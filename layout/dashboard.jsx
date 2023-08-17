@@ -16,10 +16,10 @@ const DashboardLayout = ({ children }) => {
   return (
     <>
       <Head>
-        <title>Dashboard Design By kate | TypeScript Engineer</title>
+        <title>Portfolio Tracker for the Arbitrum Blockchain</title>
         <meta
-          name="Dashboard Design By kate | TypeScript Engineer"
-          content="Dashboard Design By kate | TypeScript Engineer"
+          name="Arbitrum Portfolio Tracker"
+          content="Portfolio Tracker for the Arbitrum Blockchain"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />

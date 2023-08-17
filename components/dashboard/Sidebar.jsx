@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 // import { CLOSE } from "../../redux/actions/action";
 
 // React Icon
+
 import { MdSpaceDashboard } from "react-icons/md";
 import { BsSearch } from "react-icons/bs";
 import { GrTransaction } from "react-icons/gr";
@@ -102,7 +103,7 @@ const Sidebar = () => {
                 </div>
               </Link>
 
-              <Link href="/app/Ntfs" onClick={() => {}}>
+              <Link href="/app/Nfts" onClick={() => {}}>
                 <div className="dashboard_flex_item">
                   <div id="sidebar__icon__style">
                     <RiNftLine />
@@ -132,11 +133,11 @@ const Sidebar = () => {
               </Link>
 
               <div onClick={() => {}}>
-                <div className="dashboard_flex_item">
+                <div className="dashboard_flex_item p-2 m-3 bg-red-500 rounded">
                   <div id="sidebar__icon__style">
                     <BsDashCircle />
                   </div>
-                  <li>Log Out</li>
+                  <li>Disconnect</li>
                 </div>
               </div>
             </div>
