@@ -16,8 +16,8 @@ body {
 
 .dashboard_main {
   width: 100%;
-  display: grid;
-  grid-template-columns: 1fr;
+  // display: grid;
+  // grid-template-columns: 1fr;
   background-color: #101010;
 
   @media (max-width: 800px) {
@@ -351,4 +351,11 @@ a:visited {
 
 .burger_icons {
   font-size: 2em;
+}
+
+.long {
+  height: 220px;
+}
+.border {
+  border-color: #333;
 }

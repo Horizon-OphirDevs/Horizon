@@ -31,7 +31,7 @@ const DashboardLayout = ({ children }) => {
           </div>
 
           <div className="dashboard_main bg-[#101010]">
-            <div className="dashboard_grid_column">
+            <div className="">
               <Topbar />
               <div className="main_content bg-[#101010]">{children}</div>
             </div>

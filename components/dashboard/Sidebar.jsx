@@ -16,6 +16,7 @@ import { RiNftLine } from "react-icons/ri";
 import { AiFillSetting } from "react-icons/ai";
 import { BsInfoCircle } from "react-icons/bs";
 import { BsDashCircle } from "react-icons/bs";
+import { BiTransferAlt } from "react-icons/bi";
 
 // Icon Style
 const Iconstyle = {
@@ -54,6 +55,8 @@ const Sidebar = () => {
   //     (state) => state.ModeReducer.isSideBarOpen
   //   );
 
+  // const [isOpen, setIsOpen] = React.useState(false);
+
   return (
     <>
       <div className={!true ? "dashboard_sideBar" : "dashboard_sideBar active"}>
@@ -78,8 +81,8 @@ const Sidebar = () => {
 
               <Link href="/app/Transactions" onClick={() => {}}>
                 <div className="dashboard_flex_item">
-                  <div id="sidebar__icon__style">
-                    <GrTransaction />
+                  <div id="sidebar__icon__style" className="text-gray-300">
+                    <BiTransferAlt />
                   </div>
                   <li>Transactions</li>
                 </div>
