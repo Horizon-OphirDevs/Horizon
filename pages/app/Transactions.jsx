@@ -11,7 +11,7 @@ const Transactions = () => {
 
   return (
     <div>
-      <div className="grid grid-cols-7 gap-3">
+      <div className="grid grid-cols-7 gap-3 text-xs text-center">
         <div style={active}>
           {/* a link would be here in order to display transfer, same applies to all other buttons 
       DoctorInTech go see shege 😂 */}

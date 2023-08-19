@@ -2,15 +2,17 @@ import React from "react";
 
 const Portfolio = () => {
   return (
-    <div className="grid grid-cols-2 gap-5 m-3 grid-flow-row-dense">
-      <div className="rounded-lg shadow-xl min-h-[20rem] bg-[#1f1f1f]"></div>
-      <div className="rounded-lg shadow-xl min-h-[20rem] bg-[#1f1f1f]">
-        <div className="grid grid-cols-2 gap-2 m-5 items-center justify-center">
-          <div className="min-h-[17rem] border rounded"></div>
-          <div className="min-h-[17rem] border rounded"></div>
+    <div className="grid grid-cols-1 gap-5 m-3 items-center px-6 mx-auto ">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="rounded-lg shadow-xl long md:min-h-[20rem] bg-[#1f1f1f]"></div>
+        <div className="rounded-lg shadow-xl long md:min-h-[20rem] bg-[#1f1f1f]">
+          <div className="grid grid-cols-2 gap-2 m-5 items-center justify-center">
+            <div className="md:min-h-[17rem] h-36 border rounded"></div>
+            <div className="md:min-h-[17rem] h-36 border rounded"></div>
+          </div>
         </div>
       </div>
-      <div className="rounded-lg shadow-xl  bg-[#1f1f1f] col-span-2">
+      <div className="rounded-lg shadow-xl  bg-[#1f1f1f] md:col-span-2">
         <div className="p-3 m-2">
           <div className="overflow-x-scroll flex justify-center align rounded">
             <table className="min-w-full bgr text-white border-lg border-gray-600 rounded">
