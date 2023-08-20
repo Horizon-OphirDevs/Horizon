@@ -2,13 +2,13 @@ import React from "react";
 
 const Portfolio = () => {
   return (
-    <div className="grid grid-cols-1 gap-5 m-3 items-center px-6 mx-auto ">
+    <div className="grid grid-cols-1 gap-8 m-3 items-center px-6 mx-auto ">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="rounded-lg shadow-xl long md:min-h-[20rem] bg-[#1f1f1f]"></div>
-        <div className="rounded-lg shadow-xl long md:min-h-[20rem] bg-[#1f1f1f]">
+        <div className="rounded-lg shadow-xl long md:min-h-[17rem] bg-[#1f1f1f]"></div>
+        <div className="rounded-lg shadow-xl long md:min-h-[17rem] bg-[#1f1f1f]">
           <div className="grid grid-cols-2 gap-2 m-5 items-center justify-center">
-            <div className="md:min-h-[17rem] h-36 border rounded"></div>
-            <div className="md:min-h-[17rem] h-36 border rounded"></div>
+            <div className="md:min-h-[13rem] h-36 border rounded"></div>
+            <div className="md:min-h-[13rem] h-36 border rounded"></div>
           </div>
         </div>
       </div>

@@ -1,9 +1,25 @@
 import React from "react";
 import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 
 // React Icon
 import { FaBars, FaUserTie } from "react-icons/fa";
 import { IoNotificationsSharp } from "react-icons/io5";
+import { AiOutlineCloseSquare } from "react-icons/ai";
+import { FiSearch } from "react-icons/fi";
+import { TfiClose } from "react-icons/tfi";
+import { GiHamburgerMenu } from "react-icons/gi";
+
+import { MdSpaceDashboard } from "react-icons/md";
+import { BsSearch } from "react-icons/bs";
+import { GrTransaction } from "react-icons/gr";
+import { MdCandlestickChart } from "react-icons/md";
+import { RiNftLine } from "react-icons/ri";
+import { AiFillSetting } from "react-icons/ai";
+import { BsInfoCircle } from "react-icons/bs";
+import { BsDashCircle } from "react-icons/bs";
+import { BiTransferAlt } from "react-icons/bi";
 
 // Redux
 // import { useDispatch } from "react-redux";
@@ -11,7 +27,7 @@ import { IoNotificationsSharp } from "react-icons/io5";
 
 // Icon Style
 const Iconstyle = {
-  fontSize: "1.8em",
+  fontSize: "1.2em",
   cursor: "pointer",
   color: "white",
 };
@@ -24,46 +40,157 @@ const Topbar = () => {
   //     dispatch({ type: TOGGLE_SIDEBAR });
   //   };
 
-  const [navbarOpen, setNavbarOpen] = useState(false);
+  const [navbarOpen, setNavbarOpen] = useState(true);
 
   const toggleNavbar = () => {
     setNavbarOpen(!navbarOpen);
   };
 
   return (
-    <>
-      <div className="dashboard_topBar">
-        <div className="dashboard_topBar_flex">
-          <div className="dashboard_topBar_title" onClick={() => {}}>
-            <div className="hambuger_icon" onClick={toggleNavbar}>
-              <FaBars style={Iconstyle} />
-            </div>
-            <div
-              className={`mt-2 ${
-                navbarOpen ? "block z-10 h-[20rem] bg-blue-300 p-3 " : "hidden"
-              } md:block`}
-            ></div>
-            <div className="dashboard_user_business_name">
-              <h2 className="text-gray-300">Portfolio Tracker</h2>
+    <header>
+      <nav className="flex justify-between items-center border-b border-gray-400">
+        <div className="text-white ">Dashboard</div>
+        <div className="w-full gap-2 px-2 hidden md:block">
+          <div class="relative border flex  md:w-full flex-wrap items-stretch rounded-lg">
+            <input
+              type="search"
+              class="relative m-0 block  w-[1px] min-w-0 flex-auto rounded bg-transparent bg-clip-padding px-3 py-[0.25rem] text-xs font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:focus:border-primary"
+              placeholder="search token or contract "
+            />
+            {/* <!--Search icon--> */}
+            <span class="input-group-text flex items-center whitespace-nowrap rounded px-3 py-1.5 text-center text-base font-normal text-neutral-700 dark:text-neutral-200">
+              {" "}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                class="h-5 w-5"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </span>
+          </div>
+        </div>
+        <div>
+          <ul className="flex items-center gap-[4vw]  ">
+            <li className="block md:hidden">
+              <FiSearch style={Iconstyle} />
+            </li>
+            <li>
+              <IoNotificationsSharp style={Iconstyle} />
+            </li>
+            <li>
+              <FaUserTie style={Iconstyle} />
+            </li>
+          </ul>
+        </div>
+        <button className="rounded bg-[#0BAAB5] text-white px-4 py-2 m-2 text-[12px] md:text-sm">
+          Connect Wallet
+        </button>
+        <div className="text-white md:hidden" id="open">
+          <GiHamburgerMenu onClick={toggleNavbar} />
+        </div>
+      </nav>
+
+      {/* sidebar menu  */}
+      <div
+        className={`shadow md:hidden  ${
+          navbarOpen ? "hidden" : "block transition-all duration-500 "
+        }`}
+      >
+        <div
+          className="dashboard_sideBar md:hidden duration-500"
+          id="topSideBar"
+        >
+          <div className="">
+            <div className=" top_logo">
+              <Image
+                src="/usdt.png"
+                alt="Arbitrak Logo"
+                width={40}
+                height={56}
+              />
+
+              <h2 style={{ color: "white" }}>ArbiTrak </h2>
+              <div className="text-white" id="close">
+                <TfiClose onClick={toggleNavbar} style={{ color: "white" }} />
+              </div>
             </div>
           </div>
-          <div className="dashboard_topBar_left">
-            <div className="dashboard_topbar_user_info">
-              <div className="dashboard_notification">
-                <IoNotificationsSharp style={Iconstyle} />
-                <div className="dashboard_notification_counter">4</div>
+
+          <div className="dashboard_sidebar_navigation ">
+            <ul className="text-gray-300">
+              <div className="sidebar_top_part">
+                <Link href="/app/Portfolio" onClick={() => {}}>
+                  <div className="dashboard_flex_item">
+                    <MdSpaceDashboard />
+                    <li>Dashboard</li>
+                  </div>
+                </Link>
+
+                <Link href="/app/Explore" onClick={() => {}}>
+                  <div className="dashboard_flex_item">
+                    <div id="sidebar__icon__style">
+                      <BsSearch />
+                    </div>
+                    <li>Explore</li>
+                  </div>
+                </Link>
+
+                <Link href="/app/Markets" onClick={() => {}}>
+                  <div className="dashboard_flex_item">
+                    <div id="sidebar__icon__style">
+                      <MdCandlestickChart />
+                    </div>
+                    <li>Markets</li>
+                  </div>
+                </Link>
+                <Link href="/app/Transactions" onClick={() => {}}>
+                  <div className="dashboard_flex_item">
+                    <div id="sidebar__icon__style" className="text-gray-300">
+                      <BiTransferAlt />
+                    </div>
+                    <li>Transactions</li>
+                  </div>
+                </Link>
+
+                <Link href="/app/Nfts" onClick={() => {}}>
+                  <div className="dashboard_flex_item">
+                    <div id="sidebar__icon__style">
+                      <RiNftLine />
+                    </div>
+                    <li>NFT's </li>
+                  </div>
+                </Link>
+                <Link href="/app/Settings" onClick={() => {}}>
+                  <div className="dashboard_flex_item">
+                    <div id="sidebar__icon__style">
+                      <AiFillSetting />
+                    </div>
+                    <li>Settings</li>
+                  </div>
+                </Link>
               </div>
-              <div className="dashboard_user_photo">
-                <FaUserTie style={Iconstyle} />
+
+              <div className="sidebar_bottom_part">
+                <div onClick={() => {}}>
+                  <div className="dashboard_flex_item p-2 m-auto bg-red-500 rounded-lg ">
+                    <div id="text-white">
+                      <BsDashCircle />
+                    </div>
+                    <li className="disc">Disconnect</li>
+                  </div>
+                </div>
               </div>
-              <button className="rounded bg-[#0f3056] text-white px-4 py-2">
-                Connect Wallet
-              </button>
-            </div>
+            </ul>
           </div>
         </div>
       </div>
-    </>
+    </header>
   );
 };
 

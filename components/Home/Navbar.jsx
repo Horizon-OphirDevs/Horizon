@@ -8,8 +8,8 @@ const Header = () => {
         <header className="flex items-center justify-center h-20">
           {" "}
           {/* Adjust height */}
-          <Image src="/usdt.png" alt="Arbitract Logo" width={40} height={56} />
-          <h1 className="text-2xl font-semibold">ArbiTrack</h1>
+          <Image src="/usdt.png" alt="Arbitrak Logo" width={40} height={56} />
+          <h1 className="text-2xl font-semibold">ArbiTrak</h1>
         </header>
       </div>
     </div>
