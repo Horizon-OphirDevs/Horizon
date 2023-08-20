@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 // Redux
 // import { useDispatch, useSelector } from "react-redux";
@@ -32,30 +33,6 @@ const LogoIconSettings = {
 
 const Sidebar = () => {
   const router = useRouter();
-  //   const dispatch = useDispatch();
-
-  //   // Current Path
-  //   const current_url_pathname = router.pathname;
-
-  //   const () => { }= () => {
-  //     dispatch({ type: CLOSE });
-  //   };
-
-  //   const LogOutHandler = () => {
-  //     dispatch({ type: CLOSE });
-
-  //     // Redirect To Login Page After 2secs
-  //     setTimeout(() => {
-  //       router.push("/auth/login");
-  //     }, 1000);
-  //   };
-
-  //   // Toggle State
-  //   const ToggleState = useSelector(
-  //     (state) => state.ModeReducer.isSideBarOpen
-  //   );
-
-  // const [isOpen, setIsOpen] = React.useState(false);
 
   return (
     <>
@@ -63,8 +40,15 @@ const Sidebar = () => {
         <div className="dashboard_sidebar_height">
           <div className="dashboard_logo">
             <Link href="/" className="dashboard_logo_flex_container">
-              {/* <GrNodes style={LogoIconSettings} /> */}
-              <h2 style={{ color: "white" }}>ArbiTrak </h2>
+              <div className="side_img">
+                <Image
+                  src="/usdt.png"
+                  alt="Arbitrak Logo"
+                  width={40}
+                  height={56}
+                />
+                <h2 style={{ color: "white" }}>ArbiTrak </h2>
+              </div>
             </Link>
           </div>
         </div>
@@ -76,15 +60,6 @@ const Sidebar = () => {
                 <div className="dashboard_flex_item">
                   <MdSpaceDashboard />
                   <li>Dashboard</li>
-                </div>
-              </Link>
-
-              <Link href="/app/Transactions" onClick={() => {}}>
-                <div className="dashboard_flex_item">
-                  <div id="sidebar__icon__style" className="text-gray-300">
-                    <BiTransferAlt />
-                  </div>
-                  <li>Transactions</li>
                 </div>
               </Link>
 
@@ -105,13 +80,21 @@ const Sidebar = () => {
                   <li>Markets</li>
                 </div>
               </Link>
+              <Link href="/app/Transactions" onClick={() => {}}>
+                <div className="dashboard_flex_item">
+                  <div id="sidebar__icon__style" className="text-gray-300">
+                    <BiTransferAlt />
+                  </div>
+                  <li>Transactions</li>
+                </div>
+              </Link>
 
               <Link href="/app/Nfts" onClick={() => {}}>
                 <div className="dashboard_flex_item">
                   <div id="sidebar__icon__style">
                     <RiNftLine />
                   </div>
-                  <li>NFTs </li>
+                  <li>NFT's </li>
                 </div>
               </Link>
               <Link href="/app/Settings" onClick={() => {}}>
@@ -125,22 +108,12 @@ const Sidebar = () => {
             </div>
 
             <div className="sidebar_bottom_part">
-              <Link href="/help" onClick={() => {}}>
-                <div className="dashboard_flex_item">
-                  <div id="sidebar__icon__style">
-                    {/* <BsInfoCircle style={Iconstyle} /> */}
-                    <BsInfoCircle />
-                  </div>
-                  <li>Help & Information</li>
-                </div>
-              </Link>
-
               <div onClick={() => {}}>
-                <div className="dashboard_flex_item p-2 m-3 bg-red-500 rounded">
-                  <div id="sidebar__icon__style">
+                <div className="dashboard_flex_item p-2 m-auto bg-red-500 rounded-lg ">
+                  <div id="text-white">
                     <BsDashCircle />
                   </div>
-                  <li>Disconnect</li>
+                  <li className="disc">Disconnect</li>
                 </div>
               </div>
             </div>
