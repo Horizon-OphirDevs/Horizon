@@ -12,6 +12,7 @@ import Topbar from "@/components/dashboard/Topbar";
 
 const DashboardLayout = ({ children }) => {
   const router = useRouter();
+  //Bernard.O Added this UseState to Update the Pages 
   const [activeSection, setActiveSection] = useState("Dashboard");
 
   return (

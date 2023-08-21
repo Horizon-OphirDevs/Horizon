@@ -34,6 +34,7 @@ const LogoIconSettings = {
 const Sidebar = ({setActiveSection}) => {
   const router = useRouter();
    // Initialize with the default active section
+   //Bernard.O Import the prop setActiveSection for the Updates
 
   const handleSectionClick = (section) => {
     setActiveSection(section);
@@ -64,7 +65,7 @@ const Sidebar = ({setActiveSection}) => {
               <Link href="/app/Portfolio" >
                 <div className="dashboard_flex_item" onClick={() => handleSectionClick("Dashboard")}>
                   <MdSpaceDashboard />
-                  <li>Dashboard1</li>
+                  <li>Dashboard</li>
                 </div>
               </Link>
 
