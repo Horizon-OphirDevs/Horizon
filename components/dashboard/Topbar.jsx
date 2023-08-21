@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { connectWallet, disconnectWallet } from "./connect";
 
 // React Icon
 import { FaBars, FaUserTie } from "react-icons/fa";
@@ -46,6 +47,24 @@ const Topbar = () => {
     setNavbarOpen(!navbarOpen);
   };
 
+  const [walletInfo, setWalletInfo] = useState(null);
+
+  const handleConnectWallet = async () => {
+    const connectedWallet = await connectWallet();
+    if (connectedWallet) {
+      // Wallet connected successfully
+      console.log("Wallet connected:", connectedWallet);
+      setWalletInfo(connectedWallet); // Update wallet information
+    } else {
+      // Wallet connection failed
+      console.log("Wallet connection failed");
+    }
+  };
+  const handleDisconnectWallet = async () => {
+    await disconnectWallet();
+    setWalletInfo(null); // Reset wallet information
+  };
+
   return (
     <header>
       <nav className="flex justify-between items-center border-b border-gray-400">
@@ -88,8 +107,8 @@ const Topbar = () => {
             </li>
           </ul>
         </div>
-        <button className="rounded bg-[#0BAAB5] text-white px-4 py-2 m-2 text-[12px] md:text-sm">
-          Connect Wallet
+        <button className="rounded bg-[#0BAAB5] text-white px-4 py-2 m-2 text-[12px] md:text-sm " onClick={handleConnectWallet}>
+        {walletInfo ? walletInfo.address : "Connect Wallet"}
         </button>
         <div className="text-white md:hidden" id="open">
           <GiHamburgerMenu onClick={toggleNavbar} />
@@ -182,7 +201,7 @@ const Topbar = () => {
                     <div id="text-white">
                       <BsDashCircle />
                     </div>
-                    <li className="disc">Disconnect</li>
+                    <li className="disc" onClick={handleDisconnectWallet}>Disconnect</li>
                   </div>
                 </div>
               </div>
