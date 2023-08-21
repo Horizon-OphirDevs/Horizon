@@ -32,7 +32,7 @@ const Iconstyle = {
   color: "white",
 };
 
-const Topbar = () => {
+const Topbar = ({activeSection}) => {
   //   const dispatch = useDispatch();
 
   //   const Clickhandler = () => {
@@ -45,11 +45,12 @@ const Topbar = () => {
   const toggleNavbar = () => {
     setNavbarOpen(!navbarOpen);
   };
+ 
 
   return (
     <header>
       <nav className="flex justify-between items-center border-b border-gray-400">
-        <div className="text-white ">Dashboard</div>
+        <div className="text-white ">{activeSection}</div>
         <div className="w-full gap-2 px-2 hidden md:block">
           <div class="relative border flex  md:w-full flex-wrap items-stretch rounded-lg">
             <input
@@ -106,10 +107,11 @@ const Topbar = () => {
           className="dashboard_sideBar md:hidden duration-500"
           id="topSideBar"
         >
+          {/*Bernard.O I Exported the logo from your figma design and replaced it*/}
           <div className="">
             <div className=" top_logo">
               <Image
-                src="/usdt.png"
+                src="/arbitrak.png"
                 alt="Arbitrak Logo"
                 width={40}
                 height={56}
@@ -128,7 +130,7 @@ const Topbar = () => {
                 <Link href="/app/Portfolio" onClick={() => {}}>
                   <div className="dashboard_flex_item">
                     <MdSpaceDashboard />
-                    <li>Dashboard</li>
+                    <li>{activeSection}</li>
                   </div>
                 </Link>
 

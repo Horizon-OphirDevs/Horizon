@@ -1,4 +1,4 @@
-import React from "react";
+import React,{ useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
@@ -31,8 +31,13 @@ const LogoIconSettings = {
   color: "#373131",
 };
 
-const Sidebar = () => {
+const Sidebar = ({setActiveSection}) => {
   const router = useRouter();
+   // Initialize with the default active section
+
+  const handleSectionClick = (section) => {
+    setActiveSection(section);
+  };
 
   return (
     <>
@@ -41,13 +46,13 @@ const Sidebar = () => {
           <div className="dashboard_logo">
             <Link href="/" className="dashboard_logo_flex_container">
               <div className="side_img">
+                {/*Bernard.O I Exported the logo from your figma design and replaced it*/}
                 <Image
-                  src="/usdt.png"
+                  src="/arbitrak.png"
                   alt="Arbitrak Logo"
-                  width={40}
-                  height={56}
+                  width={140}
+                  height={180}
                 />
-                <h2 style={{ color: "white" }}>ArbiTrak </h2>
               </div>
             </Link>
           </div>
@@ -55,16 +60,16 @@ const Sidebar = () => {
 
         <div className="dashboard_sidebar_navigation ">
           <ul className="text-gray-300">
-            <div className="sidebar_top_part">
-              <Link href="/app/Portfolio" onClick={() => {}}>
-                <div className="dashboard_flex_item">
+            <div className="sidebar_top_part" >
+              <Link href="/app/Portfolio" >
+                <div className="dashboard_flex_item" onClick={() => handleSectionClick("Dashboard")}>
                   <MdSpaceDashboard />
-                  <li>Dashboard</li>
+                  <li>Dashboard1</li>
                 </div>
               </Link>
 
-              <Link href="/app/Explore" onClick={() => {}}>
-                <div className="dashboard_flex_item">
+              <Link href="/app/Explore" onClick={() => handleSectionClick("Explore")}>
+                <div className="dashboard_flex_item" onClick={() => handleSectionClick("Explore")}>
                   <div id="sidebar__icon__style">
                     <BsSearch />
                   </div>
@@ -72,7 +77,7 @@ const Sidebar = () => {
                 </div>
               </Link>
 
-              <Link href="/app/Markets" onClick={() => {}}>
+              <Link href="/app/Markets" onClick={() => handleSectionClick("Markets")}>
                 <div className="dashboard_flex_item">
                   <div id="sidebar__icon__style">
                     <MdCandlestickChart />
@@ -80,7 +85,7 @@ const Sidebar = () => {
                   <li>Markets</li>
                 </div>
               </Link>
-              <Link href="/app/Transactions" onClick={() => {}}>
+              <Link href="/app/Transactions" onClick={() => handleSectionClick("Transactions")}>
                 <div className="dashboard_flex_item">
                   <div id="sidebar__icon__style" className="text-gray-300">
                     <BiTransferAlt />
@@ -89,7 +94,7 @@ const Sidebar = () => {
                 </div>
               </Link>
 
-              <Link href="/app/Nfts" onClick={() => {}}>
+              <Link href="/app/Nfts" onClick={() => handleSectionClick("NFTs")}>
                 <div className="dashboard_flex_item">
                   <div id="sidebar__icon__style">
                     <RiNftLine />
@@ -97,7 +102,7 @@ const Sidebar = () => {
                   <li>NFT's </li>
                 </div>
               </Link>
-              <Link href="/app/Settings" onClick={() => {}}>
+              <Link href="/app/Settings" onClick={() => handleSectionClick("Settings")}>
                 <div className="dashboard_flex_item">
                   <div id="sidebar__icon__style">
                     <AiFillSetting />
