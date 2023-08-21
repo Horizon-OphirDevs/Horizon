@@ -39,7 +39,7 @@ const Topbar = ({activeSection}) => {
   //   const Clickhandler = () => {
   //     // Do Action
   //     dispatch({ type: TOGGLE_SIDEBAR });
-  //   };
+  //  };
 
   const [navbarOpen, setNavbarOpen] = useState(true);
 
