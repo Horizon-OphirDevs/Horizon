@@ -46,12 +46,18 @@ const Topbar = ({activeSection}) => {
   const toggleNavbar = () => {
     setNavbarOpen(!navbarOpen);
   };
+  const [activeSectionMobile, setActiveSection] = useState("Dashboard");
  
 
   return (
     <header>
       <nav className="flex justify-between items-center border-b border-gray-400">
-        <div className="text-white ">{activeSection}</div>
+        <div className="hidden md:block text-white">
+          {activeSection}
+        </div>
+        <div className="block md:hidden lg:hidden text-white">
+          {activeSectionMobile}
+        </div>
         <div className="w-full gap-2 px-2 hidden md:block">
           <div class="relative border flex  md:w-full flex-wrap items-stretch rounded-lg">
             <input
@@ -114,11 +120,10 @@ const Topbar = ({activeSection}) => {
               <Image
                 src="/arbitrak.png"
                 alt="Arbitrak Logo"
-                width={40}
-                height={56}
+                width={140}
+                height={180}
               />
 
-              <h2 style={{ color: "white" }}>ArbiTrak </h2>
               <div className="text-white" id="close">
                 <TfiClose onClick={toggleNavbar} style={{ color: "white" }} />
               </div>
@@ -128,14 +133,14 @@ const Topbar = ({activeSection}) => {
           <div className="dashboard_sidebar_navigation ">
             <ul className="text-gray-300">
               <div className="sidebar_top_part">
-                <Link href="/app/Portfolio" onClick={() => {}}>
+                <Link href="/app/Portfolio" onClick={() => setActiveSection("Dashboard")}>
                   <div className="dashboard_flex_item">
                     <MdSpaceDashboard />
-                    <li>{activeSection}</li>
+                    <li>Dashboard</li>
                   </div>
                 </Link>
 
-                <Link href="/app/Explore" onClick={() => {}}>
+                <Link href="/app/Explore" onClick={() => setActiveSection("Explore")}>
                   <div className="dashboard_flex_item">
                     <div id="sidebar__icon__style">
                       <BsSearch />
@@ -144,7 +149,7 @@ const Topbar = ({activeSection}) => {
                   </div>
                 </Link>
 
-                <Link href="/app/Markets" onClick={() => {}}>
+                <Link href="/app/Markets" onClick={() => setActiveSection("Market")}>
                   <div className="dashboard_flex_item">
                     <div id="sidebar__icon__style">
                       <MdCandlestickChart />
@@ -152,7 +157,7 @@ const Topbar = ({activeSection}) => {
                     <li>Markets</li>
                   </div>
                 </Link>
-                <Link href="/app/Transactions" onClick={() => {}}>
+                <Link href="/app/Transactions" onClick={() => setActiveSection("Transaction")}>
                   <div className="dashboard_flex_item">
                     <div id="sidebar__icon__style" className="text-gray-300">
                       <BiTransferAlt />
@@ -161,7 +166,7 @@ const Topbar = ({activeSection}) => {
                   </div>
                 </Link>
 
-                <Link href="/app/Nfts" onClick={() => {}}>
+                <Link href="/app/Nfts" onClick={() => setActiveSection("NFTs")}>
                   <div className="dashboard_flex_item">
                     <div id="sidebar__icon__style">
                       <RiNftLine />
@@ -169,7 +174,7 @@ const Topbar = ({activeSection}) => {
                     <li>NFT's </li>
                   </div>
                 </Link>
-                <Link href="/app/Settings" onClick={() => {}}>
+                <Link href="/app/Settings" onClick={() => setActiveSection("Settings")}>
                   <div className="dashboard_flex_item">
                     <div id="sidebar__icon__style">
                       <AiFillSetting />

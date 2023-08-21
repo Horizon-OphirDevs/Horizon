@@ -71,7 +71,7 @@ const Sidebar = ({setActiveSection}) => {
 
               <Link href="/app/Explore" onClick={() => handleSectionClick("Explore")}>
                 <div className="dashboard_flex_item" onClick={() => handleSectionClick("Explore")}>
-                  <div id="sidebar__icon__style">
+                  <div id="sidebar__icon__style" onClick={() => handleSectionClick("Explore")}>
                     <BsSearch />
                   </div>
                   <li>Explore</li>
