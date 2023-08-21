@@ -1,5 +1,7 @@
 import "@/styles/globals.css";
 import "@/styles/layout.scss";
+//Bernard.O Import The Provider and Wrap it round your project
+import { ThirdwebProvider } from "@thirdweb-dev/react";
 // import Header from "@/components/Header";
 import Link from "next/link";
 
@@ -9,16 +11,22 @@ export default function App({ Component, pageProps }) {
   if (Component.getLayout) {
     return (
       <div>
+        {/*Bernard.O You are wrapping so that when you connect your wallet the whole app is connected*/}
+        <ThirdwebProvider activeChain="ethereum">
         <DashboardLayout>
           <Component {...pageProps} />
         </DashboardLayout>
+        </ThirdwebProvider>
       </div>
     );
   }
 
   return (
     <div>
+      {/*Bernard.O You are wrapping so that when you connect your wallet the whole app is connected*/}
+      <ThirdwebProvider activeChain="ethereum">
       <Component {...pageProps} />
+      </ThirdwebProvider>
     </div>
   );
 }

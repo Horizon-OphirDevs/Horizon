@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { ethers } from "ethers";
+//import { ethers } from "ethers";
 
 const connectWallet = async () => {
   try {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    //const provider = new ethers.providers.Web3Provider(window.ethereum);
     await provider.send("eth_requestAccounts", []);
     const signer = await provider.getSigner();
     const chainId = await signer.getChainId();

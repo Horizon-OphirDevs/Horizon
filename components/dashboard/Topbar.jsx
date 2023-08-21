@@ -3,7 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { connectWallet, disconnectWallet } from "./connect";
-
+import { ConnectWallet } from "@thirdweb-dev/react";
 // React Icon
 import { FaBars, FaUserTie } from "react-icons/fa";
 import { IoNotificationsSharp } from "react-icons/io5";
@@ -115,9 +115,10 @@ const Topbar = ({activeSection}) => {
             </li>
           </ul>
         </div>
-        <button className="rounded bg-[#0BAAB5] text-white px-4 py-2 m-2 text-[12px] md:text-sm " onClick={handleConnectWallet}>
-        {walletInfo ? walletInfo.address : "Connect Wallet"}
-        </button>
+
+        <div className="connect_button">
+        <ConnectWallet />
+        </div>
         <div className="text-white md:hidden" id="open">
           <GiHamburgerMenu onClick={toggleNavbar} />
         </div>

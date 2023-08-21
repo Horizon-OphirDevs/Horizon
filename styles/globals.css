@@ -21,7 +21,7 @@ body {
   /* color: white; */
 }
 .bgr {
-  background-color: #1f1f1f;
+  background-color: hsl(0, 0%, 12%);
 }
 
 .white-glassmorphism {
@@ -33,4 +33,16 @@ body {
   height: calc(100vh - 120px);
   min-height: calc(100vh - 120px);
   max-height: calc(100vh - 120px);
+}
+
+.connect_button button {
+  padding: 15px 20px;
+  background: linear-gradient(136deg, #2873e2 48%, #23c9c9 100%);
+  box-shadow: 0px 4px 10px rgba(76.50, 76.50, 255, 0.20);
+  border-radius: 20px;
+  border: none;
+  color: white;
+  font-size: 16px;
+  font-weight: 400;
+  cursor: pointer;
 }
