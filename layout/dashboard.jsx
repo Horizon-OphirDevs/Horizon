@@ -1,4 +1,4 @@
-import React from "react";
+import React,{ useState } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 
@@ -12,6 +12,9 @@ import Topbar from "@/components/dashboard/Topbar";
 
 const DashboardLayout = ({ children }) => {
   const router = useRouter();
+  //Bernard.O Added this UseState to Update the Pages 
+  const [activeSection, setActiveSection] = useState("Dashboard");
+  
 
   return (
     <>
@@ -27,12 +30,12 @@ const DashboardLayout = ({ children }) => {
       <div className={inter.className}>
         <div className="dashboard_grid_layout bg-[#101010]">
           <div className="dashboard_grid_column">
-            <Sidebar />
+            <Sidebar setActiveSection={setActiveSection} />
           </div>
 
           <div className="dashboard_main bg-[#101010]">
             <div className="">
-              <Topbar />
+              <Topbar activeSection={activeSection} />
               <div className="main_content bg-[#101010]">{children}</div>
             </div>
           </div>

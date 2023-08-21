@@ -8,8 +8,8 @@ const Header = () => {
         <header className="flex items-center justify-center h-20">
           {" "}
           {/* Adjust height */}
-          <Image src="/usdt.png" alt="Arbitrak Logo" width={40} height={56} />
-          <h1 className="text-2xl font-semibold">ArbiTrak</h1>
+          {/*Bernard.O I Exported the logo from your figma design and replaced it*/}
+          <Image src="/arbitrak.png" alt="Arbitrak Logo" width={200} height={280} />
         </header>
       </div>
     </div>
