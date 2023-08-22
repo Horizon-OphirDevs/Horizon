@@ -2,6 +2,7 @@ import React,{ useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { useDisconnect } from "@thirdweb-dev/react";
 
 // Redux
 // import { useDispatch, useSelector } from "react-redux";
@@ -35,10 +36,10 @@ const Sidebar = ({setActiveSection}) => {
   const router = useRouter();
    // Initialize with the default active section
    //Bernard.O Import the prop setActiveSection for the Updates
-
   const handleSectionClick = (section) => {
     setActiveSection(section);
   };
+  const disconnect = useDisconnect()
 
   return (
     <>
@@ -119,7 +120,7 @@ const Sidebar = ({setActiveSection}) => {
                   <div id="text-white">
                     <BsDashCircle />
                   </div>
-                  <li className="disc">Disconnect</li>
+                  <li className="disc" onClick={disconnect} >Disconnect</li>
                 </div>
               </div>
             </div>

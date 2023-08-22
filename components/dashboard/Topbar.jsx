@@ -3,7 +3,8 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { connectWallet, disconnectWallet } from "./connect";
-import { ConnectWallet } from "@thirdweb-dev/react";
+//Bernard.O Using Thirdweb SDK for Connecting Wallet {https://portal.thirdweb.com/react} <--Check it Out
+import { ConnectWallet, useDisconnect } from "@thirdweb-dev/react";
 // React Icon
 import { FaBars, FaUserTie } from "react-icons/fa";
 import { IoNotificationsSharp } from "react-icons/io5";
@@ -48,6 +49,8 @@ const Topbar = ({activeSection}) => {
     setNavbarOpen(!navbarOpen);
   };
   const [activeSectionMobile, setActiveSection] = useState("Dashboard");
+  //Bernard.O Making use Of the react hook to disconnect the Wallet
+  const disconnect = useDisconnect();
  
 
   const [walletInfo, setWalletInfo] = useState(null);
@@ -115,7 +118,7 @@ const Topbar = ({activeSection}) => {
             </li>
           </ul>
         </div>
-
+    {/*Check global.css for the current update on the connect wallet styling */}
         <div className="connect_button">
         <ConnectWallet />
         </div>
@@ -210,7 +213,8 @@ const Topbar = ({activeSection}) => {
                     <div id="text-white">
                       <BsDashCircle />
                     </div>
-                    <li className="disc" onClick={handleDisconnectWallet}>Disconnect</li>
+                    {/*Bernard.O using disconnect function to disconnect wallet */}
+                    <li className="disc" onClick={disconnect}>Disconnect</li>
                   </div>
                 </div>
               </div>
