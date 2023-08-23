@@ -37,8 +37,8 @@ body {
 
 .connect_button button {
   padding: 15px 20px;
-  background: linear-gradient(136deg, #2873e2 48%, #23c9c9 100%);
-  box-shadow: 0px 4px 10px rgba(76.50, 76.50, 255, 0.20);
+  background: #0baab5;
+  box-shadow: 0px 4px 10px rgba(76.5, 76.5, 255, 0.2);
   border-radius: 20px;
   border: none;
   color: white;
