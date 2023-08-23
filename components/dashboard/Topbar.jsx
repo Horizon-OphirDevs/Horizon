@@ -2,7 +2,6 @@ import React from "react";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { connectWallet, disconnectWallet } from "./connect";
 //Bernard.O Using Thirdweb SDK for Connecting Wallet {https://portal.thirdweb.com/react} <--Check it Out
 import { ConnectWallet, useDisconnect } from "@thirdweb-dev/react";
 // React Icon
@@ -53,23 +52,6 @@ const Topbar = ({activeSection}) => {
   const disconnect = useDisconnect();
  
 
-  const [walletInfo, setWalletInfo] = useState(null);
-
-  const handleConnectWallet = async () => {
-    const connectedWallet = await connectWallet();
-    if (connectedWallet) {
-      // Wallet connected successfully
-      console.log("Wallet connected:", connectedWallet);
-      setWalletInfo(connectedWallet); // Update wallet information
-    } else {
-      // Wallet connection failed
-      console.log("Wallet connection failed");
-    }
-  };
-  const handleDisconnectWallet = async () => {
-    await disconnectWallet();
-    setWalletInfo(null); // Reset wallet information
-  };
 
   return (
     <header>
