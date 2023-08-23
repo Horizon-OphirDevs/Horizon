@@ -2,11 +2,10 @@ import React from "react";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { connectWallet, disconnectWallet } from "./connect";
 //Bernard.O Using Thirdweb SDK for Connecting Wallet {https://portal.thirdweb.com/react} <--Check it Out
 import { ConnectWallet, useDisconnect } from "@thirdweb-dev/react";
 // React Icon
-import { FaBars, FaUserTie } from "react-icons/fa";
+
 import { IoNotificationsSharp } from "react-icons/io5";
 import { AiOutlineCloseSquare } from "react-icons/ai";
 import { FiSearch } from "react-icons/fi";
@@ -34,7 +33,7 @@ const Iconstyle = {
   color: "white",
 };
 
-const Topbar = ({activeSection}) => {
+const Topbar = ({ activeSection }) => {
   //activeSetion Fetched From dashboard to Update The pages
   //   const dispatch = useDispatch();
 
@@ -51,40 +50,20 @@ const Topbar = ({activeSection}) => {
   const [activeSectionMobile, setActiveSection] = useState("Dashboard");
   //Bernard.O Making use Of the react hook to disconnect the Wallet
   const disconnect = useDisconnect();
- 
 
-  const [walletInfo, setWalletInfo] = useState(null);
-
-  const handleConnectWallet = async () => {
-    const connectedWallet = await connectWallet();
-    if (connectedWallet) {
-      // Wallet connected successfully
-      console.log("Wallet connected:", connectedWallet);
-      setWalletInfo(connectedWallet); // Update wallet information
-    } else {
-      // Wallet connection failed
-      console.log("Wallet connection failed");
-    }
-  };
-  const handleDisconnectWallet = async () => {
-    await disconnectWallet();
-    setWalletInfo(null); // Reset wallet information
-  };
 
   return (
     <header>
       <nav className="flex justify-between items-center border-b border-gray-400">
-        <div className="hidden md:block text-white">
-          {activeSection}
-        </div>
+        <div className="hidden md:block text-white">{activeSection}</div>
         <div className="block md:hidden lg:hidden text-white">
           {activeSectionMobile}
         </div>
-        <div className="w-full gap-2 px-2 hidden md:block">
-          <div class="relative border flex  md:w-full flex-wrap items-stretch rounded-lg">
+        <div className=" gap-2 px-2 hidden md:block w-[50%]">
+          <div class="relative border flex  md:w-full bg-[#141414] items-stretch rounded-lg">
             <input
               type="search"
-              class="relative m-0 block  w-[1px] min-w-0 flex-auto rounded bg-transparent bg-clip-padding px-3 py-[0.25rem] text-xs font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:focus:border-primary"
+              className="relative m-0 block md:w-52 min-w-0  flex-auto rounded bg-transparent bg-clip-padding px-3 py-[0.25rem] text-xs font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:focus:border-primary"
               placeholder="search token or contract "
             />
             {/* <!--Search icon--> */}
@@ -106,21 +85,18 @@ const Topbar = ({activeSection}) => {
           </div>
         </div>
         <div>
-          <ul className="flex items-center gap-[4vw]  ">
+          <ul className="flex items-center gap-[3vw]  ">
             <li className="block md:hidden">
               <FiSearch style={Iconstyle} />
             </li>
             <li>
               <IoNotificationsSharp style={Iconstyle} />
             </li>
-            <li>
-              <FaUserTie style={Iconstyle} />
-            </li>
           </ul>
         </div>
-    {/*Check global.css for the current update on the connect wallet styling */}
+        {/*Check global.css for the current update on the connect wallet styling */}
         <div className="connect_button">
-        <ConnectWallet />
+          <ConnectWallet />
         </div>
         <div className="text-white md:hidden" id="open">
           <GiHamburgerMenu onClick={toggleNavbar} />
@@ -141,10 +117,10 @@ const Topbar = ({activeSection}) => {
           <div className="">
             <div className=" top_logo">
               <Image
-                src="/arbitrak.png"
-                alt="Arbitrak Logo"
-                width={140}
-                height={180}
+                src="/HorizonWithLogo.png"
+                alt="Horizon Logo"
+                width={120}
+                height={120}
               />
 
               <div className="text-white" id="close">
@@ -156,14 +132,20 @@ const Topbar = ({activeSection}) => {
           <div className="dashboard_sidebar_navigation ">
             <ul className="text-gray-300">
               <div className="sidebar_top_part">
-                <Link href="/app/Portfolio" onClick={() => setActiveSection("Dashboard")}>
+                <Link
+                  href="/app/Portfolio"
+                  onClick={() => setActiveSection("Dashboard")}
+                >
                   <div className="dashboard_flex_item">
                     <MdSpaceDashboard />
                     <li>Dashboard</li>
                   </div>
                 </Link>
 
-                <Link href="/app/Explore" onClick={() => setActiveSection("Explore")}>
+                <Link
+                  href="/app/Explore"
+                  onClick={() => setActiveSection("Explore")}
+                >
                   <div className="dashboard_flex_item">
                     <div id="sidebar__icon__style">
                       <BsSearch />
@@ -172,7 +154,10 @@ const Topbar = ({activeSection}) => {
                   </div>
                 </Link>
 
-                <Link href="/app/Markets" onClick={() => setActiveSection("Market")}>
+                <Link
+                  href="/app/Markets"
+                  onClick={() => setActiveSection("Market")}
+                >
                   <div className="dashboard_flex_item">
                     <div id="sidebar__icon__style">
                       <MdCandlestickChart />
@@ -180,7 +165,10 @@ const Topbar = ({activeSection}) => {
                     <li>Markets</li>
                   </div>
                 </Link>
-                <Link href="/app/Transactions" onClick={() => setActiveSection("Transaction")}>
+                <Link
+                  href="/app/Transactions"
+                  onClick={() => setActiveSection("Transaction")}
+                >
                   <div className="dashboard_flex_item">
                     <div id="sidebar__icon__style" className="text-gray-300">
                       <BiTransferAlt />
@@ -197,7 +185,10 @@ const Topbar = ({activeSection}) => {
                     <li>NFT's </li>
                   </div>
                 </Link>
-                <Link href="/app/Settings" onClick={() => setActiveSection("Settings")}>
+                <Link
+                  href="/app/Settings"
+                  onClick={() => setActiveSection("Settings")}
+                >
                   <div className="dashboard_flex_item">
                     <div id="sidebar__icon__style">
                       <AiFillSetting />
@@ -214,7 +205,9 @@ const Topbar = ({activeSection}) => {
                       <BsDashCircle />
                     </div>
                     {/*Bernard.O using disconnect function to disconnect wallet */}
-                    <li className="disc" onClick={disconnect}>Disconnect</li>
+                    <li className="disc" onClick={disconnect}>
+                      Disconnect
+                    </li>
                   </div>
                 </div>
               </div>
