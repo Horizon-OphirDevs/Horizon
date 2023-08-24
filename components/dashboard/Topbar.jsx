@@ -96,7 +96,8 @@ const Topbar = ({ activeSection }) => {
         </div>
         {/*Check global.css for the current update on the connect wallet styling */}
         <div className="connect_button">
-          <ConnectWallet />
+          <ConnectWallet 
+          btnTitle='+ Connect Wallet'/>
         </div>
         <div className="text-white md:hidden" id="open">
           <GiHamburgerMenu onClick={toggleNavbar} />

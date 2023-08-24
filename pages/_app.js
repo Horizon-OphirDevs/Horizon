@@ -12,7 +12,7 @@ export default function App({ Component, pageProps }) {
     return (
       <div>
         {/*Bernard.O You are wrapping so that when you connect your wallet the whole app is connected*/}
-        <ThirdwebProvider activeChain="ethereum" clientId="f8afa748ba8ce6673a35313b9ac7f9bf">
+        <ThirdwebProvider activeChain="arbitrum" >
         <DashboardLayout>
           <Component {...pageProps} />
         </DashboardLayout>
@@ -24,7 +24,7 @@ export default function App({ Component, pageProps }) {
   return (
     <div>
       {/*Bernard.O You are wrapping so that when you connect your wallet the whole app is connected*/}
-      <ThirdwebProvider activeChain="ethereum">
+      <ThirdwebProvider activeChain="arbitrum" >
       <Component {...pageProps} />
       </ThirdwebProvider>
     </div>

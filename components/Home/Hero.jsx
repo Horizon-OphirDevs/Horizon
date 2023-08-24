@@ -2,6 +2,7 @@ import React from "react";
 import Header from "./Navbar";
 import Image from "next/image";
 import Link from "next/link";
+import { ConnectWallet } from "@thirdweb-dev/react";
 
 const Hero = () => {
   return (
@@ -22,6 +23,7 @@ const Hero = () => {
             <button className="bg-[#0baab5] text-white text-lg px-12 py-4 rounded-lg hover:bg-blue-700 mt-16">
               Launch Dapp
             </button>
+            <ConnectWallet/>
           </Link>
         </div>
       </div>

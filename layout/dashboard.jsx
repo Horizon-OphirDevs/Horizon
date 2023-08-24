@@ -25,7 +25,7 @@ const DashboardLayout = ({ children }) => {
           content="Portfolio Tracker for the Arbitrum Blockchain"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/horizon.ico" />
       </Head>
       <div className={inter.className}>
         <div className="dashboard_grid_layout bg-[#101010]">
