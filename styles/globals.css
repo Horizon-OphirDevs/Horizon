@@ -47,3 +47,20 @@ body {
   width: 250px;
   height:40px;
 }
+/* Media queries for responsiveness */
+@media (max-width: 768px) { /* Tablet view */
+  .connect_button button {
+    font-size: 13px; /* Adjust font size for tablet view */
+    height: 30px;
+    width:200px /* Further reduce height for tablet */
+  }
+}
+
+@media (max-width: 480px) { /* Mobile view */
+  .connect_button button {
+    width:150px;
+    padding: 8px 12px; /* Adjust padding for mobile */
+    font-size: 12px; /* Adjust font size for mobile view */
+    height: 25px; /* Smallest height for mobile */
+  }
+}
