@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 //Bernard.O Using Thirdweb SDK for Connecting Wallet {https://portal.thirdweb.com/react} <--Check it Out
 import { ConnectWallet, useDisconnect } from "@thirdweb-dev/react";
+import { useAddress } from "@thirdweb-dev/react";
 // React Icon
 
 import { IoNotificationsSharp } from "react-icons/io5";
@@ -51,6 +52,7 @@ const Topbar = ({ activeSection }) => {
   //Bernard.O Making use Of the react hook to disconnect the Wallet
   const disconnect = useDisconnect();
 
+  const address = useAddress();
 
   return (
     <header>
