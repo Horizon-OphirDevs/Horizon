@@ -1,5 +1,5 @@
 import React from "react";
-
+import Image from "next/image";
 // react icons
 import { BsTwitter } from "react-icons/bs";
 import { AiFillInstagram } from "react-icons/ai";
@@ -39,7 +39,8 @@ const Settings = () => {
             <div className="p-5 text-white">
               <p>Partners</p>
               <div className="rounded bg-[#141414] p-4 text-white justify-center items-center w-auto flex">
-                <p>Alchemy</p>
+                <Image src={"/alchemy-Icon.png"} width={30} height={30} />
+                <p className="px-2">Alchemy</p>
               </div>
             </div>
           </div>
