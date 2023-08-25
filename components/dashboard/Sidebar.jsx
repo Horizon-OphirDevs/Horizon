@@ -52,8 +52,8 @@ const Sidebar = ({ setActiveSection }) => {
                 <Image
                   src="/HorizonWithLogo.png"
                   alt="Horizon Logo"
-                  width={120}
-                  height={120}
+                  width={130}
+                  height={130}
                 />
               </div>
             </Link>

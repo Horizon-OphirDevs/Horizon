@@ -1,4 +1,4 @@
-import React,{ useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 
@@ -12,9 +12,8 @@ import Topbar from "@/components/dashboard/Topbar";
 
 const DashboardLayout = ({ children }) => {
   const router = useRouter();
-  //Bernard.O Added this UseState to Update the Pages 
+  //Bernard.O Added this UseState to Update the Pages
   const [activeSection, setActiveSection] = useState("Dashboard");
-  
 
   return (
     <>
@@ -25,7 +24,7 @@ const DashboardLayout = ({ children }) => {
           content="Portfolio Tracker for the Arbitrum Blockchain"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/horizon.ico" />
+        <link rel="icon" href="/horizons.ico" />
       </Head>
       <div className={inter.className}>
         <div className="dashboard_grid_layout bg-[#101010]">
