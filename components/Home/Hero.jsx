@@ -35,6 +35,11 @@ const Hero = () => {
           </div>
 
           {/* menu items  */}
+          <div className="flex justify-end md:hidden ">
+            <div className="block border md:hidden p-3 px-6 pt-2 text-white bg-[#0baab5] rounded-full baseline">
+              <Link href="/app/Portfolio">Launch Dapp</Link>
+            </div>
+          </div>
           <div className="hidden md:flex space-x-6 text-gray-300 items-center ">
             <a href="#" className="hover:bg-[#0baab5]">
               Home
@@ -49,8 +54,9 @@ const Hero = () => {
               Docs
             </a>
             <div className="hidden border md:block p-3 px-6 pt-2 text-white bg-[#0baab5] rounded-full baseline ">
-              <span>github</span>
-              <span>twitter</span>
+              <a href="#" className="">
+                <AiFillGithub className="text-xl text-white" />
+              </a>
             </div>
 
             {/* hamburger menu */}
@@ -62,7 +68,7 @@ const Hero = () => {
       <section className="">
         <div className="container flex flex-col-reverse md:flex-row items-center px-6 mx-auto mt-10 space-y-0 md:space-y-0 ">
           {/* left item  */}
-          <div className="flex flex-col mb-32 space-y-12 md:w-1/2">
+          <div className="flex flex-col md:mb-32 mb-5 space-y-12 md:w-1/2">
             <h1 className="max-w-md text-3xl text-center md:text-4xl md:text-left text-gray-300">
               An Intuitive token wallet tracker
             </h1>
@@ -93,7 +99,7 @@ const Hero = () => {
 
       {/* features section  */}
       <section className="">
-        <div className="container flex flex-col md:flex-row items-center px-6 mx-auto mt-2 space-y-0 md:space-y-0 ">
+        <div className="container flex flex-col md:flex-row items-center px-6 mx-auto md:mt-2 space-y-0 md:space-y-0 mb-32 ">
           <div className="md:w-1/2">
             <Image
               src="/blockchain4.png"
@@ -105,7 +111,8 @@ const Hero = () => {
           {/* left item  */}
           <div className="flex flex-col mb-32 space-y-12 md:w-1/2 mx-3">
             <h1 className="max-w-md text-3xl text-center md:text-4xl md:text-left text-gray-300">
-              An Intuitive token wallet tracker
+              About{" "}
+              <span className="text-[#0baab5] font-semibold">Horizon</span>
             </h1>
             <p className="max-w-sm text-center md:text-left text-gray-400">
               Horizon stands as a user-friendly Web3 Portfolio & Token Tracker
@@ -127,9 +134,10 @@ const Hero = () => {
         <div className="container flex flex-col px-4 mx-auto my-10 space-y-12 md:space-y-0 md:flex-row mx-3">
           <div className="flex flex-col space-y-2 md:w-1/2">
             <h2 className="max-w-md text-3xl font-bold text-center text-gray-300 md:text-left">
-              Core Features of Horizon
+              Core Features of{" "}
+              <span className="text-[#0baab5] font-semibold">Horizon</span>
             </h2>
-            <p className="max-w-sm text-center text-gray-400">
+            <p className="max-w-sm text-center text-gray-400 p-5">
               Horizon streamlines portfolio management within the ever-evolving
               realm of DeFi and blockchain technology. It presents a
               comprehensive Web3 Portfolio & Token Tracker across various
@@ -241,11 +249,11 @@ const Hero = () => {
       <footer>
         <div className="container flex flex-col-reverse justify-between px-6 pt-10 pb-0 mx-auto space-y-8 md:flex-row md:space-y-0">
           {/* logo and social links */}
-          <div className="flex flex-col-reverse items-center justify-between space-y-12 md:flex-col md:space-y-0 md:items-start">
-            <div className="mx-auto my-6 text-center text-white md:hidden ">
+          <div className="flex flex-col-reverse  items-center justify-between space-y-12 md:flex-row md:space-y-0 md:items-center">
+            <div className="mx-auto my-6 text-center text-white text-sm md:hidden ">
               Copyright &copy; 2023, All right reserved.
             </div>
-            <div>
+            <div className="md:px-32">
               <Image
                 src="/HorizonWithLogo.png"
                 alt="horizon Logo"
@@ -266,7 +274,7 @@ const Hero = () => {
             </div>
           </div>
 
-          <div className="flex justify-around space-x-32 ">
+          <div className="flex md:hidden justify-around space-x-32 ">
             <div className="flex flex-col space-y-3 ">
               <a href="#" className="text-gray-400 hover:text-gray-200">
                 Home
