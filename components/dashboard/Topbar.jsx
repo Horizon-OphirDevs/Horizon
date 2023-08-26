@@ -49,7 +49,8 @@ const Topbar = ({ activeSection }) => {
   //Bernard.O Making use Of the react hook to disconnect the Wallet
   const disconnect = useDisconnect();
 
-  const address = useAddress();
+  const addressc = useAddress();
+  console.log(addressc)
 
   return (
     <header>

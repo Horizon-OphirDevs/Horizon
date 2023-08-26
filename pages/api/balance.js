@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export default async (req, res) => {
   const apiUrl = "https://api.arbiscan.io/api";
-  const apiKey = "YourApiKeyToken"; // Replace this with your actual API key
+  const apiKey = "E2T436336DVTJ676A15WURXT2PHM5E8QX8"; // Replace this with your actual API key
   const { walletAddress } = req.query;
 
   if (!walletAddress) {
