@@ -1,9 +1,35 @@
-import React from "react";
+import React,{useEffect,useState} from "react";
+import axios from 'axios';
 import Image from "next/image";
-
+import { useAddress } from "@thirdweb-dev/react";
 import { BsThreeDots } from "react-icons/bs";
 
 const Portfolio = () => {
+  const address =  useAddress();
+  const [balance, setBalance] = useState("0");
+  const [walletAddress, setWalletAddress] = useState(address)
+
+  useEffect(() => {
+    const fetchBalance = async () => {
+      try {
+        const response = await axios.get(`/api/balance?walletAddress=${walletAddress}`);
+        const data = response.data;
+
+        if (data.balance) {
+          setBalance(data.balance);
+        } else {
+          console.error("API Error:", data.error);
+        }
+      } catch (error) {
+        console.error("Fetch Error:", error);
+      }
+    };
+
+    if (walletAddress !== "") {
+      fetchBalance();
+    }
+  }, [walletAddress]); 
+
   return (
     <div className="grid grid-cols-1 gap-8 m-3 items-center px-6 mx-auto ">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -34,6 +60,10 @@ const Portfolio = () => {
               width={600}
               height={600}
             />
+            <div className="text-white">
+            {balance}
+            {address}
+            </div> 
           </div>
           <div className="hidden grid-cols-2 gap-2 m-5 items-center justify-center ">
             <div className="md:min-h-[13rem] h-36 border rounded"></div>
