@@ -1,12 +1,41 @@
 import React from "react";
+import Image from "next/image";
+
+import { BsThreeDots } from "react-icons/bs";
 
 const Portfolio = () => {
   return (
     <div className="grid grid-cols-1 gap-8 m-3 items-center px-6 mx-auto ">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="rounded-lg shadow-xl long md:min-h-[17rem] bg-[#1f1f1f]"></div>
-        <div className="rounded-lg shadow-xl long md:min-h-[17rem] bg-[#1f1f1f]">
-          <div className="grid grid-cols-2 gap-2 m-5 items-center justify-center">
+        <div className="rounded-lg shadow-xl long md:min-h-[17rem] bg-[#1f1f1f] items-center">
+          <div className=" justify-between p-3 hidden">
+            <p className="text-gray-300">Token Allocation</p>
+            <span className="text-gray-600 rounded-2xl border p-2">
+              <BsThreeDots />
+            </span>
+          </div>
+          <div className=" port_img">
+            <Image
+              className=" rounded-xl "
+              src="/Asset.jpg"
+              alt="Horizon Logo"
+              width={300}
+              height={300}
+            />
+          </div>
+        </div>
+        <div className="rounded-lg shadow-xl long md:min-h-[17rem] bg-[#1f1f1f] flex justify-center items-center">
+          {/* this will be substitute for whats meant to be there */}
+          <div className=" justify-between p-0 ">
+            <Image
+              className=" rounded-xl "
+              src="/frame.jpg"
+              alt="frame Logo"
+              width={600}
+              height={600}
+            />
+          </div>
+          <div className="hidden grid-cols-2 gap-2 m-5 items-center justify-center ">
             <div className="md:min-h-[13rem] h-36 border rounded"></div>
             <div className="md:min-h-[13rem] h-36 border rounded"></div>
           </div>

@@ -4,14 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 //Bernard.O Using Thirdweb SDK for Connecting Wallet {https://portal.thirdweb.com/react} <--Check it Out
 import { ConnectWallet, useDisconnect } from "@thirdweb-dev/react";
+import { useAddress } from "@thirdweb-dev/react";
 // React Icon
 
 import { IoNotificationsSharp } from "react-icons/io5";
-import { AiOutlineCloseSquare } from "react-icons/ai";
-import { FiSearch } from "react-icons/fi";
 import { TfiClose } from "react-icons/tfi";
 import { GiHamburgerMenu } from "react-icons/gi";
-
 import { MdSpaceDashboard } from "react-icons/md";
 import { BsSearch } from "react-icons/bs";
 import { GrTransaction } from "react-icons/gr";
@@ -51,16 +49,30 @@ const Topbar = ({ activeSection }) => {
   //Bernard.O Making use Of the react hook to disconnect the Wallet
   const disconnect = useDisconnect();
 
+  const address = useAddress();
 
   return (
     <header>
-      <nav className="flex justify-between items-center border-b border-gray-400">
+      <nav className="flex justify-between items-center my-3 border-b border-gray-400">
         <div className="hidden md:block text-white">{activeSection}</div>
-        <div className="block md:hidden lg:hidden text-white">
+        <div className="pb-3 md:hidden">
+          <Image
+            src="/HorizonWithLogo.png"
+            alt="Horizon Logo"
+            width={100}
+            height={100}
+          />
+        </div>
+
+        <div className="flex border rounded-md mb-2 p-1 text-sm md:hidden lg:hidden text-gray-400">
           {activeSectionMobile}
         </div>
+        <div className="text-white text-2xl md:hidden" id="open">
+          <GiHamburgerMenu onClick={toggleNavbar} />
+        </div>
+
         <div className=" gap-2 px-2 hidden md:block w-[50%]">
-          <div class="relative border flex  md:w-full bg-[#141414] items-stretch rounded-lg">
+          <div class="relative border flex  md:w-full bg-[#1f1f1f] items-stretch rounded-lg">
             <input
               type="search"
               className="relative m-0 block md:w-52 min-w-0  flex-auto rounded bg-transparent bg-clip-padding px-3 py-[0.25rem] text-xs font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:focus:border-primary"
@@ -84,27 +96,19 @@ const Topbar = ({ activeSection }) => {
             </span>
           </div>
         </div>
-        <div>
+
+        {/*Check global.css for the current update on the connect wallet styling */}
+        <div className="connect_button md:flex hidden">
           <ul className="flex items-center gap-[3vw]  ">
-            <li className="block md:hidden">
-              <FiSearch style={Iconstyle} />
-            </li>
             <li>
               <IoNotificationsSharp style={Iconstyle} />
             </li>
           </ul>
-        </div>
-        {/*Check global.css for the current update on the connect wallet styling */}
-        <div className="connect_button">
-          <ConnectWallet 
-          btnTitle='+ Connect Wallet'/>
-        </div>
-        <div className="text-white md:hidden" id="open">
-          <GiHamburgerMenu onClick={toggleNavbar} />
+          <ConnectWallet btnTitle="+ Connect Wallet" />
         </div>
       </nav>
 
-      {/* sidebar menu  */}
+      {/* ------------------  sidebar menu  --------------------  */}
       <div
         className={`shadow md:hidden  ${
           navbarOpen ? "hidden" : "block transition-all duration-500 "
@@ -133,6 +137,36 @@ const Topbar = ({ activeSection }) => {
           <div className="dashboard_sidebar_navigation ">
             <ul className="text-gray-300">
               <div className="sidebar_top_part">
+                <div className="side-connect">
+                  <ConnectWallet btnTitle="+ Connect Wallet" />
+                </div>
+
+                <div>
+                  <div class="relative border flex mb-2  md:w-full md:hidden bg-[#1f1f1f] items-stretch rounded-lg">
+                    <input
+                      type="search"
+                      className="relative m-0 block md:w-52 min-w-0  flex-auto rounded bg-transparent bg-clip-padding px-3 py-[0.25rem] text-xs font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:focus:border-primary"
+                      placeholder="search token or contract "
+                    />
+                    {/* <!--Search icon--> */}
+                    <span class="input-group-text flex items-center whitespace-nowrap rounded px-3 py-1.5 text-center text-base font-normal text-neutral-700 dark:text-neutral-200">
+                      {" "}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        class="h-5 w-5"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                    </span>
+                  </div>
+                </div>
+
                 <Link
                   href="/app/Portfolio"
                   onClick={() => setActiveSection("Dashboard")}
