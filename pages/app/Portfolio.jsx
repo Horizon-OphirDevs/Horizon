@@ -8,7 +8,7 @@ const Portfolio = () => {
   const address =  useAddress();
   const [balance, setBalance] = useState("0");
   const [walletAddress, setWalletAddress] = useState(address)
-
+//
   useEffect(() => {
     const fetchBalance = async () => {
       try {
