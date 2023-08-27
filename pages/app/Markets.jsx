@@ -19,6 +19,9 @@ const Markets = ({ initialData }) => {
     return () => clearInterval(interval);
   }, []);
 
+  const startIndex = (currentPage - 1) * CoinsPerPage;
+  const endIndex = startIndex + CoinsPerPage;
+
   return (
     <div className="markets_home">
       <div className="text-gray-300">
@@ -26,7 +29,7 @@ const Markets = ({ initialData }) => {
         <p></p>
       </div>
       <div className="rounded-lg shadow-xl bg-[#1f1f1f] col-span-2 text-xs">
-        <div className="p-3 m-2 overflow-x-auto">
+        <div className="p-3 m-2 overflow-x-auto flex justify-center space-x-2 ">
           <div className=" flex justify-center align rounded overflow-x-auto">
             <table className="min-w-full bgr text-white border-lg border-gray-600 rounded overflow-x-auto">
               <thead className="border-b border-gray-600 py-5 my-5">
@@ -41,7 +44,7 @@ const Markets = ({ initialData }) => {
               </thead>
               <tbody>
                 {Array.isArray(data) &&
-                  data.map((token) => (
+                   data.slice(startIndex, endIndex).map((token) => (
                     <tr key={token.id}>
                       <td className="flex gap-2 items-center py-3 sticky left-0 z-10">
                         <div className="p-2 rounded-lg bg-[#39393983] ">
@@ -64,6 +67,18 @@ const Markets = ({ initialData }) => {
               </tbody>
             </table>
           </div>
+          <button
+            onClick={() => setCurrentPage(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+          <button
+            onClick={() => setCurrentPage(currentPage + 1)}
+            disabled={endIndex >= data.length}
+          >
+            Next
+          </button>
         </div>
       </div>
     </div>

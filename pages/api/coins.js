@@ -17,7 +17,7 @@ export default async function handler(req, res) {
         params: {
           vs_currency: "usd",
           order: "market_cap_desc",
-          per_page: 100,
+          per_page: 20, // Updated to 20 coins per page
           page: 1,
           sparkline: true,
           price_change_percentage: "24h",
