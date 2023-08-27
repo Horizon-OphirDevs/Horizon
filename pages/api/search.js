@@ -1,21 +1,19 @@
-// lib/coingecko.js
+// pages/api/search.js
 import axios from 'axios';
 
-const coingeckoAPI = axios.create({
-  baseURL: 'https://api.coingecko.com/api/v3',
-});
+export default async function handler(req, res) {
+  const { query } = req.query;
 
-export const searchCoins = async (query) => {
   try {
-    const response = await coingeckoAPI.get(`/search`, {
+    const response = await axios.get('https://api.coingecko.com/api/v3/search', {
       params: {
         query: query,
       },
     });
 
-    return response.data;
+    res.status(200).json(response.data);
   } catch (error) {
     console.error('Error fetching data from CoinGecko API:', error);
-    throw error;
+    res.status(500).json({ error: 'An error occurred' });
   }
-};
+}
