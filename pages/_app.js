@@ -12,7 +12,8 @@ export default function App({ Component, pageProps }) {
     return (
       <div>
         {/*Bernard.O You are wrapping so that when you connect your wallet the whole app is connected*/}
-        <ThirdwebProvider activeChain="arbitrum" >
+        <ThirdwebProvider activeChain="arbitrum" 
+        clientId=" f8afa748ba8ce6673a35313b9ac7f9bf">
         <DashboardLayout>
           <Component {...pageProps} />
         </DashboardLayout>
