@@ -50,7 +50,7 @@ const Topbar = ({ activeSection }) => {
   const disconnect = useDisconnect();
 
   const addressc = useAddress();
-  console.log(addressc)
+  console.log(addressc);
 
   return (
     <header>
