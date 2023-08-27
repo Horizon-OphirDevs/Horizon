@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 //Bernard.O Using Thirdweb SDK for Connecting Wallet {https://portal.thirdweb.com/react} <--Check it Out
@@ -51,6 +51,36 @@ const Topbar = ({ activeSection }) => {
 
   const addressc = useAddress();
   console.log(addressc);
+
+   // Step 1: State variables for search query and results
+   const [searchQuery, setSearchQuery] = useState("");
+   const [searchResults, setSearchResults] = useState([]);
+ 
+   // Step 2: Search function
+   const handleSearch = async () => {
+     if (searchQuery) {
+       try {
+         const response = await axios.get(
+           "https://api.coingecko.com/api/v3/search",
+           {
+             params: {
+               query: searchQuery,
+             },
+           }
+         );
+ 
+         setSearchResults(response.data);
+       } catch (error) {
+         console.error("Error fetching data from CoinGecko API:", error);
+         setSearchResults([]);
+       }
+     }
+   };
+ 
+   // Step 3: UseEffect to trigger search on query change
+   useEffect(() => {
+     handleSearch();
+   }, [searchQuery]);
 
   return (
     <header>
