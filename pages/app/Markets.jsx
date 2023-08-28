@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 
-const CoinsPerPage = 20; // Define the number of coins per page
+const CoinsPerPage = 20;
 
 const Markets = ({ initialData }) => {
   const [data, setData] = useState(initialData || []);
-  const [currentPage, setCurrentPage] = useState(1); // Add currentPage stat
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const interval = setInterval(async () => {
@@ -15,7 +15,7 @@ const Markets = ({ initialData }) => {
         setData(newData);
       } catch (error) {
         console.error("Error fetching data:", error);
-        setData([]); // Reset data to empty array on error
+        setData([]);
       }
     }, 60000);
 
@@ -24,6 +24,13 @@ const Markets = ({ initialData }) => {
 
   const startIndex = (currentPage - 1) * CoinsPerPage;
   const endIndex = startIndex + CoinsPerPage;
+
+  useEffect(() => {
+    console.log("Current Page:", currentPage);
+    console.log("Start Index:", startIndex);
+    console.log("End Index:", endIndex);
+    console.log("Data to show:", data.slice(startIndex, endIndex));
+  }, [currentPage, data]);
 
   return (
     <div className="markets_home">
@@ -47,16 +54,16 @@ const Markets = ({ initialData }) => {
               </thead>
               <tbody>
                 {Array.isArray(data) &&
-                   data.slice(startIndex, endIndex).map((token) => (
+                  data.slice(startIndex, endIndex).map((token, index) => (
                     <tr key={token.id}>
                       <td className="flex gap-2 items-center py-3 sticky left-0 z-10">
                         <div className="p-2 rounded-lg bg-[#39393983] ">
-                          <Image
+                          {/* <Image
                             src={token.image}
                             width={20}
                             height={20}
                             alt={token.name}
-                          />
+                          /> */}
                         </div>
                         {token.name}
                       </td>
@@ -70,15 +77,22 @@ const Markets = ({ initialData }) => {
               </tbody>
             </table>
           </div>
+          {/* ... rest of your code */}
           <button
+            className={`text-white rounded-lg p-2 ${
+              currentPage === 1 ? "hidden" : ""
+            }`}
             onClick={() => setCurrentPage(currentPage - 1)}
-            disabled={currentPage === 1}
           >
             Previous
           </button>
           <button
-            onClick={() => setCurrentPage(currentPage + 1)}
-            disabled={endIndex >= data.length}
+            className="text-white rounded-lg p-2"
+            onClick={() => {
+              console.log("Next button clicked. Current page:", currentPage);
+              setCurrentPage(currentPage + 1);
+            }}
+            disabled={endIndex > data.length}
           >
             Next
           </button>

@@ -12,11 +12,13 @@ export default function App({ Component, pageProps }) {
     return (
       <div>
         {/*Bernard.O You are wrapping so that when you connect your wallet the whole app is connected*/}
-        <ThirdwebProvider activeChain="arbitrum" 
-        clientId=" f8afa748ba8ce6673a35313b9ac7f9bf">
-        <DashboardLayout>
-          <Component {...pageProps} />
-        </DashboardLayout>
+        <ThirdwebProvider
+          activeChain="arbitrum"
+          // clientId=" f8afa748ba8ce6673a35313b9ac7f9bf"
+        >
+          <DashboardLayout>
+            <Component {...pageProps} />
+          </DashboardLayout>
         </ThirdwebProvider>
       </div>
     );
@@ -25,8 +27,8 @@ export default function App({ Component, pageProps }) {
   return (
     <div>
       {/*Bernard.O You are wrapping so that when you connect your wallet the whole app is connected*/}
-      <ThirdwebProvider activeChain="arbitrum" >
-      <Component {...pageProps} />
+      <ThirdwebProvider activeChain="arbitrum">
+        <Component {...pageProps} />
       </ThirdwebProvider>
     </div>
   );
