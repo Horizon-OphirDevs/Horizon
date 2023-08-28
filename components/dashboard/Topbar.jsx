@@ -5,7 +5,6 @@ import Link from "next/link";
 //Bernard.O Using Thirdweb SDK for Connecting Wallet {https://portal.thirdweb.com/react} <--Check it Out
 import { ConnectWallet, useDisconnect } from "@thirdweb-dev/react";
 import { useAddress } from "@thirdweb-dev/react";
-import axios from 'axios'; // Import axios
 // React Icon
 
 import { IoNotificationsSharp } from "react-icons/io5";
@@ -33,7 +32,6 @@ const Iconstyle = {
 };
 
 const Topbar = ({ activeSection }) => {
-  const [searchResults, setSearchResults] = useState([]); // Initialize search results state
   //activeSetion Fetched From dashboard to Update The pages
   //   const dispatch = useDispatch();
 
@@ -54,24 +52,35 @@ const Topbar = ({ activeSection }) => {
   const addressc = useAddress();
   console.log(addressc);
 
-  const handleSearchInputChange = async (event) => {
-    const query = event.target.value;
-  
-    try {
-      if (query.trim() === "") {
-        setSearchResults([]); // Clear search results if query is empty
-        return;
-      }
-  
-      const response = await axios.get(`/api/search?query=${query}`);
-  
-      setSearchResults(response.data);
-    } catch (error) {
-      console.error("Error fetching data from CoinGecko API:", error);
-    }
-  };
-
-  
+   // Step 1: State variables for search query and results
+   const [searchQuery, setSearchQuery] = useState("");
+   const [searchResults, setSearchResults] = useState([]);
+ 
+   // Step 2: Search function
+   const handleSearch = async () => {
+     if (searchQuery) {
+       try {
+         const response = await axios.get(
+           "https://api.coingecko.com/api/v3/search",
+           {
+             params: {
+               query: searchQuery,
+             },
+           }
+         );
+ 
+         setSearchResults(response.data);
+       } catch (error) {
+         console.error("Error fetching data from CoinGecko API:", error);
+         setSearchResults([]);
+       }
+     }
+   };
+ 
+   // Step 3: UseEffect to trigger search on query change
+   useEffect(() => {
+     handleSearch();
+   }, [searchQuery]);
 
   return (
     <header>
@@ -99,14 +108,7 @@ const Topbar = ({ activeSection }) => {
               type="search"
               className="relative m-0 block md:w-52 min-w-0  flex-auto rounded bg-transparent bg-clip-padding px-3 py-[0.25rem] text-xs font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:focus:border-primary"
               placeholder="search token or contract "
-              onChange={handleSearchInputChange}
             />
-                          <div className="search-results">
-                {searchResults.map((result) => (
-                  <div key={result.id}>{result.name}</div>
-                ))}
-              </div>
-
             {/* <!--Search icon--> */}
             <span class="input-group-text flex items-center whitespace-nowrap rounded px-3 py-1.5 text-center text-base font-normal text-neutral-700 dark:text-neutral-200">
               {" "}
