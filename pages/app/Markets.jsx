@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 
+const CoinsPerPage = 20; // Define the number of coins per page
+
 const Markets = ({ initialData }) => {
   const [data, setData] = useState(initialData || []);
+  const [currentPage, setCurrentPage] = useState(1); // Add currentPage stat
 
   useEffect(() => {
     const interval = setInterval(async () => {

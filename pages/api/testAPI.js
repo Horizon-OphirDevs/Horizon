@@ -1,14 +1,30 @@
-const fetch = require('node-fetch');
+import { data } from 'autoprefixer';
+import axios from 'axios';
+const sdk = require('api')('@chainbase/v1.0#1kyz5d4liym8zdw');
 
-const options = {
-  method: 'GET',
-  headers: {
-    accept: 'application/json',
-    authorization: 'Basic emtfZGV2X2ZhNGQ3MDQxNDY3ZjQwZTU5OTYzM2Y4Zjg0ZjFmNTJiOg=='
+export default async (req, res) => {
+  const apiKey = '2Ubr7CKu26athkPkImSWHDiG1TL'; // Your API key
+  const walletAddress = req.query.walletAddress; // Retrieve walletAddress from query
+
+  try {
+    const response = await sdk.getAccountTokens({
+      chain_id: '42161',
+      address: walletAddress,
+      limit: '20',
+      page: '1',
+      'x-api-key': apiKey
+    });
+
+    const data = response.data;
+    console.log(data);
+
+    if (data.code === 1) {
+      res.status(500).json({ error: data.error });
+    } else {
+      res.status(200).json(data);
+    }
+  } catch (error) {
+    res.status(500).json({ error: "An error occurred" });
   }
 };
 
-fetch('https://api.zerion.io/v1/wallets/0x42b9df65b219b3dd36ff330a4dd8f327a6ada990/positions/?currency=usd&filter[chain_ids]=0xa4b1&filter[trash]=only_non_trash&sort=value', options)
-  .then(response => response.json())
-  .then(response => console.log(response))
-  .catch(err => console.error(err));

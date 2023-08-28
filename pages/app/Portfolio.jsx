@@ -8,27 +8,43 @@ const Portfolio = () => {
   const address =  useAddress();
   const [balance, setBalance] = useState("0");
   const [walletAddress, setWalletAddress] = useState(address)
+  const [coinData, setCoinData] = useState([]); // To store coin/token data
 //
-  useEffect(() => {
-    const fetchBalance = async () => {
-      try {
-        const response = await axios.get(`/api/balance?walletAddress=${walletAddress}`);
-        const data = response.data;
+useEffect(() => {
+  const fetchBalance = async () => {
+    try {
+      const response = await axios.get(`/api/balance?walletAddress=${walletAddress}`);
+      const data = response.data;
 
-        if (data.balance) {
-          setBalance(data.balance);
-        } else {
-          console.error("API Error:", data.error);
-        }
-      } catch (error) {
-        console.error("Fetch Error:", error);
+      if (data.balance) {
+        setBalance(data.balance);
+      } else {
+        console.error("API Error:", data.error);
       }
-    };
-
-    if (walletAddress !== "") {
-      fetchBalance();
+    } catch (error) {
+      console.error("Fetch Error:", error);
     }
-  }, [walletAddress]); 
+  };
+
+  
+
+  const fetchCoinData = async () => {
+    try {
+      const response = await axios.get(`/api/testAPI?walletAddress=${walletAddress}`);
+      const data = response.data;
+
+      setCoinData(data); // Store fetched coin/token data
+    } catch (error) {
+      console.error("Fetch Error:", error);
+      setCoinData([]); // Handle the error by setting coinData to an empty array
+    }
+  };
+
+  if (walletAddress !== "") {
+    fetchBalance();
+    fetchCoinData(); // Fetch coin/token data
+  }
+}, [walletAddress]);
 
   return (
     <div className="grid grid-cols-1 gap-8 m-3 items-center px-6 mx-auto ">
@@ -96,54 +112,17 @@ const Portfolio = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th className="text-md px-6 py-3">
-                    <span>img</span>
-                    Ethereum
-                  </th>
-                  <td className="text-sm px-6 py-3">null</td>
-                  <td className="text-sm px-6 py-3">null</td>
-                  <td className="text-sm px-6 py-3">null</td>
-                  <td className="text-sm px-6 py-3">null</td>
-                  <td className="text-sm px-6 py-3">null</td>
-                  <td className="text-sm px-6 py-3">null</td>
-                </tr>
-                <tr>
-                  <th className="text-md px-6 py-3">
-                    <span>img</span>
-                    Arbitrum
-                  </th>
-                  <td className="text-sm px-6 py-3">null</td>
-                  <td className="text-sm px-6 py-3">null</td>
-                  <td className="text-sm px-6 py-3">null</td>
-                  <td className="text-sm px-6 py-3">null</td>
-                  <td className="text-sm px-6 py-3">null</td>
-                  <td className="text-sm px-6 py-3">null</td>
-                </tr>
-                <tr>
-                  <th className="text-md px-6 py-3">
-                    <span>img</span>
-                    WINR
-                  </th>
-                  <td className="text-sm px-6 py-3">null</td>
-                  <td className="text-sm px-6 py-3">null</td>
-                  <td className="text-sm px-6 py-3">null</td>
-                  <td className="text-sm px-6 py-3">null</td>
-                  <td className="text-sm px-6 py-3">null</td>
-                  <td className="text-sm px-6 py-3">null</td>
-                </tr>
-                <tr>
-                  <th className="text-md px-6 py-3">
-                    <span>img</span>
-                    VELA
-                  </th>
-                  <td className="text-sm px-6 py-3">null</td>
-                  <td className="text-sm px-6 py-3">null</td>
-                  <td className="text-sm px-6 py-3">null</td>
-                  <td className="text-sm px-6 py-3">null</td>
-                  <td className="text-sm px-6 py-3">null</td>
-                  <td className="text-sm px-6 py-3">null</td>
-                </tr>
+                {coinData.map((coin, index) => (
+                  <tr key={index}>
+                    <th className="text-md px-6 py-3">
+                      <span>img</span>
+                      {coin.name}
+                    </th>
+                    <td className="text-sm px-6 py-3">{coin.price}</td>
+                    <td className="text-sm px-6 py-3">{coin.holdings}</td>
+                    {/* Add other table cells here */}
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
