@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { useState, useEffect } from 'react';
+import axios from "axios";
+import { useState, useEffect } from "react";
 import { useAddress } from "@thirdweb-dev/react";
 
 const YourComponent = () => {
@@ -10,7 +10,9 @@ const YourComponent = () => {
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const response = await axios.get(`/api/transactions?walletAddress=${walletAddress}`);
+        const response = await axios.get(
+          `/api/transactions?walletAddress=${walletAddress}`
+        );
         const data = response.data;
 
         setTransactions(data);
@@ -25,7 +27,7 @@ const YourComponent = () => {
   }, [walletAddress]);
 
   return (
-    <div className='text-white'>
+    <div className="text-white">
       <h1>Transaction History</h1>
       <ul>
         {transactions.map((tx, index) => (
@@ -46,3 +48,7 @@ const YourComponent = () => {
 };
 
 export default YourComponent;
+
+YourComponent.getLayout = function PageLayout(page) {
+  return <>{page}</>;
+};
