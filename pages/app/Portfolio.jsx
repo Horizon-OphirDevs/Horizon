@@ -13,7 +13,6 @@ const Portfolio = () => {
   useEffect(() => {
     const fetchBalance = async () => {
       try {
-        // const response = await axios.get(`/api/testAPI?walletAddress=${walletAddress}`); what chatgpt wants
         const response = await axios.get(
           `/api/balance?walletAddress=${walletAddress}`
         );
