@@ -3,29 +3,33 @@ import axios from "axios";
 import Image from "next/image";
 import { useAddress } from "@thirdweb-dev/react";
 import { BsThreeDots } from "react-icons/bs";
+import Web3 from "web3"; // Import Web3 library
 
 const Portfolio = () => {
   const address = useAddress();
   const [balance, setBalance] = useState("0");
   const [walletAddress, setWalletAddress] = useState(address);
-  const [coinData, setCoinData] = useState([]); // To store coin/token data
-  //
+  const [coinData, setCoinData] = useState([]);
+
   useEffect(() => {
+    const web3 = new Web3(); // Initialize Web3
+
     const fetchBalance = async () => {
       try {
         const response = await axios.get(
           `/api/balance?walletAddress=${walletAddress}`
         );
         const data = response.data;
-        // const data = response.data;
-        console.log("API Response:", data);
-        setCoinData(data);
 
-        if (data.balance) {
-          setBalance(data.balance);
-        } else {
-          console.error("API Error:", data.error);
-        }
+        // Get balance in wei
+        const weiBalance = data.balance;
+
+        // Convert wei to ethers
+        const etherBalance = web3.utils.fromWei(weiBalance, "ether");
+
+        console.log(`Balance of ${walletAddress}: ${etherBalance} ETH`);
+
+        setBalance(etherBalance); // Set the balance in ethers
       } catch (error) {
         console.error("Fetch Error:", error);
       }
