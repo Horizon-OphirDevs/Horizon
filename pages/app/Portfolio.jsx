@@ -37,13 +37,15 @@ const Portfolio = () => {
           `/api/testAPI?walletAddress=${walletAddress}`
         );
         const data = response.data;
-
-        setCoinData(data); // Store fetched coin/token data
+    
+        console.log("Coin Data:", data.tokens); // Log the extracted data
+        setCoinData(data.tokens); // Store fetched coin/token data
       } catch (error) {
         console.error("Fetch Error:", error);
         setCoinData([]); // Handle the error by setting coinData to an empty array
       }
     };
+    
 
     if (walletAddress !== "") {
       fetchBalance();
@@ -117,19 +119,19 @@ const Portfolio = () => {
                 </tr>
               </thead>
               <tbody>
-                {Array.isArray(coinData) &&
-                  coinData.map((coin, index) => (
-                    <tr key={index}>
-                      <th className="text-md px-6 py-3">
-                        <span>img</span>
-                        {coin.name}
-                      </th>
-                      <td className="text-sm px-6 py-3">{coin.price}</td>
-                      <td className="text-sm px-6 py-3">{coin.holdings}</td>
-                      {/* Add other table cells here */}
-                    </tr>
-                  ))}
-              </tbody>
+              {Array.isArray(coinData) &&
+                coinData.map((coin, index) => (
+                  <tr key={index}>
+                    <th className="text-md px-6 py-3">
+                      <span>img</span>
+                      {coin.name}
+                    </th>
+                    <td className="text-sm px-6 py-3">{coin.current_usd_price}</td>
+                    <td className="text-sm px-6 py-3">{coin.holdings}</td>
+                    {/* Add other table cells here */}
+                  </tr>
+                ))}
+            </tbody>
             </table>
           </div>
         </div>
