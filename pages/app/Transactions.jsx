@@ -1,12 +1,14 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useAddress } from "@thirdweb-dev/react";
+import Web3 from "web3";
 
-const YourComponent = () => {
+const Transactions = () => {
   const address = useAddress(); // Assuming useAddress() is defined somewhere
   const [transactions, setTransactions] = useState([]);
   const [walletAddress, setWalletAddress] = useState(address);
   const [copiedText, setCopiedText] = useState(null);
+  const web3 = new Web3();
 
   useEffect(() => {
     const fetchTransactions = async () => {
@@ -84,7 +86,9 @@ const YourComponent = () => {
                 >
                   {tx.from}
                 </td>
-                <td>{tx.quantity}</td>
+                <td>
+                  {web3.utils.fromWei(tx.quantity, "ether")} Ether
+                </td>
               </tr>
             ))}
           </tbody>
@@ -100,8 +104,8 @@ const YourComponent = () => {
   );
 };
 
-export default YourComponent;
+export default Transactions;
 
-YourComponent.getLayout = function PageLayout(page) {
+Transactions.getLayout = function PageLayout(page) {
   return <>{page}</>;
 };
