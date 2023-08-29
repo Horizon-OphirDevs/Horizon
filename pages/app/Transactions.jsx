@@ -63,8 +63,8 @@ const YourComponent = () => {
                   style={{ cursor: "pointer" }}
                 >
                   {tx.txnHash.length > 12 
-                    ? `${tx.txnHash.slice(0, 12)}...`
-                    : tx.txnHash}
+                ? `${tx.txnHash.slice(0, 12)}...`
+                : tx.txnHash}
                 </td>
                 <td>
                   {tx.method.length > 10 
