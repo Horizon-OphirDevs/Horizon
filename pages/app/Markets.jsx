@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 
-const CoinsPerPage = 20; // Define the number of coins per page
-
 const Markets = ({ initialData }) => {
   const [data, setData] = useState(initialData || []);
-  const [currentPage, setCurrentPage] = useState(1); // Add currentPage stat
 
   useEffect(() => {
     const interval = setInterval(async () => {
@@ -15,15 +12,12 @@ const Markets = ({ initialData }) => {
         setData(newData);
       } catch (error) {
         console.error("Error fetching data:", error);
-        setData([]); // Reset data to empty array on error
+        setData([]);
       }
     }, 60000);
 
     return () => clearInterval(interval);
   }, []);
-
-  const startIndex = (currentPage - 1) * CoinsPerPage;
-  const endIndex = startIndex + CoinsPerPage;
 
   return (
     <div className="markets_home">
@@ -47,16 +41,20 @@ const Markets = ({ initialData }) => {
               </thead>
               <tbody>
                 {Array.isArray(data) &&
+<<<<<<< HEAD
                   data.slice(startIndex, endIndex).map((token) => (
+=======
+                  data.map((token, index) => (
+>>>>>>> 0c0f6e91d3f2c4b22a2ecf3cb4a547b614a7c235
                     <tr key={token.id}>
                       <td className="flex gap-2 items-center py-3 sticky left-0 z-10">
                         <div className="p-2 rounded-lg bg-[#39393983] ">
-                          <Image
+                          {/* <Image
                             src={token.image}
                             width={20}
                             height={20}
                             alt={token.name}
-                          />
+                          /> */}
                         </div>
                         {token.name}
                       </td>
@@ -70,18 +68,6 @@ const Markets = ({ initialData }) => {
               </tbody>
             </table>
           </div>
-          <button
-            onClick={() => setCurrentPage(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            Previous
-          </button>
-          <button
-            onClick={() => setCurrentPage(currentPage + 1)}
-            disabled={endIndex >= data.length}
-          >
-            Next
-          </button>
         </div>
       </div>
     </div>

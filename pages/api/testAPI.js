@@ -1,4 +1,3 @@
-import { data } from 'autoprefixer';
 import axios from 'axios';
 const sdk = require('api')('@chainbase/v1.0#1kyz5d4liym8zdw');
 
@@ -15,16 +14,20 @@ export default async (req, res) => {
       'x-api-key': apiKey
     });
 
-    const data = response.data;
-    console.log(data);
+    const responseData = response.data;
 
-    if (data.code === 1) {
-      res.status(500).json({ error: data.error });
+    if (responseData.code === 1) {
+      res.status(500).json({ error: responseData.error });
     } else {
-      res.status(200).json(data);
+      const extractedData = responseData.tokens.map(token => ({
+        name: token.name,
+        current_usd_price: token.current_usd_price,
+        logos: token.logos
+      }));
+      
+      res.status(200).json(extractedData);
     }
   } catch (error) {
     res.status(500).json({ error: "An error occurred" });
   }
 };
-

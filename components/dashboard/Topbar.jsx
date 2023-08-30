@@ -5,6 +5,7 @@ import Link from "next/link";
 //Bernard.O Using Thirdweb SDK for Connecting Wallet {https://portal.thirdweb.com/react} <--Check it Out
 import { ConnectWallet, useDisconnect } from "@thirdweb-dev/react";
 import { useAddress } from "@thirdweb-dev/react";
+import CoinSearch from '../dashboard/CoinSearch';
 // React Icon
 
 import { IoNotificationsSharp } from "react-icons/io5";
@@ -52,36 +53,6 @@ const Topbar = ({ activeSection }) => {
   const addressc = useAddress();
   console.log(addressc);
 
-   // Step 1: State variables for search query and results
-   const [searchQuery, setSearchQuery] = useState("");
-   const [searchResults, setSearchResults] = useState([]);
- 
-   // Step 2: Search function
-   const handleSearch = async () => {
-     if (searchQuery) {
-       try {
-         const response = await axios.get(
-           "https://api.coingecko.com/api/v3/search",
-           {
-             params: {
-               query: searchQuery,
-             },
-           }
-         );
- 
-         setSearchResults(response.data);
-       } catch (error) {
-         console.error("Error fetching data from CoinGecko API:", error);
-         setSearchResults([]);
-       }
-     }
-   };
- 
-   // Step 3: UseEffect to trigger search on query change
-   useEffect(() => {
-     handleSearch();
-   }, [searchQuery]);
-
   return (
     <header>
       <nav className="flex justify-between items-center my-3 border-b border-gray-400">
@@ -103,30 +74,10 @@ const Topbar = ({ activeSection }) => {
         </div>
 
         <div className=" gap-2 px-2 hidden md:block w-[50%]">
-          <div class="relative border flex  md:w-full bg-[#1f1f1f] items-stretch rounded-lg">
-            <input
-              type="search"
-              className="relative m-0 block md:w-52 min-w-0  flex-auto rounded bg-transparent bg-clip-padding px-3 py-[0.25rem] text-xs font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:focus:border-primary"
-              placeholder="search token or contract "
-            />
-            {/* <!--Search icon--> */}
-            <span class="input-group-text flex items-center whitespace-nowrap rounded px-3 py-1.5 text-center text-base font-normal text-neutral-700 dark:text-neutral-200">
-              {" "}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                class="h-5 w-5"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-            </span>
-          </div>
-        </div>
+        {/* Search Bar */}
+        <CoinSearch />
+      </div>
+      
 
         {/*Check global.css for the current update on the connect wallet styling */}
         <div className="connect_button md:flex hidden">

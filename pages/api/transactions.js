@@ -28,6 +28,8 @@ export default async function handler(req, res) {
       quantity: tx.value,
     }));
 
+    console.log(transformedData)
+
     res.status(200).json(transformedData);
   } catch (error) {
     console.error('Error fetching transaction history:', error);

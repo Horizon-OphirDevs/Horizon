@@ -1,5 +1,3 @@
-// pages/api/coin-data.js
-
 import axios from "axios";
 
 let cachedData = null;
@@ -17,8 +15,7 @@ export default async function handler(req, res) {
         params: {
           vs_currency: "usd",
           order: "market_cap_desc",
-          per_page: 20, // Updated to 20 coins per page
-          page: 1,
+          per_page: 250, // Set a higher per_page value to fetch more data
           sparkline: true,
           price_change_percentage: "24h",
           locale: "en",
