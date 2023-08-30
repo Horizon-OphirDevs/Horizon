@@ -47,7 +47,7 @@ const Markets = ({ initialData }) => {
               </thead>
               <tbody>
                 {Array.isArray(data) &&
-                   data.slice(startIndex, endIndex).map((token) => (
+                  data.slice(startIndex, endIndex).map((token) => (
                     <tr key={token.id}>
                       <td className="flex gap-2 items-center py-3 sticky left-0 z-10">
                         <div className="p-2 rounded-lg bg-[#39393983] ">
