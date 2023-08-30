@@ -135,7 +135,7 @@ const Portfolio = () => {
           <>
             <div className="md:col-span-7 rounded-lg shadow-xl long md:min-h-[17rem] bg-[#1f1f1f] items-center flex justify-center">
               <h2 className="items-center text-gray-300 font-semibold text-2xl">
-                Connect your wallet omo werey ! 🔪🔫🫵🏼
+                Connect your wallet to view portfolio !
               </h2>
             </div>
           </>
