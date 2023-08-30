@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Image from "next/image";
+import BigNumber from "bignumber.js";
 import { useAddress } from "@thirdweb-dev/react";
 import { BsThreeDots } from "react-icons/bs";
-import Web3 from "web3"; // Import Web3 library
+import { BiSolidWallet } from "react-icons/bi";
+import { BsEyeSlash } from "react-icons/bs";
+import { IoIosArrowDown } from "react-icons/io";
 
 const Portfolio = () => {
   const address = useAddress();
@@ -11,25 +14,26 @@ const Portfolio = () => {
   const [walletAddress, setWalletAddress] = useState(address);
   const [coinData, setCoinData] = useState([]);
 
+  let cutAddress = "";
+  if (address) {
+    cutAddress = address.slice(0, 6) + "..." + address.slice(-4);
+  }
   useEffect(() => {
-    const web3 = new Web3(); // Initialize Web3
-
     const fetchBalance = async () => {
       try {
         const response = await axios.get(
           `/api/balance?walletAddress=${walletAddress}`
         );
         const data = response.data;
+        // const data = response.data;
+        console.log("API Response:", data);
+        setCoinData(data);
 
-        // Get balance in wei
-        const weiBalance = data.balance;
-
-        // Convert wei to ethers
-        const etherBalance = web3.utils.fromWei(weiBalance, "ether");
-
-        console.log(`Balance of ${walletAddress}: ${etherBalance} ETH`);
-
-        setBalance(etherBalance); // Set the balance in ethers
+        if (data.balance) {
+          setBalance(data.balance);
+        } else {
+          console.error("API Error:", data.error);
+        }
       } catch (error) {
         console.error("Fetch Error:", error);
       }
@@ -41,7 +45,7 @@ const Portfolio = () => {
           `/api/testAPI?walletAddress=${walletAddress}`
         );
         const data = response.data;
-    
+
         console.log("Coin Data:", data.tokens); // Log the extracted data
         setCoinData(data.tokens); // Store fetched coin/token data
       } catch (error) {
@@ -49,7 +53,6 @@ const Portfolio = () => {
         setCoinData([]); // Handle the error by setting coinData to an empty array
       }
     };
-    
 
     if (walletAddress !== "") {
       fetchBalance();
@@ -57,47 +60,89 @@ const Portfolio = () => {
     }
   }, [walletAddress]);
 
+  const cutBalance = new BigNumber(balance)
+    .dividedBy(new BigNumber(10).pow(18))
+    .toFixed(6);
+
   return (
     <div className="grid grid-cols-1 gap-8 m-3 items-center px-6 mx-auto ">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="rounded-lg shadow-xl long md:min-h-[17rem] bg-[#1f1f1f] items-center">
-          <div className=" justify-between p-3 hidden">
-            <p className="text-gray-300">Token Allocation</p>
-            <span className="text-gray-600 rounded-2xl border p-2">
-              <BsThreeDots />
-            </span>
-          </div>
-          <div className=" port_img">
-            <Image
-              className=" rounded-xl "
-              src="/Asset.jpg"
-              alt="Horizon Logo"
-              width={300}
-              height={300}
-            />
-          </div>
-        </div>
-        <div className="rounded-lg shadow-xl long md:min-h-[17rem] bg-[#1f1f1f] flex justify-center items-center">
-          {/* this will be substitute for whats meant to be there */}
-          <div className=" justify-between p-0 ">
-            {/* <Image
-              className=" rounded-xl "
-              src="/frame.jpg"
-              alt="frame Logo"
-              width={600}
-              height={600}
-            /> */}
-            <div className="text-white">
-              {balance}
-              {address}
+      <div className="grid grid-cols-1 md:grid-cols-7 gap-4 ">
+        {/* before connecting box */}
+        {address ? (
+          <>
+            {/* first div box */}
+            <div className="md:col-span-3 rounded-lg shadow-xl long md:min-h-[17rem] bg-[#1f1f1f] items-center grid-row-3">
+              <div className=" justify-between p-3 hidden">
+                <p className="text-gray-300">Token Allocation</p>
+                <span className="text-gray-600 rounded-2xl border p-2">
+                  <BsThreeDots />
+                </span>
+              </div>
+              <div className=" port_img">
+                <Image
+                  className=" rounded-xl "
+                  src="/Asset.jpg"
+                  alt="Horizon Logo"
+                  width={300}
+                  height={300}
+                />
+              </div>
             </div>
-          </div>
-          <div className="hidden grid-cols-2 gap-2 m-5 items-center justify-center ">
-            <div className="md:min-h-[13rem] h-36 border rounded"></div>
-            <div className="md:min-h-[13rem] h-36 border rounded"></div>
-          </div>
-        </div>
+
+            {/* second div box */}
+            <div className="md:col-span-4 rounded-lg shadow-xl grid-row-4 long md:min-h-[17rem] bg-[#1f1f1f] flex justify-center flex-col items-center">
+              <div className="flex flex-row p-3 gap-4 items-center justify-center">
+                {/* first inner box */}
+                <div className="rounded ">
+                  {/* image icon`` */}
+                  <div className="text-gray-300 p-1 rounded flex flex-col items-center justify-center">
+                    <Image
+                      className=" rounded-xl "
+                      src="/mask.png"
+                      alt="Horizon Logo"
+                      width={150}
+                      height={150}
+                    />
+                    <span className="bg-[#343434] p-2 rounded my-3 w-full text-center text-md flex gap-2 items-center">
+                      {cutAddress}
+                      <IoIosArrowDown size={16} />
+                    </span>
+                  </div>
+                </div>
+                {/* second inner box */}
+                <div className="text-white flex items-center flex-col">
+                  <div className="flex flex-row gap-2 items-center">
+                    <div className="p-1 rounded-lg  bg-[#1497337f] wallet-icon ">
+                      <BiSolidWallet size={22} />
+                    </div>
+                    <h2 className="text-gray-400 text-sm md:text-md font-bold">
+                      {" "}
+                      Net Worth
+                    </h2>
+                    {/* eye ball symbol */}
+                    <BsEyeSlash size={17} />
+                  </div>
+                  <h2 className=" text-xl md:text-2xl">${cutBalance} ETH </h2>
+                  <div className="text-xs text-gray-500">
+                    <p>Monthly Profit</p>
+                    {/* percentage increase */}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="md:col-span-7 rounded-lg shadow-xl long md:min-h-[17rem] bg-[#1f1f1f] items-center flex justify-center">
+              <h2 className="items-center text-gray-300 font-semibold text-2xl">
+                Connect your wallet omo werey ! 🔪🔫🫵🏼
+              </h2>
+            </div>
+          </>
+        )}
       </div>
+
+      {/* ======== Holdings sections ========== */}
       <div className="rounded-lg shadow-xl  bg-[#1f1f1f] md:col-span-2">
         <div className="p-3 m-2">
           <div className="overflow-x-scroll flex justify-center align rounded">
@@ -123,19 +168,21 @@ const Portfolio = () => {
                 </tr>
               </thead>
               <tbody>
-              {Array.isArray(coinData) &&
-                coinData.map((coin, index) => (
-                  <tr key={index}>
-                    <th className="text-md px-6 py-3">
-                      <span>img</span>
-                      {coin.name}
-                    </th>
-                    <td className="text-sm px-6 py-3">{coin.current_usd_price}</td>
-                    <td className="text-sm px-6 py-3">{coin.holdings}</td>
-                    {/* Add other table cells here */}
-                  </tr>
-                ))}
-            </tbody>
+                {Array.isArray(coinData) &&
+                  coinData.map((coin, index) => (
+                    <tr key={index}>
+                      <th className="text-md px-6 py-3">
+                        <span>img</span>
+                        {coin.name}
+                      </th>
+                      <td className="text-sm px-6 py-3">
+                        {coin.current_usd_price}
+                      </td>
+                      <td className="text-sm px-6 py-3">{coin.holdings}</td>
+                      {/* Add other table cells here */}
+                    </tr>
+                  ))}
+              </tbody>
             </table>
           </div>
         </div>
