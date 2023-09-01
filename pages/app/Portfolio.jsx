@@ -12,7 +12,8 @@ const Portfolio = () => {
   const address = useAddress();
   const [balance, setBalance] = useState("0");
   const [walletAddress, setWalletAddress] = useState(address);
-  const [coinData, setCoinData] = useState([]);
+  const [tokens, setTokens] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   let cutAddress = "";
   if (address) {
@@ -39,24 +40,25 @@ const Portfolio = () => {
       }
     };
 
-    const fetchCoinData = async () => {
+    const fetchTokens = async () => {
       try {
-        const response = await axios.get(
-          `/api/testAPI?walletAddress=${walletAddress}`
-        );
-        const data = response.data;
-
-        console.log("Coin Data:", data.tokens); // Log the extracted data
-        setCoinData(data.tokens); // Store fetched coin/token data
+        const response = await fetch(`/api/dashboard?walletAddress=${walletAddress}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+        const data = await response.json();
+        setTokens(data);
+        setLoading(false);
       } catch (error) {
-        console.error("Fetch Error:", error);
-        setCoinData([]); // Handle the error by setting coinData to an empty array
+        console.error('Error fetching data:', error);
+        setLoading(false);
       }
     };
 
+
     if (walletAddress !== "") {
       fetchBalance();
-      fetchCoinData(); // Fetch coin/token data
+      fetchTokens();
     }
   }, [walletAddress]);
 
@@ -64,6 +66,10 @@ const Portfolio = () => {
     .dividedBy(new BigNumber(10).pow(18))
     .toFixed(6);
 
+    const convertHexToDecimal = hexValue => {
+      return parseInt(hexValue, 16);
+    };
+    
   return (
     <div className="grid grid-cols-1 gap-8 m-3 items-center px-6 mx-auto ">
       <div className="grid grid-cols-1 md:grid-cols-7 gap-4 ">
@@ -153,7 +159,7 @@ const Portfolio = () => {
                     "COIN",
                     "PRICE",
                     "HOLDINGS",
-                    "CHART",
+                    "AMOUNT",
                     "24hr",
                     "24hr volume",
                     "Market cap",
@@ -168,20 +174,17 @@ const Portfolio = () => {
                 </tr>
               </thead>
               <tbody>
-                {Array.isArray(coinData) &&
-                  coinData.map((coin, index) => (
-                    <tr key={index}>
-                      <th className="text-md px-6 py-3">
-                        <span>img</span>
-                        {coin.name}
-                      </th>
-                      <td className="text-sm px-6 py-3">
-                        {coin.current_usd_price}
-                      </td>
-                      <td className="text-sm px-6 py-3">{coin.holdings}</td>
-                      {/* Add other table cells here */}
-                    </tr>
-                  ))}
+              {tokens.map((token, index) => (
+                  <tr key={index}>
+                    <td>{token.name}</td>
+                    <td>{token.current_usd_price}</td>
+                    <td>{convertHexToDecimal(token.balance)/ 10**token.decimals}</td>
+                    <td>{convertHexToDecimal(token.balance)/ 10**token.decimals * token.current_usd_price}</td>
+                    <td>24hr Placeholder</td>
+                    <td>24hr Volume Placeholder</td>
+                    <td>Market Cap Placeholder</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

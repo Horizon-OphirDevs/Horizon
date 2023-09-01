@@ -1,27 +1,36 @@
-// pages/api/fetchPortfolio.js
-import fetch from 'node-fetch'; // Import node-fetch
+const sdk = require('api')('@chainbase/v1.0#1kyz5d4liym8zdw');
 
-export default async function handler(req, res) {
-  const address = req.query.address;
-
+export default async (req, res) => {
   try {
-    const apiUrl = `https://api.zerion.io/v1/wallets/${address}/portfolio/?currency=usd`;
-    const options = {
-      headers: {
-        Authorization: 'Basic emtfZGV2X2ZhNGQ3MDQxNDY3ZjQwZTU5OTYzM2Y4Zjg0ZjFmNTJiOg==',
-      },
-    };
+    const { walletAddress } = req.query; // Extract address from query parameter
 
-    const response = await fetch(apiUrl, options);
-
-    if (!response.ok) {
-      throw new Error('API request failed');
+    if (!walletAddress) {
+      res.status(400).json({ error: "Wallet address is required" });
+      return;
     }
+    
+    const response = await sdk.getAccountTokens({
+      chain_id: '42161',
+      address: walletAddress, // Remove the curly braces around walletAddress
+      limit: '20',
+      page: '1',
+      'x-api-key': '2Ubr7CKu26athkPkImSWHDiG1TL'
+    });
 
-    const data = await response.json();
-    res.status(200).json(data);
+    const extractedData = response.data.data.map(token => { // Access the nested "data" array
+      return {
+        balance: token.balance,
+        name: token.name,
+        logo: token.logos.length > 0 ? token.logos[0].url : null,
+        current_usd_price: token.current_usd_price,
+        decimals: token.decimals
+      };
+    });
+
+    console.log(extractedData);
+    res.status(200).json(extractedData);
   } catch (error) {
-    console.error('Error fetching data:', error);
-    res.status(500).json({ error: 'Failed to fetch data from the API' });
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred' });
   }
-}
+};
