@@ -3,21 +3,25 @@ import Image from "next/image";
 
 const CoinsPerPage = 20; // Define the number of coins per page
 
-const Markets = ({ initialData }) => {
-  const [data, setData] = useState(initialData || []);
+const Markets = () => {
+  const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // Add currentPage stat
 
   useEffect(() => {
-    const interval = setInterval(async () => {
+    const fetchData = async () => {
       try {
         const response = await fetch("/api/coins");
         const newData = await response.json();
         setData(newData);
       } catch (error) {
         console.error("Error fetching data:", error);
-        setData([]); // Reset data to empty array on error
+        setData([]); // Reset data to an empty array on error
       }
-    }, 60000);
+    };
+
+    fetchData(); // Initial data fetch
+
+    const interval = setInterval(fetchData, 60000); // Fetch data every 60 seconds
 
     return () => clearInterval(interval);
   }, []);
