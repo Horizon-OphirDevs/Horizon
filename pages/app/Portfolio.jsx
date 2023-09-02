@@ -42,19 +42,20 @@ const Portfolio = () => {
 
     const fetchTokens = async () => {
       try {
-        const response = await fetch(`/api/dashboard?walletAddress=${walletAddress}`);
+        const response = await fetch(
+          `/api/dashboard?walletAddress=${walletAddress}`
+        );
         if (!response.ok) {
-          throw new Error('Failed to fetch data');
+          throw new Error("Failed to fetch data");
         }
         const data = await response.json();
         setTokens(data);
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
         setLoading(false);
       }
     };
-
 
     if (walletAddress !== "") {
       fetchBalance();
@@ -66,10 +67,10 @@ const Portfolio = () => {
     .dividedBy(new BigNumber(10).pow(18))
     .toFixed(6);
 
-    const convertHexToDecimal = hexValue => {
-      return parseInt(hexValue, 16);
-    };
-    
+  const convertHexToDecimal = (hexValue) => {
+    return parseInt(hexValue, 16);
+  };
+
   return (
     <div className="grid grid-cols-1 gap-8 m-3 items-center px-6 mx-auto ">
       <div className="grid grid-cols-1 md:grid-cols-7 gap-4 ">
@@ -128,7 +129,7 @@ const Portfolio = () => {
                     {/* eye ball symbol */}
                     <BsEyeSlash size={17} />
                   </div>
-                  <h2 className=" text-xl md:text-2xl">${cutBalance} ETH </h2>
+                  <h2 className=" text-xl md:text-2xl">${cutBalance}</h2>
                   <div className="text-xs text-gray-500">
                     <p>Monthly Profit</p>
                     {/* percentage increase */}
@@ -174,12 +175,19 @@ const Portfolio = () => {
                 </tr>
               </thead>
               <tbody>
-              {tokens.map((token, index) => (
+                {tokens.map((token, index) => (
                   <tr key={index}>
                     <td>{token.name}</td>
                     <td>{token.current_usd_price}</td>
-                    <td>{convertHexToDecimal(token.balance)/ 10**token.decimals}</td>
-                    <td>{convertHexToDecimal(token.balance)/ 10**token.decimals * token.current_usd_price}</td>
+                    <td>
+                      {convertHexToDecimal(token.balance) /
+                        10 ** token.decimals}
+                    </td>
+                    <td>
+                      {(convertHexToDecimal(token.balance) /
+                        10 ** token.decimals) *
+                        token.current_usd_price}
+                    </td>
                     <td>24hr Placeholder</td>
                     <td>24hr Volume Placeholder</td>
                     <td>Market Cap Placeholder</td>
