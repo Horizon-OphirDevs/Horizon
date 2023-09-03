@@ -103,7 +103,7 @@ const Portfolio = () => {
                     {/* eye ball symbol */}
                     <BsEyeSlash size={17} />
                   </div>
-                  <h2 className=" text-xl md:text-2xl">${cutBalance} ETH </h2>
+                  <h2 className=" text-xl md:text-2xl">${cutBalance}</h2>
                   <div className="text-xs text-gray-500">
                     <p>Monthly Profit</p>
                     {/* percentage increase */}

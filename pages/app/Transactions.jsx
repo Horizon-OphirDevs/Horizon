@@ -65,7 +65,7 @@ const YourComponent = () => {
   return (
     <div className="text-white">
       <h1
-        className="p-4 bg-[#0baab5] rounded-lg"
+        className="p-4 bg-[#0baab5] rounded-md"
         style={{ width: "fit-content" }}
       >
         Transfers
@@ -90,13 +90,9 @@ const YourComponent = () => {
                 <th>Quantity</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="tx_table">
               {transactions.map((tx, index) => (
-                <tr
-                  key={index}
-                  style={{ borderBottom: "1px solid #333" }}
-                  className="mx-3"
-                >
+                <tr key={index} className="mx-3 px-3">
                   <td
                     onClick={() => copyToClipboard(tx.txnHash)}
                     style={{ cursor: "pointer" }}

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
 function CoinSearch() {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
   const handleSearchChange = (event) => {
@@ -10,28 +10,28 @@ function CoinSearch() {
   };
 
   const performSearch = async () => {
-    if (searchQuery.trim() !== '') {
+    if (searchQuery.trim() !== "") {
       try {
         const response = await axios.get(`/api/search?query=${searchQuery}`);
         setSearchResults(response.data.coins); // Adjust based on API response structure
       } catch (error) {
-        console.error('Error searching coins:', error);
+        console.error("Error searching coins:", error);
       }
     }
   };
 
   return (
-    <div>
+    <>
       <div className="relative border flex md:w-full bg-[#1f1f1f] items-stretch rounded-lg">
         <input
           type="search"
-          className="relative m-0 block md:w-52 min-w-0 flex-auto rounded bg-transparent bg-clip-padding px-3 py-[0.25rem] text-xs font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:focus:border-primary"
+          className="relative m-0 block md:w-52 min-w-0 flex-auto rounded bg-transparent bg-clip-padding px-3 py-[0.25rem] text-xs font-normal leading-[1.6] text-gray-500 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-gray-400 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:focus:border-primary"
           placeholder="Search token or contract"
           value={searchQuery}
           onChange={handleSearchChange}
         />
         <span
-          className="input-group-text flex items-center whitespace-nowrap rounded px-3 py-1.5 text-center text-base font-normal text-neutral-700 dark:text-neutral-200 cursor-pointer"
+          className="input-group-text flex items-center whitespace-nowrap rounded px-3 py-1.5 text-center text-base font-normal text-gray-700 dark:text-neutral-200 cursor-pointer"
           onClick={performSearch}
           aria-label="Search"
         >
@@ -50,7 +50,7 @@ function CoinSearch() {
           </svg>
         </span>
       </div>
-      
+
       {/* Display search results */}
       <div>
         {Array.isArray(searchResults) && searchResults.length > 0 ? (
@@ -63,7 +63,7 @@ function CoinSearch() {
           <p>No results found.</p>
         )}
       </div>
-    </div>
+    </>
   );
 }
 

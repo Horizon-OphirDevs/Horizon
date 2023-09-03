@@ -5,7 +5,7 @@ import Link from "next/link";
 //Bernard.O Using Thirdweb SDK for Connecting Wallet {https://portal.thirdweb.com/react} <--Check it Out
 import { ConnectWallet, useDisconnect } from "@thirdweb-dev/react";
 import { useAddress } from "@thirdweb-dev/react";
-import CoinSearch from '../dashboard/CoinSearch';
+import CoinSearch from "../dashboard/CoinSearch";
 // React Icon
 
 import { IoNotificationsSharp } from "react-icons/io5";
@@ -73,11 +73,10 @@ const Topbar = ({ activeSection }) => {
           <GiHamburgerMenu onClick={toggleNavbar} />
         </div>
 
-        <div className=" gap-2 px-2 hidden md:block w-[50%]">
-        {/* Search Bar */}
-        <CoinSearch />
-      </div>
-      
+        <div className=" gap-2 px-2 hidden md:block w-[50%] items-center">
+          {/* Search Bar */}
+          <CoinSearch />
+        </div>
 
         {/*Check global.css for the current update on the connect wallet styling */}
         <div className="connect_button md:flex hidden">
