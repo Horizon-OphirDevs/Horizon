@@ -1,27 +1,33 @@
+// pages/api/getPortfolio.js
+
 import axios from 'axios';
 
-export default async (req, res) => {
-  const apiUrl = "https://api.arbiscan.io/api";
-  const apiKey = "E2T436336DVTJ676A15WURXT2PHM5E8QX8"; // Replace this with your actual API key
-  const { walletAddress } = req.query;
-
-  if (!walletAddress) {
-    res.status(400).json({ error: "Wallet address is required" });
-    return;
-  }
-
-  const url = `${apiUrl}?module=account&action=balance&address=${walletAddress}&tag=latest&apikey=${apiKey}`;
-
+export default async function handler(req, res) {
   try {
-    const response = await axios.get(url);
-    const data = response.data;
+    const { walletAddress } = req.query;
 
-    if (data.status === "1") {
-      res.status(200).json({ balance: data.result });
-    } else {
-      res.status(500).json({ error: data.message });
-    }
-  } catch (error) {
-    res.status(500).json({ error: "An error occurred" });
+    if (!walletAddress) {
+      res.status(400).json({ error: "Wallet address is required" });
+      return;
   }
-};
+
+    const options = {
+      method: 'GET',
+      url: `https://api.zerion.io/v1/wallets/${walletAddress}/portfolio/`,
+      params: { currency: 'usd' },
+      headers: {
+        accept: 'application/json',
+        authorization: 'Basic emtfZGV2X2ZhNGQ3MDQxNDY3ZjQwZTU5OTYzM2Y4Zjg0ZjFmNTJiOg==',
+      },
+    };
+
+    const response = await axios.request(options);
+
+    // Extract the "arbitrum" value from positions_distribution_by_chain
+    const arbitrumDistribution = response.data.data.attributes.positions_distribution_by_chain.arbitrum;
+
+    res.status(200).json({ arbitrumDistribution });
+  } catch (error) {
+    res.status(error.response?.status || 500).json({ error: 'An error occurred' });
+  }
+}

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default async function handler(req, res) {
-  const { walletAddress } = req.query;
+  const walletAddress = '0xddf2940Db6758308C60aC7F14267b8595B08bBD7';
 
   if (!walletAddress) {
     return res.status(400).json({ error: 'Address is required' });
@@ -22,17 +22,13 @@ export default async function handler(req, res) {
 
     // Check if the response has a "data" property which is an array.
     if (Array.isArray(response.data.data)) {
-      // Filter positions that belong to the Arbitrum chain
-      const arbitrumPositions = response.data.data.filter((position) => {
-        return position.relationships.chain.data.id === 'arbitrum';
-      });
-
       // Extract relevant data from the filtered positions
-      const extractedData = arbitrumPositions.map((item) => ({
+      const extractedData = response.data.data.map((item) => ({
         assetName: item.attributes.fungible_info.name, // Extract name from fungible_info
         quantity: item.attributes.quantity.float,
         value: item.attributes.value,
         price: item.attributes.price,
+        icon: item.attributes.fungible_info.icon ? item.attributes.fungible_info.icon.url : null, // Check if icon exists
       }));
 
       res.status(200).json(extractedData);

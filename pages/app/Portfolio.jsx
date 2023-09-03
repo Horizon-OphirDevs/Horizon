@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Image from "next/image";
-import BigNumber from "bignumber.js";
 import { useAddress } from "@thirdweb-dev/react";
 import { BsThreeDots } from "react-icons/bs";
 import { BiSolidWallet } from "react-icons/bi";
@@ -13,6 +12,7 @@ const Portfolio = () => {
   const [balance, setBalance] = useState("0");
   const [walletAddress, setWalletAddress] = useState(address);
   const [portfolioData, setPortfolioData] = useState([]);
+  const [arbitrumDistribution, setArbitrumDistribution] = useState(null);
 
   let cutAddress = "";
   if (address) {
@@ -20,6 +20,16 @@ const Portfolio = () => {
   }
 
   useEffect(() => {
+    fetch(`/api/balance?walletAddress=${walletAddress}`)
+      .then((response) => response.json())
+      .then((data) => {
+        // Set the received data in the state
+        setArbitrumDistribution(data.arbitrumDistribution);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+
     const fetchData = async () => {
       try {
         const response = await axios.get(`/api/dashboard?walletAddress=${walletAddress}`);
@@ -41,9 +51,7 @@ const Portfolio = () => {
     }
   }, [walletAddress]);
 
-  const cutBalance = new BigNumber(balance)
-    .dividedBy(new BigNumber(10).pow(18))
-    .toFixed(6);
+  
 
   return (
     <div className="grid grid-cols-1 gap-8 m-3 items-center px-6 mx-auto">
@@ -103,7 +111,7 @@ const Portfolio = () => {
                     {/* eye ball symbol */}
                     <BsEyeSlash size={17} />
                   </div>
-                  <h2 className=" text-xl md:text-2xl">${cutBalance}</h2>
+                  <h2 className=" text-xl md:text-2xl">${arbitrumDistribution}</h2>
                   <div className="text-xs text-gray-500">
                     <p>Monthly Profit</p>
                     {/* percentage increase */}
@@ -152,7 +160,15 @@ const Portfolio = () => {
                 {portfolioData.map((item, index) => (
                   <tr key={index}>
                     <td className="py-2 px-3 text-left text-xs leading-4 font-medium text-gray-500">
-                      {item.assetName}
+                      {/* Display the icon alongside the asset name */}
+                      <div className="flex items-center">
+                        <img
+                          src={item.icon} // Use the icon URL from the API response
+                          alt={`${item.assetName} Icon`}
+                          className="w-5 h-5 mr-2" // Adjust the width and height as needed
+                        />
+                        {item.assetName}
+                      </div>
                     </td>
                     <td className="py-2 px-3 text-left text-xs leading-4 font-medium text-gray-500">
                       ${item.price}
