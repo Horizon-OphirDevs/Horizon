@@ -12,53 +12,32 @@ const Portfolio = () => {
   const address = useAddress();
   const [balance, setBalance] = useState("0");
   const [walletAddress, setWalletAddress] = useState(address);
-  const [tokens, setTokens] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [portfolioData, setPortfolioData] = useState([]);
 
   let cutAddress = "";
   if (address) {
     cutAddress = address.slice(0, 6) + "..." + address.slice(-4);
   }
-  useEffect(() => {
-    const fetchBalance = async () => {
-      try {
-        const response = await axios.get(
-          `/api/balance?walletAddress=${walletAddress}`
-        );
-        const data = response.data;
-        // const data = response.data;
-        console.log("API Response:", data);
-        setCoinData(data);
 
-        if (data.balance) {
-          setBalance(data.balance);
-        } else {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`/api/dashboard?walletAddress=${walletAddress}`);
+        const data = response.data;
+
+        if (data.error) {
           console.error("API Error:", data.error);
+        } else {
+          setPortfolioData(data); // Update the portfolioData state
+          setBalance(data.balance);
         }
       } catch (error) {
         console.error("Fetch Error:", error);
       }
     };
 
-    const fetchTokens = async () => {
-      try {
-        const response = await fetch(`/api/dashboard?walletAddress=${walletAddress}`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
-        }
-        const data = await response.json();
-        setTokens(data);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setLoading(false);
-      }
-    };
-
-
     if (walletAddress !== "") {
-      fetchBalance();
-      fetchTokens();
+      fetchData();
     }
   }, [walletAddress]);
 
@@ -66,13 +45,9 @@ const Portfolio = () => {
     .dividedBy(new BigNumber(10).pow(18))
     .toFixed(6);
 
-    const convertHexToDecimal = hexValue => {
-      return parseInt(hexValue, 16);
-    };
-    
   return (
-    <div className="grid grid-cols-1 gap-8 m-3 items-center px-6 mx-auto ">
-      <div className="grid grid-cols-1 md:grid-cols-7 gap-4 ">
+    <div className="grid grid-cols-1 gap-8 m-3 items-center px-6 mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-7 gap-4">
         {/* before connecting box */}
         {address ? (
           <>
@@ -174,15 +149,21 @@ const Portfolio = () => {
                 </tr>
               </thead>
               <tbody>
-              {tokens.map((token, index) => (
+                {portfolioData.map((item, index) => (
                   <tr key={index}>
-                    <td>{token.name}</td>
-                    <td>{token.current_usd_price}</td>
-                    <td>{convertHexToDecimal(token.balance)/ 10**token.decimals}</td>
-                    <td>{convertHexToDecimal(token.balance)/ 10**token.decimals * token.current_usd_price}</td>
-                    <td>24hr Placeholder</td>
-                    <td>24hr Volume Placeholder</td>
-                    <td>Market Cap Placeholder</td>
+                    <td className="py-2 px-3 text-left text-xs leading-4 font-medium text-gray-500">
+                      {item.assetName}
+                    </td>
+                    <td className="py-2 px-3 text-left text-xs leading-4 font-medium text-gray-500">
+                      ${item.price}
+                    </td>
+                    <td className="py-2 px-3 text-left text-xs leading-4 font-medium text-gray-500">
+                      {item.quantity}
+                    </td>
+                    <td className="py-2 px-3 text-left text-xs leading-4 font-medium text-gray-500">
+                      ${item.value}
+                    </td>
+                    {/* Add columns for "24hr," "24hr volume," and "Market cap" here */}
                   </tr>
                 ))}
               </tbody>
