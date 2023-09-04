@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default async function handler(req, res) {
-  const walletAddress = '0xddf2940Db6758308C60aC7F14267b8595B08bBD7';
+  const { walletAddress } = req.query;
 
   if (!walletAddress) {
     return res.status(400).json({ error: 'Address is required' });

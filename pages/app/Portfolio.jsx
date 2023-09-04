@@ -13,6 +13,7 @@ const Portfolio = () => {
   const [walletAddress, setWalletAddress] = useState(address);
   const [portfolioData, setPortfolioData] = useState([]);
   const [arbitrumDistribution, setArbitrumDistribution] = useState(null);
+  
 
   let cutAddress = "";
   if (address) {
@@ -133,62 +134,75 @@ const Portfolio = () => {
         )}
       </div>
 
-      {/* ======== Holdings sections ========== */}
-      <div className="rounded-lg shadow-xl  bg-[#1f1f1f] md:col-span-2">
-        <div className="p-3 m-2">
-          <div className="overflow-x-scroll flex justify-center align rounded">
-            <table className="min-w-full bgr text-white border-lg border-gray-600 rounded">
-              <thead>
-                <tr>
-                  {[
-                    "COIN",
-                    "PRICE",
-                    "HOLDINGS",
-                    "AMOUNT",
-                    "24hr",
-                    "24hr volume",
-                    "Market cap",
-                  ].map((header, index) => (
-                    <th
-                      key={index}
-                      className="py-2 px-3 border-b border-gray-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      {header}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {portfolioData.map((item, index) => (
-                  <tr key={index}>
-                    <td className="py-2 px-3 text-left text-xs leading-4 font-medium text-gray-500">
-                      {/* Display the icon alongside the asset name */}
-                      <div className="flex items-center">
-                        <img
-                          src={item.icon} // Use the icon URL from the API response
-                          alt={`${item.assetName} Icon`}
-                          className="w-5 h-5 mr-2" // Adjust the width and height as needed
-                        />
-                        {item.assetName}
-                      </div>
-                    </td>
-                    <td className="py-2 px-3 text-left text-xs leading-4 font-medium text-gray-500">
-                      ${item.price}
-                    </td>
-                    <td className="py-2 px-3 text-left text-xs leading-4 font-medium text-gray-500">
-                      {item.quantity}
-                    </td>
-                    <td className="py-2 px-3 text-left text-xs leading-4 font-medium text-gray-500">
-                      ${item.value}
-                    </td>
-                    {/* Add columns for "24hr," "24hr volume," and "Market cap" here */}
+      {address ? (
+  <>
+        {/* ... (previous code for the top section) ... */}
+
+        {/* ======== Holdings section ========== */}
+        <div className="rounded-lg shadow-xl bg-[#1f1f1f] md:col-span-2">
+          <div className="p-3 m-2">
+            <div className="overflow-x-scroll flex justify-center align rounded">
+              <table className="min-w-full bgr text-white border-lg border-gray-600 rounded">
+                <thead>
+                  <tr>
+                    {[
+                      "COIN",
+                      "PRICE",
+                      "HOLDINGS",
+                      "AMOUNT",
+                      "24hr",
+                      "24hr volume",
+                      "Market cap",
+                    ].map((header, index) => (
+                      <th
+                        key={index}
+                        className="py-2 px-3 border-b border-gray-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        {header}
+                      </th>
+                    ))}
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {portfolioData.map((item, index) => (
+                    <tr key={index}>
+                      <td className="py-2 px-3 text-left text-xs leading-4 font-medium text-gray-500">
+                        {/* Display the icon alongside the asset name */}
+                        <div className="flex items-center">
+                          <img
+                            src={item.icon} // Use the icon URL from the API response
+                            alt={`${item.assetName} Icon`}
+                            className="w-5 h-5 mr-2" // Adjust the width and height as needed
+                          />
+                          {item.assetName}
+                        </div>
+                      </td>
+                      <td className="py-2 px-3 text-left text-xs leading-4 font-medium text-gray-500">
+                        ${item.price}
+                      </td>
+                      <td className="py-2 px-3 text-left text-xs leading-4 font-medium text-gray-500">
+                        {item.quantity}
+                      </td>
+                      <td className="py-2 px-3 text-left text-xs leading-4 font-medium text-gray-500">
+                        ${item.value}
+                      </td>
+                      {/* Add columns for "24hr," "24hr volume," and "Market cap" here */}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
+      </>
+    ) : (
+      // Render the "Connect your wallet" message when the wallet is not connected
+      <div className="md:col-span-7 rounded-lg shadow-xl long md:min-h-[17rem] bg-[#1f1f1f] items-center flex justify-center">
+        <h2 className="items-center text-gray-300 font-semibold text-2xl">
+          Connect your wallet to view portfolio !
+        </h2>
       </div>
+    )}
     </div>
   );
 };

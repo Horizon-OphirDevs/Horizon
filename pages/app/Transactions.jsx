@@ -5,7 +5,7 @@ import BigNumber from "bignumber.js";
 
 import { BiCopy } from "react-icons/bi";
 
-const YourComponent = () => {
+const Transactions = () => {
   const address = useAddress(); // Assuming useAddress() is defined somewhere
   const [transactions, setTransactions] = useState([]);
   const [walletAddress, setWalletAddress] = useState(address);
@@ -158,8 +158,8 @@ const YourComponent = () => {
   );
 };
 
-export default YourComponent;
+export default Transactions;
 
-YourComponent.getLayout = function PageLayout(page) {
+Transactions.getLayout = function PageLayout(page) {
   return <>{page}</>;
 };
