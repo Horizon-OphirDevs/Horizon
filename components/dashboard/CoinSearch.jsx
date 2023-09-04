@@ -60,7 +60,8 @@ function CoinSearch() {
             ))}
           </ul>
         ) : (
-          <p>No results found.</p>
+          /* when u finally make it work then u can remove it from the hidden class */
+          <p className="hidden">No results found.</p>
         )}
       </div>
     </>

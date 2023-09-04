@@ -27,12 +27,14 @@ const Portfolio = () => {
         setArbitrumDistribution(data.arbitrumDistribution);
       })
       .catch((error) => {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       });
 
     const fetchData = async () => {
       try {
-        const response = await axios.get(`/api/dashboard?walletAddress=${walletAddress}`);
+        const response = await axios.get(
+          `/api/dashboard?walletAddress=${walletAddress}`
+        );
         const data = response.data;
 
         if (data.error) {
@@ -50,8 +52,6 @@ const Portfolio = () => {
       fetchData();
     }
   }, [walletAddress]);
-
-  
 
   return (
     <div className="grid grid-cols-1 gap-8 m-3 items-center px-6 mx-auto">
@@ -111,7 +111,9 @@ const Portfolio = () => {
                     {/* eye ball symbol */}
                     <BsEyeSlash size={17} />
                   </div>
-                  <h2 className=" text-xl md:text-2xl">${arbitrumDistribution}</h2>
+                  <h2 className=" text-xl md:text-3xl">
+                    ${parseFloat(arbitrumDistribution).toFixed(4)}
+                  </h2>
                   <div className="text-xs text-gray-500">
                     <p>Monthly Profit</p>
                     {/* percentage increase */}

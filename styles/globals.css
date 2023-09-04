@@ -81,8 +81,8 @@ body {
 
 .tx_table td {
   font-size: 13px;
-  padding-left: 2rem !important;
-  padding-right: 2rem !important;
+  padding-left: 1.5rem !important;
+  padding-right: 1.5rem !important;
   padding-top: 0.5rem !important;
   padding-bottom: 0.5rem !important;
 }
@@ -98,4 +98,11 @@ body {
     /* width: 900px !important;
     padding: 5rem; */
   }
+}
+.explore_items svg {
+  height: 1.5em;
+  width: 1.5em;
+}
+.tx_data svg {
+  color: #555555;
 }

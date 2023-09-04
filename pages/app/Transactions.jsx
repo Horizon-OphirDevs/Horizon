@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { useAddress } from "@thirdweb-dev/react";
 import BigNumber from "bignumber.js";
 
+import { BiCopy } from "react-icons/bi";
+
 const YourComponent = () => {
   const address = useAddress(); // Assuming useAddress() is defined somewhere
   const [transactions, setTransactions] = useState([]);
@@ -77,7 +79,7 @@ const YourComponent = () => {
           {" "}
           {/* Scrollable container */}
           <table
-            className="table  text-xs rounded-lg bg-[#1c1c1c] p-3 gap-3 m-3"
+            className="table  text-xs rounded-lg bg-[#1c1c1c] p-3 gap-3 m-3 overflow-x-auto"
             style={{ minWidth: "100%", lineHeight: "3rem", borderSpacing: "0" }}
           >
             <thead style={{ borderBottom: "2px solid #474747" }}>
@@ -85,48 +87,65 @@ const YourComponent = () => {
                 <th>Transaction Hash</th>
                 <th>Method</th>
                 <th>Time</th>
-                <th>To</th>
                 <th>From</th>
+                <th>To</th>
                 <th>Quantity</th>
               </tr>
             </thead>
             <tbody className="tx_table">
-              {transactions.map((tx, index) => (
-                <tr key={index} className="mx-3 px-3">
-                  <td
-                    onClick={() => copyToClipboard(tx.txnHash)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    {tx.txnHash.length > 12
-                      ? `${tx.txnHash.slice(0, 12)}...`
-                      : tx.txnHash}
-                  </td>
-                  <td>
-                    {tx.method.length > 10
-                      ? `${tx.method.slice(0, 10)}...`
-                      : tx.method}
-                  </td>
-                  <td>{timeAgo(tx.time)}</td>
-                  <td
-                    onClick={() => copyToClipboard(tx.to)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    {tx.to.slice(0, 10)}...
-                  </td>
-                  <td
-                    onClick={() => copyToClipboard(tx.from)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    {tx.from.slice(0, 10)}....
-                  </td>
-                  <td>
-                    {new BigNumber(tx.quantity)
-                      .dividedBy(new BigNumber(10).pow(18))
-                      .toFixed(6)}{" "}
-                    Eth
-                  </td>
-                </tr>
-              ))}
+              {transactions.map((tx, index) => {
+                return (
+                  <tr key={index} className="mx-3 px-3 tx_data">
+                    <td
+                      onClick={() => copyToClipboard(tx.txnHash)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      {tx.txnHash.length > 12
+                        ? `${tx.txnHash.slice(0, 12)}...`
+                        : tx.txnHash}
+                    </td>
+                    <td>
+                      {tx.method.length > 10
+                        ? `${tx.method.slice(0, 10)}...`
+                        : tx.method}
+                    </td>
+                    <td>{timeAgo(tx.time)}</td>
+
+                    {/* transaction from  */}
+                    <td
+                      onClick={() => copyToClipboard(tx.from)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <div className="flex items-center justify-center gap-2">
+                        {tx.from.slice(0, 10)}....
+                        <BiCopy
+                          size={17}
+                          onClick={() => copyToClipboard(tx.from)}
+                        />
+                      </div>
+                    </td>
+                    {/* transaction to */}
+                    <td
+                      onClick={() => copyToClipboard(tx.to)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <div className="flex items-center justify-center gap-2">
+                        {tx.to.slice(0, 10)}...
+                        <BiCopy
+                          size={17}
+                          onClick={() => copyToClipboard(tx.from)}
+                        />
+                      </div>
+                    </td>
+                    <td>
+                      {new BigNumber(tx.quantity)
+                        .dividedBy(new BigNumber(10).pow(18))
+                        .toFixed(6)}{" "}
+                      Eth
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

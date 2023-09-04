@@ -68,10 +68,12 @@ const Markets = () => {
                       <td
                         className={
                           token.price_change_percentage
-                            .toString()
-                            .startsWith("-")
-                            ? "text-red-500 md:p-3"
-                            : "text-green-700 md:p-3"
+                            ? token.price_change_percentage
+                                .toString()
+                                .startsWith("-")
+                              ? "text-red-500 md:p-3"
+                              : "text-green-700 md:p-3"
+                            : "md:p-3"
                         }
                       >
                         {parseFloat(token.price_change_percentage).toFixed(2)}%
