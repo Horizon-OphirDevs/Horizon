@@ -33,14 +33,6 @@ const Iconstyle = {
 };
 
 const Topbar = ({ activeSection }) => {
-  //activeSetion Fetched From dashboard to Update The pages
-  //   const dispatch = useDispatch();
-
-  //   const Clickhandler = () => {
-  //     // Do Action
-  //     dispatch({ type: TOGGLE_SIDEBAR });
-  //  };
-
   const [navbarOpen, setNavbarOpen] = useState(true);
 
   const toggleNavbar = () => {
