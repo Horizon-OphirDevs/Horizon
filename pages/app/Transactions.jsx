@@ -14,18 +14,16 @@ const Transactions = () => {
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const response = await axios.get(
-          `/api/transactions?walletAddress=${walletAddress}`
-        );
-        const data = response.data;
+        const response = await axios.get(`/api/transactions?walletAddress=${walletAddress}`);
+        const data = response.data.simplifiedTransactions; // Assuming the API returns simplifiedTransactions
 
         setTransactions(data);
       } catch (error) {
-        console.error("Fetch Error:", error);
+        console.error('Fetch Error:', error);
       }
     };
 
-    if (walletAddress !== "") {
+    if (walletAddress !== '') {
       fetchTransactions();
     }
   }, [walletAddress]);
@@ -90,6 +88,7 @@ const Transactions = () => {
                 <th>From</th>
                 <th>To</th>
                 <th>Quantity</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody className="tx_table">
@@ -105,9 +104,7 @@ const Transactions = () => {
                         : tx.txnHash}
                     </td>
                     <td>
-                      {tx.method.length > 10
-                        ? `${tx.method.slice(0, 10)}...`
-                        : tx.method}
+                      {tx.method}
                     </td>
                     <td>{timeAgo(tx.time)}</td>
 
@@ -138,11 +135,9 @@ const Transactions = () => {
                       </div>
                     </td>
                     <td>
-                      {new BigNumber(tx.quantity)
-                        .dividedBy(new BigNumber(10).pow(18))
-                        .toFixed(6)}{" "}
-                      Eth
+                      {tx.quantity}Eth
                     </td>
+                    <td>{tx.status}</td>
                   </tr>
                 );
               })}

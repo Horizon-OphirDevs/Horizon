@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import Image from "next/image";
 import { useAddress } from "@thirdweb-dev/react";
@@ -13,12 +13,35 @@ const Portfolio = () => {
   const [walletAddress, setWalletAddress] = useState(address);
   const [portfolioData, setPortfolioData] = useState([]);
   const [arbitrumDistribution, setArbitrumDistribution] = useState(null);
-  
 
   let cutAddress = "";
   if (address) {
     cutAddress = address.slice(0, 6) + "..." + address.slice(-4);
   }
+
+  const fetchData = useCallback(async () => {
+    try {
+      const response = await axios.get(
+        `/api/dashboard?walletAddress=${walletAddress}`
+      );
+      const data = response.data;
+
+      if (data.error) {
+        console.error("API Error:", data.error);
+      } else {
+        setPortfolioData(data); // Update the portfolioData state
+        setBalance(data.balance);
+      }
+    } catch (error) {
+      console.error("Fetch Error:", error);
+    }
+  }, [walletAddress]);
+
+  useEffect(() => {
+    if (walletAddress !== "") {
+      fetchData();
+    }
+  }, [walletAddress, fetchData]);
 
   useEffect(() => {
     fetch(`/api/balance?walletAddress=${walletAddress}`)
@@ -30,28 +53,6 @@ const Portfolio = () => {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `/api/dashboard?walletAddress=${walletAddress}`
-        );
-        const data = response.data;
-
-        if (data.error) {
-          console.error("API Error:", data.error);
-        } else {
-          setPortfolioData(data); // Update the portfolioData state
-          setBalance(data.balance);
-        }
-      } catch (error) {
-        console.error("Fetch Error:", error);
-      }
-    };
-
-    if (walletAddress !== "") {
-      fetchData();
-    }
   }, [walletAddress]);
 
   return (
