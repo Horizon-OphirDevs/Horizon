@@ -28,6 +28,7 @@ export default async function handler(req, res) {
         quantity: item.attributes.quantity.float,
         value: item.attributes.value,
         price: item.attributes.price,
+        changes: item.attributes.changes,
         icon: item.attributes.fungible_info.icon ? item.attributes.fungible_info.icon.url : null, // Check if icon exists
       }));
 

@@ -150,9 +150,8 @@ const Portfolio = () => {
                       "PRICE",
                       "HOLDINGS",
                       "AMOUNT",
-                      "24hr",
-                      "24hr volume",
-                      "Market cap",
+                      "24hr Profit ($)",
+                      "24hr Change (%)"
                     ].map((header, index) => (
                       <th
                         key={index}
@@ -185,6 +184,12 @@ const Portfolio = () => {
                       </td>
                       <td className="py-2 px-3 text-left text-xs leading-4 font-medium text-gray-500">
                         ${item.value}
+                      </td>
+                      <td className="py-2 px-3 text-left text-xs leading-4 font-medium text-gray-500">
+                        {item.changes ? `$${item.changes.absolute_1d}` : 'N/A'}
+                      </td>
+                      <td className="py-2 px-3 text-left text-xs leading-4 font-medium text-gray-500">
+                      {item.changes ? `${item.changes.percent_1d}` : 'N/A'}%
                       </td>
                       {/* Add columns for "24hr," "24hr volume," and "Market cap" here */}
                     </tr>
