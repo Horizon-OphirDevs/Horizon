@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useAddress } from "@thirdweb-dev/react";
 import BigNumber from "bignumber.js";
+
 import { BiCopy } from "react-icons/bi";
 
 const Transactions = () => {
@@ -11,22 +12,26 @@ const Transactions = () => {
   const [copiedText, setCopiedText] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const transactionsPerPage = 10;
+
   const totalPages = Math.ceil(transactions.length / transactionsPerPage);
+  const startIndex = (currentPage - 1) * transactionsPerPage;
+  const endIndex = startIndex + transactionsPerPage;
+  const displayedTransactions = transactions.slice(startIndex, endIndex);
+  
 
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const response = await axios.get(
-          `/api/transactions?walletAddress=${walletAddress}`
-        );
+        const response = await axios.get(`/api/transactions?walletAddress=${walletAddress}`);
         const data = response.data.simplifiedTransactions; // Assuming the API returns simplifiedTransactions
+
         setTransactions(data);
       } catch (error) {
-        console.error("Fetch Error:", error);
+        console.error('Fetch Error:', error);
       }
     };
 
-    if (walletAddress !== "") {
+    if (walletAddress !== '') {
       fetchTransactions();
     }
   }, [walletAddress]);
@@ -63,19 +68,9 @@ const Transactions = () => {
     const hours = Math.floor(remainingMilliseconds / millisecondsPerHour);
 
     return `${days} days and ${hours} hours ago`;
-  };
 
-  // Function to load a specific page
-  const loadPage = (pageNumber) => {
-    if (pageNumber >= 1 && pageNumber <= totalPages) {
-      setCurrentPage(pageNumber);
-    }
+   
   };
-
-  // Calculate the range of transactions to display based on the current page
-  const startIndex = (currentPage - 1) * transactionsPerPage;
-  const endIndex = startIndex + transactionsPerPage;
-  const displayedTransactions = transactions.slice(startIndex, endIndex);
 
   return (
     <div className="text-white">
@@ -89,13 +84,11 @@ const Transactions = () => {
         <p>No transactions to show.</p>
       ) : (
         <div style={{ overflowX: "auto", whiteSpace: "nowrap" }}>
+          {" "}
+          {/* Scrollable container */}
           <table
             className="table  text-xs rounded-lg bg-[#1c1c1c] p-3 gap-3 m-3 overflow-x-auto"
-            style={{
-              minWidth: "100%",
-              lineHeight: "3rem",
-              borderSpacing: "0",
-            }}
+            style={{ minWidth: "100%", lineHeight: "3rem", borderSpacing: "0" }}
           >
             <thead style={{ borderBottom: "2px solid #474747" }}>
               <tr>
@@ -120,8 +113,12 @@ const Transactions = () => {
                         ? `${tx.txnHash.slice(0, 12)}...`
                         : tx.txnHash}
                     </td>
-                    <td>{tx.method}</td>
+                    <td>
+                      {tx.method}
+                    </td>
                     <td>{timeAgo(tx.time)}</td>
+
+                    {/* transaction from  */}
                     <td
                       onClick={() => copyToClipboard(tx.from)}
                       style={{ cursor: "pointer" }}
@@ -134,6 +131,7 @@ const Transactions = () => {
                         />
                       </div>
                     </td>
+                    {/* transaction to */}
                     <td
                       onClick={() => copyToClipboard(tx.to)}
                       style={{ cursor: "pointer" }}
@@ -142,11 +140,13 @@ const Transactions = () => {
                         {tx.to.slice(0, 10)}...
                         <BiCopy
                           size={17}
-                          onClick={() => copyToClipboard(tx.to)}
+                          onClick={() => copyToClipboard(tx.from)}
                         />
                       </div>
                     </td>
-                    <td>{tx.quantity}Eth</td>
+                    <td>
+                      {tx.quantity}Eth
+                    </td>
                     <td>{tx.status}</td>
                   </tr>
                 );
@@ -162,14 +162,14 @@ const Transactions = () => {
       {/* Pagination Controls */}
       <div className="pagination">
         <button
-          onClick={() => loadPage(currentPage - 1)}
+          onClick={() => setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))}
           disabled={currentPage === 1}
         >
           Previous
         </button>
         <span>{`Page ${currentPage} of ${totalPages}`}</span>
         <button
-          onClick={() => loadPage(currentPage + 1)}
+          onClick={() => setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages))}
           disabled={currentPage === totalPages}
         >
           Next
@@ -181,8 +181,4 @@ const Transactions = () => {
 
 export default Transactions;
 
-
-
-Transactions.getLayout = function PageLayout(page) {
-  return <>{page}</>;
-};
+Transaction

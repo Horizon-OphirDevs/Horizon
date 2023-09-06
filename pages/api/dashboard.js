@@ -10,7 +10,7 @@ export default async function handler(req, res) {
   const options = {
     method: 'GET',
     url: `https://api.zerion.io/v1/wallets/${walletAddress}/positions/`,
-    params: { currency: 'usd', 'filter[trash]': 'only_non_trash', sort: 'value' },
+    params: { currency: 'usd','filter[chain_ids]': 'arbitrum', 'filter[trash]': 'only_non_trash', sort: 'value' },
     headers: {
       accept: 'application/json',
       authorization: 'Basic emtfZGV2X2ZhNGQ3MDQxNDY3ZjQwZTU5OTYzM2Y4Zjg0ZjFmNTJiOg==',

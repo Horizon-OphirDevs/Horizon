@@ -2,27 +2,29 @@ import axios from 'axios';
 
 export default async (req, res) => {
   try {
+    // Hardcoded wallet address and page number
     const { walletAddress } = req.query;
-
-    if (!walletAddress) {
-      return res.status(400).json({ error: 'Address is required' });
-    }
-  
+    const page = 1; // You can change this to any page number you want
+    const pageSize = 10; // Number of transactions per page
 
     const options = {
       method: 'GET',
       url: `https://api.zerion.io/v1/wallets/${walletAddress}/transactions/`,
-      params: { currency: 'usd', 'page[size]': '100', 'filter[chain_ids]': 'arbitrum' },
+      params: {
+        currency: 'usd',
+        'page[size]': pageSize,
+        'page[number]': page,
+        'filter[chain_ids]': 'arbitrum',
+      },
       headers: {
         accept: 'application/json',
-        authorization: 'Basic emtfZGV2X2ZhNGQ3MDQxNDY3ZjQwZTU5OTYzM2Y4Zjg0ZjFmNTJiOg=='
-      }
+        authorization: 'Basic emtfZGV2X2ZhNGQ3MDQxNDY3ZjQwZTU5OTYzM2Y4Zjg0ZjFmNTJiOg==',
+      },
     };
 
     const response = await axios.request(options);
-    const transactionsData = response.data.data; // Select the 'data' array from the response
+    const transactionsData = response.data.data;
 
-    // Extract the desired fields from each transaction and create a new array
     const simplifiedTransactions = transactionsData.map((transaction) => ({
       method: transaction.attributes.operation_type,
       time: transaction.attributes.mined_at,
@@ -39,6 +41,3 @@ export default async (req, res) => {
     res.status(500).json({ error: 'An error occurred' });
   }
 };
-
-
-
