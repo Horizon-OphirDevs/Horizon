@@ -6,6 +6,7 @@ import { BsThreeDots } from "react-icons/bs";
 import { BiSolidWallet } from "react-icons/bi";
 import { BsEyeSlash } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
+import PieChartComponent from "../../components/dashboard/pieChart"; // Import the PieChartComponent
 
 const Portfolio = () => {
   const address = useAddress();
@@ -13,6 +14,15 @@ const Portfolio = () => {
   const [walletAddress, setWalletAddress] = useState(address);
   const [portfolioData, setPortfolioData] = useState([]);
   const [arbitrumDistribution, setArbitrumDistribution] = useState(null);
+
+  // Calculate the total portfolio value
+  const totalPortfolioValue = portfolioData.reduce((total, item) => total + item.value, 0);
+
+  // Create a data array for the pie chart
+  const pieChartData = portfolioData.map((item) => ({
+    name: item.assetName,
+    value: (item.value / totalPortfolioValue) * 100, // Calculate percentage
+  }));
 
   let cutAddress = "";
   if (address) {
@@ -69,14 +79,8 @@ const Portfolio = () => {
                   <BsThreeDots />
                 </span>
               </div>
-              <div className=" port_img">
-                <Image
-                  className=" rounded-xl "
-                  src="/Asset.jpg"
-                  alt="Horizon Logo"
-                  width={300}
-                  height={300}
-                />
+              <div className=" pie_Chart ">
+                <PieChartComponent data={pieChartData} />
               </div>
             </div>
 
