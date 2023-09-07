@@ -47,11 +47,19 @@ const Portfolio = () => {
     }
   }, [walletAddress]);
 
+    // Function to fetch data and update every X milliseconds
+    const refreshData = useCallback(() => {
+      fetchData(); // Fetch new data
+  
+      // Schedule the next data refresh after X minutes (adjust as needed)
+      setTimeout(refreshData, 30000); // X minutes in milliseconds
+    }, [fetchData]);
+
   useEffect(() => {
     if (walletAddress !== "") {
       fetchData();
     }
-  }, [walletAddress, fetchData]);
+  }, [walletAddress, fetchData, refreshData]);
 
   useEffect(() => {
     fetch(`/api/balance?walletAddress=${walletAddress}`)
