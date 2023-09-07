@@ -65,6 +65,16 @@ const Portfolio = () => {
       });
   }, [walletAddress]);
 
+    // Calculate total 24-hour profit and percentage increase
+    const total24hrProfit = portfolioData.reduce(
+      (total, item) =>
+        total + (item.changes ? parseFloat(item.changes.absolute_1d) : 0),
+      0
+    );
+  
+    const totalPercentageIncrease =
+      (total24hrProfit / (totalPortfolioValue - total24hrProfit)) * 100;
+
   return (
     <div className="grid grid-cols-1 gap-8 m-3 items-center px-6 mx-auto">
       <div className="grid grid-cols-1 md:grid-cols-7 gap-4">
@@ -123,6 +133,10 @@ const Portfolio = () => {
                   <div className="text-xs text-gray-500">
                     <p>Monthly Profit</p>
                     {/* percentage increase */}
+                    <p>
+                      24hr Gain: ${total24hrProfit.toFixed(4)} (
+                      {totalPercentageIncrease.toFixed(2)}%)
+                    </p>
                   </div>
                 </div>
               </div>
