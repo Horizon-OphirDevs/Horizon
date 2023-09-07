@@ -1,17 +1,16 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useAddress } from "@thirdweb-dev/react";
-import BigNumber from "bignumber.js";
 import { BiCopy } from "react-icons/bi";
 
 const Transactions = () => {
-  const address = useAddress(); // Assuming useAddress() is defined somewhere
+  const address = useAddress();
   const [transactions, setTransactions] = useState([]);
   const [walletAddress, setWalletAddress] = useState(address);
   const [copiedText, setCopiedText] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const transactionsPerPage = 10;
-  const totalPages = Math.ceil(transactions.length / transactionsPerPage);
+  const [totalPages, setTotalPages] = useState(1); // Initialize totalPages
 
   useEffect(() => {
     const fetchTransactions = async () => {
@@ -19,8 +18,13 @@ const Transactions = () => {
         const response = await axios.get(
           `/api/transactions?walletAddress=${walletAddress}`
         );
-        const data = response.data.simplifiedTransactions; // Assuming the API returns simplifiedTransactions
+        const data = response.data.simplifiedTransactions;
         setTransactions(data);
+
+        // Calculate totalPages after data is fetched and when transactions change
+        const calculatedTotalPages = Math.ceil(data.length / transactionsPerPage);
+        setTotalPages(calculatedTotalPages);
+        setCurrentPage(1); // Reset to the first page when data is fetched
       } catch (error) {
         console.error("Fetch Error:", error);
       }
@@ -42,7 +46,6 @@ const Transactions = () => {
     setTimeout(() => setCopiedText(null), 2000); // Clear copied text after 2 seconds
   };
 
-  // to set the time into days and hours ago
   const timeAgo = (dateString) => {
     const now = new Date();
     const past = new Date(dateString);
@@ -112,13 +115,17 @@ const Transactions = () => {
               {displayedTransactions.map((tx, index) => {
                 return (
                   <tr key={index} className="mx-3 px-3 tx_data">
-                    <td
-                      onClick={() => copyToClipboard(tx.txnHash)}
-                      style={{ cursor: "pointer" }}
-                    >
-                      {tx.txnHash.length > 12
-                        ? `${tx.txnHash.slice(0, 12)}...`
-                        : tx.txnHash}
+                    <td>
+                      <a
+                        href={`https://arbiscan.io/tx/${tx.txnHash}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ textDecoration: "underline", color: "#0baab5", cursor: "pointer" }}
+                      >
+                        {tx.txnHash.length > 12
+                          ? `${tx.txnHash.slice(0, 12)}...`
+                          : tx.txnHash}
+                      </a>
                     </td>
                     <td>{tx.method}</td>
                     <td>{timeAgo(tx.time)}</td>
@@ -162,6 +169,7 @@ const Transactions = () => {
       {/* Pagination Controls */}
       <div className="pagination">
         <button
+          className="p-3 rounded-lg bg-[#0baab5]"
           onClick={() => loadPage(currentPage - 1)}
           disabled={currentPage === 1}
         >
@@ -169,11 +177,15 @@ const Transactions = () => {
         </button>
         <span>{`Page ${currentPage} of ${totalPages}`}</span>
         <button
+          className="p-3 rounded-lg bg-[#0baab5]"
           onClick={() => loadPage(currentPage + 1)}
           disabled={currentPage === totalPages}
         >
           Next
         </button>
+        {currentPage === totalPages && (
+          <p>No more pages to show</p>
+        )}
       </div>
     </div>
   );
