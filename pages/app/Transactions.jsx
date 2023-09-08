@@ -35,7 +35,7 @@ const Transactions = () => {
     if (walletAddress !== "") {
       fetchTransactions();
     }
-  }, [walletAddress],[page]);
+  }, [walletAddress,page]);
 
  
 
@@ -50,7 +50,7 @@ const Transactions = () => {
     };
 
     fetchData();
-  }, [walletAddress],[page]);
+  }, [walletAddress,page]);
 
   const handleNextClick = () => {
     const nextPage = String(parseInt(page, 10) + 1);
@@ -131,11 +131,15 @@ const Transactions = () => {
         <p>No transactions to show.</p>
       ) : (
         <div style={{ overflowX: "auto", whiteSpace: "nowrap" }}>
-          <button onClick={handlePreviousClick} disabled={page === '1'}>
+          <div className='flex justify-between mt-2'>
+          <button className="p-3 rounded-lg bg-[#0baab5]" onClick={handlePreviousClick} disabled={page === '1'}>
         Previous
       </button>
-    {page}
-      <button onClick={handleNextClick}>Next</button>
+      <span>
+    {page}/n
+    </span>
+      <button className="p-3 rounded-lg bg-[#0baab5]" onClick={handleNextClick}>Next</button>
+      </div>
       <table
        className="table  text-xs rounded-lg bg-[#1c1c1c] p-3 gap-3 m-3 overflow-x-auto"
        style={{
