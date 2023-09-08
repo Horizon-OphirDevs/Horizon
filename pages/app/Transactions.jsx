@@ -152,7 +152,7 @@ const Transactions = () => {
             <th>TxHash</th>
             <th>From</th>
             <th>To</th>
-            <th>Function Name</th>
+            <th>Method</th>
             <th>TimeStamp</th>
             <th>Value(AETH)</th>
             <th>Gas(Gwei)</th>
