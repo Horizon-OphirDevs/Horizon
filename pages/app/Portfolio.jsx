@@ -84,7 +84,7 @@ const Portfolio = () => {
       (total24hrProfit / (totalPortfolioValue - total24hrProfit)) * 100;
 
   return (
-    <div className="grid grid-cols-1 gap-8 m-3 items-center px-6 mx-auto">
+    <div className="grid grid-cols-1 gap-8 m-3 items-center md:px-6 px-2 mx-auto">
       <div className="grid grid-cols-1 md:grid-cols-7 gap-4">
         {/* before connecting box */}
         {address ? (
@@ -116,7 +116,7 @@ const Portfolio = () => {
                       width={150}
                       height={150}
                     />
-                    <span className="bg-[#343434] p-2 rounded my-3 w-full text-center text-md flex gap-2 items-center">
+                    <span className="bg-[#343434] p-2 rounded my-3 w-full text-center text-md flex gap-2 items-center cursor-pointer">
                       {cutAddress}
                       <IoIosArrowDown size={16} />
                     </span>
@@ -168,62 +168,64 @@ const Portfolio = () => {
         {/* ======== Holdings section ========== */}
         <div className="rounded-lg shadow-xl bg-[#1f1f1f] md:col-span-2">
           <div className="p-3 m-2">
-            <div className="overflow-x-scroll flex justify-center align rounded">
-              <table className="min-w-full bgr text-white border-lg border-gray-600 rounded">
-                <thead>
-                  <tr>
-                    {[
-                      "COIN",
-                      "PRICE",
-                      "HOLDINGS",
-                      "AMOUNT",
-                      "24hr Profit ($)",
-                      "24hr Change (%)"
-                    ].map((header, index) => (
-                      <th
-                        key={index}
-                        className="py-2 px-3 border-b border-gray-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-                      >
-                        {header}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {portfolioData.map((item, index) => (
-                    <tr key={index}>
-                      <td className="py-2 px-3 text-left text-xs leading-4 font-medium text-gray-500">
-                        {/* Display the icon alongside the asset name */}
-                        <div className="flex items-center">
-                          <img
-                            src={item.icon} // Use the icon URL from the API response
-                            alt={`${item.assetName} Icon`}
-                            className="w-5 h-5 mr-2" // Adjust the width and height as needed
-                          />
-                          {item.assetName}
-                        </div>
-                      </td>
-                      <td className="py-2 px-3 text-left text-xs leading-4 font-medium text-gray-500">
-                        ${item.price}
-                      </td>
-                      <td className="py-2 px-3 text-left text-xs leading-4 font-medium text-gray-500">
-                        {item.quantity}
-                      </td>
-                      <td className="py-2 px-3 text-left text-xs leading-4 font-medium text-gray-500">
-                        ${item.value}
-                      </td>
-                      <td className="py-2 px-3 text-left text-xs leading-4 font-medium text-gray-500">
-                        {item.changes ? `$${item.changes.absolute_1d}` : 'N/A'}
-                      </td>
-                      <td className="py-2 px-3 text-left text-xs leading-4 font-medium text-gray-500">
-                      {item.changes ? `${item.changes.percent_1d}` : 'N/A'}%
-                      </td>
-                      {/* Add columns for "24hr," "24hr volume," and "Market cap" here */}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+          <div className="overflow-x-auto">
+  <table className="min-w-full bgr text-white border-lg border-gray-600 rounded">
+    <thead>
+      <tr>
+        <th className="py-2 px-3 border-b border-gray-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider sticky left-0 bg-[#1f1f1f] z-10">
+          COIN
+        </th>
+        {[
+          "PRICE",
+          "HOLDINGS",
+          "AMOUNT",
+          "24hr Profit ($)",
+          "24hr Change (%)"
+        ].map((header, index) => (
+          <th
+            key={index}
+            className="py-2 px-3 border-b border-gray-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+          >
+            {header}
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {portfolioData.map((item, index) => (
+        <tr key={index}>
+          <td className="py-2 px-3 text-left text-xs leading-4 font-medium text-gray-500 sticky left-0 bg-[#1f1f1f] z-10">
+            <div className="flex items-center">
+              <img
+                src={item.icon}
+                alt={`${item.assetName} Icon`}
+                className="w-5 h-5 mr-2"
+              />
+              {item.assetName}
             </div>
+          </td>
+          <td className="py-2 px-3 text-left text-xs leading-4 font-medium text-gray-500">
+            ${item.price}
+          </td>
+          <td className="py-2 px-3 text-left text-xs leading-4 font-medium text-gray-500">
+            {item.quantity}
+          </td>
+          <td className="py-2 px-3 text-left text-xs leading-4 font-medium text-gray-500">
+            ${item.value}
+          </td>
+          <td className="py-2 px-3 text-left text-xs leading-4 font-medium text-gray-500">
+            {item.changes ? `$${item.changes.absolute_1d}` : 'N/A'}
+          </td>
+          <td className="py-2 px-3 text-left text-xs leading-4 font-medium text-gray-500">
+            {item.changes ? `${item.changes.percent_1d}` : 'N/A'}%
+          </td>
+          {/* Add columns for "24hr," "24hr volume," and "Market cap" here */}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
           </div>
         </div>
       </>
