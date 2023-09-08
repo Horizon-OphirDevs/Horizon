@@ -6,7 +6,9 @@ import { BiCopy } from "react-icons/bi";
 const Transactions = () => {
   const address = useAddress();
   const [transactions, setTransactions] = useState([]);
-  const [walletAddress, setWalletAddress] = useState(address);
+  const [transactionss, setTransactionss] = useState([]);
+  const [walletAddress, setWalletAddress] = useState('0x1a97a5a0063d837fd3365e71e5bdc3894e833e6d');
+  const [page, setPage] = useState('1');
   const [copiedText, setCopiedText] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const transactionsPerPage = 10;
@@ -33,8 +35,49 @@ const Transactions = () => {
     if (walletAddress !== "") {
       fetchTransactions();
     }
-  }, [walletAddress]);
+  }, [walletAddress],[page]);
 
+ 
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`/api/txn?walletAddress=${walletAddress}&page=${page}`); // Replace with the actual route to your API
+        setTransactionss(response.data);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    fetchData();
+  }, [walletAddress],[page]);
+
+  const handleNextClick = () => {
+    const nextPage = String(parseInt(page, 10) + 1);
+    setPage(nextPage);
+  };
+
+  const handlePreviousClick = () => {
+    const previousPage = String(parseInt(page, 10) - 1);
+    setPage(previousPage);
+  };
+  function formatTimestamp(unixTimestamp) {
+    // Convert the Unix timestamp to milliseconds
+    const milliseconds = unixTimestamp * 1000;
+  
+    // Create a new Date object using the milliseconds
+    const date = new Date(milliseconds);
+  
+    // Format the date as per your requirements, for example:
+    const formattedDateTime = date.toLocaleString(); // This will use the user's locale for formatting
+  
+    return formattedDateTime;
+  }
+
+  // Calculate the range of transactions to display based on the current page
+  const startIndex = (currentPage - 1) * transactionsPerPage;
+  const endIndex = startIndex + transactionsPerPage;
+  const displayedTransactions = transactions.slice(startIndex, endIndex);
   const copyToClipboard = (text) => {
     const el = document.createElement("textarea");
     el.value = text;
@@ -46,7 +89,7 @@ const Transactions = () => {
     setTimeout(() => setCopiedText(null), 2000); // Clear copied text after 2 seconds
   };
 
-  const timeAgo = (dateString) => {
+  {/*const timeAgo = (dateString) => {
     const now = new Date();
     const past = new Date(dateString);
     const differenceInMilliseconds = now - past;
@@ -74,12 +117,8 @@ const Transactions = () => {
       setCurrentPage(pageNumber);
     }
   };
-
-  // Calculate the range of transactions to display based on the current page
-  const startIndex = (currentPage - 1) * transactionsPerPage;
-  const endIndex = startIndex + transactionsPerPage;
-  const displayedTransactions = transactions.slice(startIndex, endIndex);
-
+ 
+*/}
   return (
     <div className="text-white">
       <h1
@@ -92,6 +131,126 @@ const Transactions = () => {
         <p>No transactions to show.</p>
       ) : (
         <div style={{ overflowX: "auto", whiteSpace: "nowrap" }}>
+          <button onClick={handlePreviousClick} disabled={page === '1'}>
+        Previous
+      </button>
+    {page}
+      <button onClick={handleNextClick}>Next</button>
+      <table
+       className="table  text-xs rounded-lg bg-[#1c1c1c] p-3 gap-3 m-3 overflow-x-auto"
+       style={{
+         minWidth: "100%",
+         lineHeight: "3rem",
+         borderSpacing: "0",
+       }}>
+        <thead style={{ borderBottom: "2px solid #474747" }}>
+          <tr >
+            <th>TxHash</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Function Name</th>
+            <th>TimeStamp</th>
+            <th>Value(AETH)</th>
+            <th>Gas(Gwei)</th>
+          </tr>
+        </thead>
+        <tbody className="tx_table">
+          {transactionss.map((transaction, index) => (
+            <tr key={index} className="mx-3 px-3 tx_data">
+              <td>
+              <a
+                        href={`https://arbiscan.io/tx/${transaction.hash}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ textDecoration: "underline", color: "#0baab5", cursor: "pointer" }}
+                      >
+                        {transaction.hash.length > 12
+                          ? `${transaction.hash.slice(0, 12)}...`
+                          : transaction.hash}
+                </a>
+              </td>
+              <td
+              onClick={() => copyToClipboard(transaction.from)}
+              style={{ cursor: "pointer" }}
+              >
+              <div className="flex items-center justify-center gap-2">
+                        {transaction.from.slice(0, 10)}....
+                        <BiCopy
+                          size={17}
+                          onClick={() => copyToClipboard(transaction.from)}
+                        />
+                  </div>
+              </td>
+              <td
+              onClick={() => copyToClipboard(transaction.to)}
+              style={{ cursor: "pointer" }}
+              >
+               <div className="flex items-center justify-center gap-2">
+                        {transaction.to.slice(0, 10)}....
+                        <BiCopy
+                          size={17}
+                          onClick={() => copyToClipboard(transaction.to)}
+                        />
+                  </div></td>
+              <td>
+              {transaction.functionName.slice(0, 7)}..</td>
+              <td>{formatTimestamp(transaction.timeStamp)}</td>
+              <td>{transaction.value/1000000000000000000}</td>
+              <td>{transaction.gas}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    
+
+        
+      )}
+      {copiedText && (
+        <div className="copy-notification">Copied: {copiedText}</div>
+      )}
+
+      {/* Pagination Controls */}
+      {/*<div className="pagination">
+        <button
+          className="p-3 rounded-lg bg-[#0baab5]"
+          onClick={() => loadPage(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
+        <span>{`Page ${currentPage} of ${totalPages}`}</span>
+        <button
+          className="p-3 rounded-lg bg-[#0baab5]"
+          onClick={() => loadPage(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
+        {currentPage === totalPages && (
+          <p>No more pages to show</p>
+        )}
+      </div>
+      */}
+      
+
+      
+    
+    <div>
+      </div>
+    </div>
+  );
+};
+
+export default Transactions;
+
+
+
+Transactions.getLayout = function PageLayout(page) {
+  return <>{page}</>;
+};
+
+        {/*<div style={{ overflowX: "auto", whiteSpace: "nowrap" }}>
           <table
             className="table  text-xs rounded-lg bg-[#1c1c1c] p-3 gap-3 m-3 overflow-x-auto"
             style={{
@@ -160,41 +319,4 @@ const Transactions = () => {
               })}
             </tbody>
           </table>
-        </div>
-      )}
-      {copiedText && (
-        <div className="copy-notification">Copied: {copiedText}</div>
-      )}
-
-      {/* Pagination Controls */}
-      <div className="pagination">
-        <button
-          className="p-3 rounded-lg bg-[#0baab5]"
-          onClick={() => loadPage(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </button>
-        <span>{`Page ${currentPage} of ${totalPages}`}</span>
-        <button
-          className="p-3 rounded-lg bg-[#0baab5]"
-          onClick={() => loadPage(currentPage + 1)}
-          disabled={currentPage === totalPages}
-        >
-          Next
-        </button>
-        {currentPage === totalPages && (
-          <p>No more pages to show</p>
-        )}
-      </div>
-    </div>
-  );
-};
-
-export default Transactions;
-
-
-
-Transactions.getLayout = function PageLayout(page) {
-  return <>{page}</>;
-};
+        </div>*/}

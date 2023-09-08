@@ -3,9 +3,10 @@ import axios from 'axios';
 export default async (req, res) => {
   try {
     // Hardcoded wallet address and page number
-    const { walletAddress } = req.query;
-    const page = 1; // You can change this to any page number you want
-    const pageSize = 10; // Number of transactions per page
+    //const { walletAddress } = req.query;
+    const walletAddress = '0xFC4A7dfd2dB75C2438A31f7CEa6896F1Ead7c341';
+    const page = 10; // You can change this to any page number you want
+    const pageSize = 100; // Number of transactions per page
 
     const options = {
       method: 'GET',
@@ -13,7 +14,7 @@ export default async (req, res) => {
       params: {
         currency: 'usd',
         'page[size]': pageSize,
-        'page[number]': page,
+        //'page[after]': page,
         'filter[chain_ids]': 'arbitrum',
       },
       headers: {
