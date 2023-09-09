@@ -102,7 +102,10 @@ const Transactions = () => {
       {transactions.length === 0 ? (
         <p>No transactions to show.</p>
       ) : (
-        <div style={{ overflowX: "auto", whiteSpace: "nowrap" }}>
+        <div
+          style={{ whiteSpace: "nowrap" }}
+          className="overflow-x-auto w-full relative m-5"
+        >
           <div className="flex justify-between mt-2">
             <button
               className="p-3 rounded-lg bg-[#0baab5]"
@@ -120,7 +123,7 @@ const Transactions = () => {
             </button>
           </div>
           <table
-            className="table  text-xs rounded-lg bg-[#1c1c1c] p-3 gap-3 m-3 overflow-x-auto"
+            className=" text-xs rounded-lg bg-[#1c1c1c] p-3 gap-3 m-3 min-w-max whitespace-nowrap"
             style={{
               minWidth: "100%",
               lineHeight: "3rem",

@@ -87,85 +87,87 @@ const Portfolio = () => {
     (total24hrProfit / (totalPortfolioValue - total24hrProfit)) * 100;
 
   return (
-    <div className="grid grid-cols-1 gap-8 m-3 items-center md:px-6 px-2 mx-auto absolute">
-      <div className="grid grid-cols-1 md:grid-cols-7 gap-4">
-        {/* before connecting box */}
-        {address ? (
-          <>
-            {/* first div box */}
-            <div className="md:col-span-3 rounded-lg shadow-xl md:min-h-[18rem]  bg-[#1f1f1f] items-center grid-row-3 ">
-              {/* <div className="flex flex-col items-center justify-center "> */}
-              <div className="  justify-between p-3 flex">
-                <p className="text-gray-300">Token Allocation</p>
-                <span className="text-gray-600 rounded-2xl border p-2">
-                  <BsThreeDots />
-                </span>
-              </div>
-              <div className="flex items-center justify-center pb-3">
-                <div className=" pie_Chart m-auto ">
-                  <PieChartComponent data={pieChartData} />
+    <div className="grid grid-cols-1 gap-8 m-3 items-center md:px-6 px-2 mx-auto  ">
+      <div className="flex justify-between ">
+        <div className="grid grid-cols-1 md:grid-cols-7 gap-4 w-full justify-between ">
+          {/* before connecting box */}
+          {address ? (
+            <>
+              {/* first div box */}
+              <div className="md:col-span-3 rounded-lg shadow-xl md:min-h-[18rem]  bg-[#1f1f1f] items-center grid-row-3 ">
+                {/* <div className="flex flex-col items-center justify-center "> */}
+                <div className="  justify-between p-3 flex">
+                  <p className="text-gray-300">Token Allocation</p>
+                  <span className="text-gray-600 rounded-2xl border p-2">
+                    <BsThreeDots />
+                  </span>
                 </div>
+                <div className="flex items-center justify-center pb-3">
+                  <div className=" pie_Chart m-auto ">
+                    <PieChartComponent data={pieChartData} />
+                  </div>
+                </div>
+                {/* </div> */}
               </div>
-              {/* </div> */}
-            </div>
 
-            {/* second div box */}
-            <div className="md:col-span-4 rounded-lg shadow-xl grid-row-4 md:min-h-[18rem] bg-[#1f1f1f] flex justify-center flex-col items-center">
-              <div className="flex flex-row p-3 gap-4 items-center justify-center">
-                {/* first inner box */}
-                <div className="rounded ">
-                  {/* image icon`` */}
-                  <div className="text-gray-300 p-1 rounded flex flex-col items-center justify-center">
-                    <Image
-                      className=" rounded-xl "
-                      src="/mask.png"
-                      alt="Horizon Logo"
-                      width={150}
-                      height={150}
-                    />
-                    <span className="bg-[#343434] p-2 rounded my-3 w-full text-center text-md flex gap-2 items-center cursor-pointer">
-                      {cutAddress}
-                      <IoIosArrowDown size={16} />
-                    </span>
-                  </div>
-                </div>
-                {/* second inner box */}
-                <div className="text-white flex items-center flex-col">
-                  <div className="flex flex-row gap-2 items-center">
-                    <div className="p-1 rounded-lg  bg-[#1497337f] wallet-icon ">
-                      <BiSolidWallet size={22} />
+              {/* second div box */}
+              <div className="md:col-span-4 rounded-lg shadow-xl grid-row-4 md:min-h-[18rem] bg-[#1f1f1f] flex justify-center flex-col items-center">
+                <div className="flex flex-row p-3 gap-4 items-center justify-center">
+                  {/* first inner box */}
+                  <div className="rounded ">
+                    {/* image icon`` */}
+                    <div className="text-gray-300 p-1 rounded flex flex-col items-center justify-center">
+                      <Image
+                        className=" rounded-xl "
+                        src="/mask.png"
+                        alt="Horizon Logo"
+                        width={150}
+                        height={150}
+                      />
+                      <span className="bg-[#343434] p-2 rounded my-3 w-full text-center text-md flex gap-2 items-center cursor-pointer">
+                        {cutAddress}
+                        <IoIosArrowDown size={16} />
+                      </span>
                     </div>
-                    <h2 className="text-gray-400 text-sm md:text-md font-bold">
-                      {" "}
-                      Net Worth
-                    </h2>
-                    {/* eye ball symbol */}
-                    <BsEyeSlash size={17} />
                   </div>
-                  <h2 className=" text-xl md:text-3xl">
-                    ${parseFloat(arbitrumDistribution).toFixed(4)}
-                  </h2>
-                  <div className="text-xs text-gray-500">
-                    <p>Monthly Profit</p>
-                    {/* percentage increase */}
-                    <p>
-                      24hr Gain: ${total24hrProfit.toFixed(4)} (
-                      {totalPercentageIncrease.toFixed(2)}%)
-                    </p>
+                  {/* second inner box */}
+                  <div className="text-white flex items-center flex-col gap-y-4">
+                    <div className="flex flex-row gap-2 items-center">
+                      <div className="p-1 rounded-lg  bg-[#1497337f] wallet-icon ">
+                        <BiSolidWallet size={22} />
+                      </div>
+                      <h2 className="text-gray-400 text-sm md:text-md font-bold">
+                        {" "}
+                        Net Worth
+                      </h2>
+                      {/* eye ball symbol */}
+                      <BsEyeSlash size={17} />
+                    </div>
+                    <h2 className=" text-xl md:text-3xl">
+                      ${parseFloat(arbitrumDistribution).toFixed(4)}
+                    </h2>
+                    <div className="text-xs text-gray-500">
+                      <p>Monthly Profit</p>
+                      {/* percentage increase */}
+                      <p>
+                        24hr Gain: ${total24hrProfit.toFixed(4)} (
+                        {totalPercentageIncrease.toFixed(2)}%)
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="md:col-span-7 rounded-lg shadow-xl long md:min-h-[17rem] bg-[#1f1f1f] items-center flex justify-center">
-              <h2 className="items-center text-gray-300 font-semibold text-2xl">
-                Connect your wallet to view portfolio !
-              </h2>
-            </div>
-          </>
-        )}
+            </>
+          ) : (
+            <>
+              <div className="md:col-span-7 rounded-lg shadow-xl long md:min-h-[17rem] bg-[#1f1f1f] items-center flex justify-center">
+                <h2 className="items-center text-gray-300 font-semibold text-2xl">
+                  Connect your wallet to view portfolio !
+                </h2>
+              </div>
+            </>
+          )}
+        </div>
       </div>
 
       {address ? (
@@ -173,7 +175,7 @@ const Portfolio = () => {
           {/* ... (previous code for the top section) ... */}
 
           {/* ======== Holdings section ========== */}
-          <div className="rounded-lg shadow-xl bg-[#1f1f1f] md:col-span-2">
+          <div className="rounded-lg shadow-xl bg-[#1f1f1f] ">
             <div className="p-3 m-2">
               <div className="overflow-x-auto">
                 <table className="min-w-full bgr text-white border-lg border-gray-600 rounded gap-4">
@@ -247,7 +249,7 @@ const Portfolio = () => {
         </>
       ) : (
         // Render the "Connect your wallet" message when the wallet is not connected
-        <div className="md:col-span-7 rounded-lg shadow-xl long md:min-h-[17rem] bg-[#1f1f1f] items-center flex justify-center">
+        <div className=" rounded-lg shadow-xl md:w-full  md:min-h-[17rem] bg-[#1f1f1f] items-center flex justify-center">
           <h2 className="items-center text-gray-300 font-semibold text-2xl">
             Connect your wallet to view portfolio !
           </h2>
