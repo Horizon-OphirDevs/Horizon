@@ -87,22 +87,47 @@ body {
   padding-bottom: 0.5rem !important;
 }
 
-@media (max-width: 480px) {
-  /* Mobile view */
-  .markets_table {
-  }
-}
-@media (max-width: 760px) {
-  /* tablet view */
-  .markets_table {
-    /* width: 900px !important;
-    padding: 5rem; */
-  }
-}
 .explore_items svg {
   height: 1.5em;
   width: 1.5em;
 }
 .tx_data svg {
   color: #555555;
+}
+
+/* ========== FOR CHART ========== */
+/* .pie_Chart path {
+  padding: 0 !important;
+  margin: 0 !important;
+} */
+/* .pie_Chart .recharts-wrapper { */
+/* padding: 0 !important; */
+/* margin: 0 !important; */
+/* width: 250px !important; */
+/* height: 200px !important; */
+/* position: absolute !important; */
+/* } */
+/* .pie_Chart svg {
+  height: 200px !important;
+  width: 300px !important;
+  margin: 0px !important;
+  padding: 0px !important;
+}
+.pie_Chart g {
+  padding: 0px !important;
+  margin: 0px !important;
+/* } */
+
+.fixed-column {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+}
+
+.table-cells {
+  min-width: 100px;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
