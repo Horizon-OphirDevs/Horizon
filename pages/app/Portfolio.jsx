@@ -29,6 +29,10 @@ const Portfolio = () => {
     cutAddress = address.slice(0, 6) + "..." + address.slice(-4);
   }
 
+  useEffect(() => {
+    setWalletAddress(address)
+  },[address]);
+
   const fetchData = useCallback(async () => {
     try {
       const response = await axios.get(
@@ -62,7 +66,14 @@ const Portfolio = () => {
   }, [walletAddress, fetchData, refreshData]);
 
   useEffect(() => {
-    fetch(`/api/balance?walletAddress=${walletAddress}`)
+    if (!walletAddress) {
+      return; // Do not fetch data if walletAddress is empty or not defined
+    }
+
+    // Add a timestamp as a query parameter to avoid caching
+    const timestamp = Date.now();
+
+    fetch(`/api/balance?walletAddress=${walletAddress}&timestamp=${timestamp}`)
       .then((response) => response.json())
       .then((data) => {
         // Set the received data in the state

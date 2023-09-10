@@ -7,7 +7,7 @@ const Transactions = () => {
   const address = useAddress();
   const [transactions, setTransactions] = useState([]);
   const [transactionss, setTransactionss] = useState([]);
-  const [walletAddress, setWalletAddress] = useState('0x1a97a5a0063d837fd3365e71e5bdc3894e833e6d');
+  const [walletAddress, setWalletAddress] = useState(address);
   const [page, setPage] = useState('1');
   const [copiedText, setCopiedText] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
