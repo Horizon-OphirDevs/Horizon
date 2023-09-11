@@ -233,7 +233,13 @@ const Portfolio = () => {
                         <td className="py-4 px-3 text-left text-xs leading-4 font-medium text-gray-300">
                           ${parseFloat(item.value).toFixed(4)}
                         </td>
-                        <td className="py-4 px-3 text-left text-xs leading-4 font-medium text-gray-300">
+                        <td
+                          className={`py-4 px-3 text-left text-xs leading-4 font-medium ${
+                            item.changes && item.changes.absolute_1d < 0
+                              ? "text-red-500"
+                              : "text-green-500"
+                          }`}
+                        >
                           {item.changes
                             ? `$ ${parseFloat(item.changes.absolute_1d).toFixed(
                                 5
@@ -241,7 +247,13 @@ const Portfolio = () => {
                             : "N/A"}
                         </td>
 
-                        <td className="py-4 px-3 text-xs leading-4 font-medium text-gray-300">
+                        <td
+                          className={`py-4 px-3 text-xs leading-4 font-medium text-gray-300 ${
+                            item.changes && item.changes.percent_1d < 0
+                              ? "text-red-500"
+                              : "text-green-500"
+                          }`}
+                        >
                           {item.changes
                             ? `${parseFloat(item.changes.percent_1d).toFixed(
                                 3

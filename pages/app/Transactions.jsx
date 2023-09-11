@@ -63,17 +63,44 @@ const Transactions = () => {
     const previousPage = String(parseInt(page, 10) - 1);
     setPage(previousPage);
   };
-  function formatTimestamp(unixTimestamp) {
-    // Convert the Unix timestamp to milliseconds
-    const milliseconds = unixTimestamp * 1000;
 
-    // Create a new Date object using the milliseconds
-    const date = new Date(milliseconds);
+  // converting the timestamp to how long ago
+  function timeAgo(unixTimestamp) {
+    const millisecondsPerSecond = 1000;
+    const millisecondsPerMinute = millisecondsPerSecond * 60;
+    const millisecondsPerHour = millisecondsPerMinute * 60;
+    const millisecondsPerDay = millisecondsPerHour * 24;
 
-    // Format the date as per your requirements, for example:
-    const formattedDateTime = date.toLocaleString(); // This will use the user's locale for formatting
+    const currentTime = new Date().getTime();
+    const timestampInMilliseconds = unixTimestamp * 1000;
+    const timeDifference = currentTime - timestampInMilliseconds;
 
-    return formattedDateTime;
+    // Log values for debugging:
+    console.log("Current Time:", currentTime);
+    console.log("Transaction Time:", timestampInMilliseconds);
+    console.log("Difference:", timeDifference);
+
+    if (timeDifference < millisecondsPerMinute) {
+      return (
+        Math.round(timeDifference / millisecondsPerSecond) + " seconds ago"
+      );
+    } else if (timeDifference < millisecondsPerHour) {
+      return (
+        Math.round(timeDifference / millisecondsPerMinute) + " minutes ago"
+      );
+    } else if (timeDifference < millisecondsPerDay) {
+      const hours = Math.floor(timeDifference / millisecondsPerHour);
+      const minutes = Math.round(
+        (timeDifference - hours * millisecondsPerHour) / millisecondsPerMinute
+      );
+      return hours + " hours " + minutes + " minutes ago";
+    } else {
+      const days = Math.floor(timeDifference / millisecondsPerDay);
+      const hours = Math.round(
+        (timeDifference - days * millisecondsPerDay) / millisecondsPerHour
+      );
+      return days + " days " + hours + " hours ago";
+    }
   }
 
   // Calculate the range of transactions to display based on the current page
@@ -93,108 +120,124 @@ const Transactions = () => {
 
   return (
     <div className="text-white">
-      <h1
-        className="p-4 bg-[#0baab5] rounded-md"
-        style={{ width: "fit-content" }}
-      >
-        Transfers
-      </h1>
       {transactions.length === 0 ? (
         <p>No transactions to show.</p>
       ) : (
         <>
-          <div className="flex justify-center gap-3 mt-2">
-            <button
-              className="p-2 rounded-md bg-[#0baab5]"
-              onClick={handlePreviousClick}
-              disabled={page === "1"}
-            >
-              Previous
-            </button>
-            <span>{page}</span>
-            <button
-              className="p-2 rounded-md bg-[#0baab5]"
-              onClick={handleNextClick}
-            >
-              Next
-            </button>
-          </div>
           <div
             // style={{ whiteSpace: "nowrap" }}
-            className="overflow-x-auto m-2 relative h-screen"
+            className="bg-[#1f1f1f] md:m-2 sm:m-0  pb-5"
           >
-            <div>
+            <div
+              // the div for next and prev
+              className="flex flex-row justify-between items-center w-auto px-3"
+            >
+              <div className="flex-1 text-left">
+                {/* @DoctorInTech add the number latest transactions */}
+                <p className="text-xs md:text-sm">
+                  Latest _ from a total of _ transactions
+                </p>
+              </div>
+              <div className="flex justify-center items-center gap-3 mt-2 pt-3">
+                <button
+                  className="p-2 rounded-md border text-xs md:text-sm"
+                  onClick={handlePreviousClick}
+                  disabled={page === "1"}
+                >
+                  Previous
+                </button>
+                <span className="text-sm">{page}</span>
+                <button
+                  className="p-2 rounded-md  border text-xs md:text-sm"
+                  onClick={handleNextClick}
+                >
+                  Next
+                </button>
+              </div>
+              <div></div>
+            </div>
+            <div className="overflow-x-auto p-3 m-3">
               <table
-                className=" text-xs rounded-lg bg-[#1c1c1c] p-3 gap-3  min-w-max whitespace-nowrap border-collapse"
+                className=" text-xs rounded-lg bg-[#1f1f1f] p-3 m-3 gap-3  min-w-max whitespace-nowrap border-collapse"
                 // style={{
                 //   minWidth: "100%",
                 //   lineHeight: "3rem",
                 //   borderSpacing: "0",
                 // }}
               >
-                <thead
-                  style={{ borderBottom: "2px solid #474747" }}
-                  className=""
-                >
+                <thead className="border-b-1 border py-3 my-3">
                   <tr>
-                    <th>TxHash</th>
-                    <th>Method</th>
-                    <th>From</th>
-                    <th>To</th>
-                    <th>TimeStamp</th>
-                    <th>Value(AETH)</th>
-                    <th>Gas(Gwei)</th>
+                    <th className="py-3 my-3 ">TxHash</th>
+                    <th className="py-3 my-3 ">Method</th>
+                    <th className="py-3 my-3 ">TimeStamp</th>
+                    <th className="py-3 my-3 ">From</th>
+                    <th className="py-3 my-3 ">To</th>
+                    <th className="py-3 my-3 ">Value(AETH)</th>
+                    <th className="py-3 my-3 ">Gas(Gwei)</th>
                   </tr>
                 </thead>
-                <tbody className="tx_table">
-                  {transactionss.map((transaction, index) => (
-                    <tr key={index} className="mx-3 px-3 tx_data">
-                      <td>
-                        <a
-                          href={`https://arbiscan.io/tx/${transaction.hash}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          style={{
-                            textDecoration: "underline",
-                            color: "#0baab5",
-                            cursor: "pointer",
-                          }}
+
+                <tbody className="tx_table ">
+                  {transactionss.map((transaction, index) => {
+                    console.log(
+                      "Transaction Unix Timestamp:",
+                      transaction.timeStamp
+                    );
+                    return (
+                      <tr key={index} className="mx-3 px-3 tx_data">
+                        <td>
+                          <a
+                            href={`https://arbiscan.io/tx/${transaction.hash}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              color: "#0baab5",
+                              cursor: "pointer",
+                            }}
+                          >
+                            {transaction.hash.length > 12
+                              ? `${transaction.hash.slice(0, 12)}...`
+                              : transaction.hash}
+                          </a>
+                        </td>
+                        <td>
+                          <div className="text-xs p-2 border rounded-lg m-2 text-center bg-[#1c1c1c]">
+                            {transaction.functionName.slice(0, 7)}..
+                          </div>
+                        </td>
+                        <td>{timeAgo(transaction.timeStamp)}</td>
+                        <td
+                          onClick={() => copyToClipboard(transaction.from)}
+                          style={{ cursor: "pointer" }}
                         >
-                          {transaction.hash.length > 12
-                            ? `${transaction.hash.slice(0, 12)}...`
-                            : transaction.hash}
-                        </a>
-                      </td>
-                      <td>{transaction.functionName.slice(0, 7)}..</td>
-                      <td
-                        onClick={() => copyToClipboard(transaction.from)}
-                        style={{ cursor: "pointer" }}
-                      >
-                        <div className="flex items-center justify-center gap-2">
-                          {transaction.from.slice(0, 10)}....
-                          <BiCopy
-                            size={17}
-                            onClick={() => copyToClipboard(transaction.from)}
-                          />
-                        </div>
-                      </td>
-                      <td
-                        onClick={() => copyToClipboard(transaction.to)}
-                        style={{ cursor: "pointer" }}
-                      >
-                        <div className="flex items-center justify-center gap-2">
-                          {transaction.to.slice(0, 10)}....
-                          <BiCopy
-                            size={17}
-                            onClick={() => copyToClipboard(transaction.to)}
-                          />
-                        </div>
-                      </td>
-                      <td>{formatTimestamp(transaction.timeStamp)}</td>
-                      <td>{transaction.value / 1000000000000000000}</td>
-                      <td>{transaction.gas}</td>
-                    </tr>
-                  ))}
+                          <div className="flex items-center justify-center gap-2">
+                            {transaction.from.slice(0, 10)}....
+                            <BiCopy
+                              size={17}
+                              onClick={() => copyToClipboard(transaction.from)}
+                            />
+                          </div>
+                        </td>
+                        <td
+                          onClick={() => copyToClipboard(transaction.to)}
+                          style={{ cursor: "pointer" }}
+                        >
+                          <div className="flex items-center justify-center gap-2">
+                            {transaction.to.slice(0, 10)}....
+                            <BiCopy
+                              size={17}
+                              onClick={() => copyToClipboard(transaction.to)}
+                            />
+                          </div>
+                        </td>
+
+                        <td>
+                          {(transaction.value / 1000000000000000000).toFixed(5)}
+                        </td>
+                        <td>{transaction.gas}</td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
@@ -204,29 +247,6 @@ const Transactions = () => {
       {copiedText && (
         <div className="copy-notification">Copied: {copiedText}</div>
       )}
-
-      {/* Pagination Controls */}
-      {/*<div className="pagination">
-        <button
-          className="p-3 rounded-lg bg-[#0baab5]"
-          onClick={() => loadPage(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </button>
-        <span>{`Page ${currentPage} of ${totalPages}`}</span>
-        <button
-          className="p-3 rounded-lg bg-[#0baab5]"
-          onClick={() => loadPage(currentPage + 1)}
-          disabled={currentPage === totalPages}
-        >
-          Next
-        </button>
-        {currentPage === totalPages && (
-          <p>No more pages to show</p>
-        )}
-      </div>
-      */}
 
       <div></div>
     </div>

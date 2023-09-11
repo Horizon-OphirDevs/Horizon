@@ -81,10 +81,17 @@ body {
 
 .tx_table td {
   font-size: 13px;
-  padding-left: 1.5rem !important;
-  padding-right: 1.5rem !important;
-  padding-top: 1.5rem !important;
-  padding-bottom: 1.5rem !important;
+  padding-left: 1.3rem !important;
+  padding-right: 1.3rem !important;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+@media (max-width: 480px) {
+  .tx_table td {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
 }
 
 .explore_items svg {
@@ -108,3 +115,8 @@ body {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+/* for the pie chart  */
+/* .pie_Chart svg .recharts-layer {
+  display: hidden !important;
+} */

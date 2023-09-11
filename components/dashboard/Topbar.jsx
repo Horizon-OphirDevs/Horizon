@@ -187,7 +187,7 @@ const Topbar = ({ activeSection }) => {
                 </Link>
                 <Link
                   href="/app/Transactions"
-                  onClick={() => setActiveSection("Transaction")}
+                  onClick={() => setActiveSection("Transactions")}
                 >
                   <div className="dashboard_flex_item">
                     <div id="sidebar__icon__style" className="text-gray-300">
