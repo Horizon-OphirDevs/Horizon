@@ -83,8 +83,8 @@ body {
   font-size: 13px;
   padding-left: 1.5rem !important;
   padding-right: 1.5rem !important;
-  padding-top: 0.5rem !important;
-  padding-bottom: 0.5rem !important;
+  padding-top: 1.5rem !important;
+  padding-bottom: 1.5rem !important;
 }
 
 .explore_items svg {
@@ -94,29 +94,6 @@ body {
 .tx_data svg {
   color: #555555;
 }
-
-/* ========== FOR CHART ========== */
-/* .pie_Chart path {
-  padding: 0 !important;
-  margin: 0 !important;
-} */
-/* .pie_Chart .recharts-wrapper { */
-/* padding: 0 !important; */
-/* margin: 0 !important; */
-/* width: 250px !important; */
-/* height: 200px !important; */
-/* position: absolute !important; */
-/* } */
-/* .pie_Chart svg {
-  height: 200px !important;
-  width: 300px !important;
-  margin: 0px !important;
-  padding: 0px !important;
-}
-.pie_Chart g {
-  padding: 0px !important;
-  margin: 0px !important;
-/* } */
 
 .fixed-column {
   position: sticky;

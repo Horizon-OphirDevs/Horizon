@@ -8,7 +8,7 @@ const Transactions = () => {
   const [transactions, setTransactions] = useState([]);
   const [transactionss, setTransactionss] = useState([]);
   const [walletAddress, setWalletAddress] = useState(address);
-  const [page, setPage] = useState('1');
+  const [page, setPage] = useState("1");
   const [copiedText, setCopiedText] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const transactionsPerPage = 10;
@@ -102,97 +102,104 @@ const Transactions = () => {
       {transactions.length === 0 ? (
         <p>No transactions to show.</p>
       ) : (
-        <div
-          style={{ whiteSpace: "nowrap" }}
-          className="overflow-x-auto w-full relative m-5"
-        >
-          <div className="flex justify-between mt-2">
+        <>
+          <div className="flex justify-center gap-3 mt-2">
             <button
-              className="p-3 rounded-lg bg-[#0baab5]"
+              className="p-2 rounded-md bg-[#0baab5]"
               onClick={handlePreviousClick}
               disabled={page === "1"}
             >
               Previous
             </button>
-            <span>{page}/n</span>
+            <span>{page}</span>
             <button
-              className="p-3 rounded-lg bg-[#0baab5]"
+              className="p-2 rounded-md bg-[#0baab5]"
               onClick={handleNextClick}
             >
               Next
             </button>
           </div>
-          <table
-            className=" text-xs rounded-lg bg-[#1c1c1c] p-3 gap-3 m-3 min-w-max whitespace-nowrap"
-            style={{
-              minWidth: "100%",
-              lineHeight: "3rem",
-              borderSpacing: "0",
-            }}
+          <div
+            // style={{ whiteSpace: "nowrap" }}
+            className="overflow-x-auto m-2 relative h-screen"
           >
-            <thead style={{ borderBottom: "2px solid #474747" }}>
-              <tr>
-                <th>TxHash</th>
-                <th>Method</th>
-                <th>From</th>
-                <th>To</th>
-                <th>TimeStamp</th>
-                <th>Value(AETH)</th>
-                <th>Gas(Gwei)</th>
-              </tr>
-            </thead>
-            <tbody className="tx_table">
-              {transactionss.map((transaction, index) => (
-                <tr key={index} className="mx-3 px-3 tx_data">
-                  <td>
-                    <a
-                      href={`https://arbiscan.io/tx/${transaction.hash}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{
-                        textDecoration: "underline",
-                        color: "#0baab5",
-                        cursor: "pointer",
-                      }}
-                    >
-                      {transaction.hash.length > 12
-                        ? `${transaction.hash.slice(0, 12)}...`
-                        : transaction.hash}
-                    </a>
-                  </td>
-                  <td>{transaction.functionName.slice(0, 7)}..</td>
-                  <td
-                    onClick={() => copyToClipboard(transaction.from)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <div className="flex items-center justify-center gap-2">
-                      {transaction.from.slice(0, 10)}....
-                      <BiCopy
-                        size={17}
+            <div>
+              <table
+                className=" text-xs rounded-lg bg-[#1c1c1c] p-3 gap-3  min-w-max whitespace-nowrap border-collapse"
+                // style={{
+                //   minWidth: "100%",
+                //   lineHeight: "3rem",
+                //   borderSpacing: "0",
+                // }}
+              >
+                <thead
+                  style={{ borderBottom: "2px solid #474747" }}
+                  className=""
+                >
+                  <tr>
+                    <th>TxHash</th>
+                    <th>Method</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>TimeStamp</th>
+                    <th>Value(AETH)</th>
+                    <th>Gas(Gwei)</th>
+                  </tr>
+                </thead>
+                <tbody className="tx_table">
+                  {transactionss.map((transaction, index) => (
+                    <tr key={index} className="mx-3 px-3 tx_data">
+                      <td>
+                        <a
+                          href={`https://arbiscan.io/tx/${transaction.hash}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{
+                            textDecoration: "underline",
+                            color: "#0baab5",
+                            cursor: "pointer",
+                          }}
+                        >
+                          {transaction.hash.length > 12
+                            ? `${transaction.hash.slice(0, 12)}...`
+                            : transaction.hash}
+                        </a>
+                      </td>
+                      <td>{transaction.functionName.slice(0, 7)}..</td>
+                      <td
                         onClick={() => copyToClipboard(transaction.from)}
-                      />
-                    </div>
-                  </td>
-                  <td
-                    onClick={() => copyToClipboard(transaction.to)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <div className="flex items-center justify-center gap-2">
-                      {transaction.to.slice(0, 10)}....
-                      <BiCopy
-                        size={17}
+                        style={{ cursor: "pointer" }}
+                      >
+                        <div className="flex items-center justify-center gap-2">
+                          {transaction.from.slice(0, 10)}....
+                          <BiCopy
+                            size={17}
+                            onClick={() => copyToClipboard(transaction.from)}
+                          />
+                        </div>
+                      </td>
+                      <td
                         onClick={() => copyToClipboard(transaction.to)}
-                      />
-                    </div>
-                  </td>
-                  <td>{formatTimestamp(transaction.timeStamp)}</td>
-                  <td>{transaction.value / 1000000000000000000}</td>
-                  <td>{transaction.gas}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                        style={{ cursor: "pointer" }}
+                      >
+                        <div className="flex items-center justify-center gap-2">
+                          {transaction.to.slice(0, 10)}....
+                          <BiCopy
+                            size={17}
+                            onClick={() => copyToClipboard(transaction.to)}
+                          />
+                        </div>
+                      </td>
+                      <td>{formatTimestamp(transaction.timeStamp)}</td>
+                      <td>{transaction.value / 1000000000000000000}</td>
+                      <td>{transaction.gas}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </>
       )}
       {copiedText && (
         <div className="copy-notification">Copied: {copiedText}</div>

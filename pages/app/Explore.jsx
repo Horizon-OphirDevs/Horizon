@@ -10,7 +10,7 @@ import Image from "next/image";
 const Explore = () => {
   return (
     <div>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-5 m-3 grid-flow-row-dense explore_items">
+      <div className="grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 m-3 grid-flow-row-dense explore_items">
         <div className=" flex justify-center items-center rounded-lg shadow-xl min-h-[15rem] md:min-h-[17rem] bg-[#1f1f1f]">
           <div className="p-5 md:p-5 rounded-lg text-center items-center justify-center">
             <div className="flex items-center justify-center">

@@ -33,8 +33,8 @@ const Portfolio = () => {
   }
 
   useEffect(() => {
-    setWalletAddress(address)
-  },[address]);
+    setWalletAddress(address);
+  }, [address]);
 
   const fetchData = useCallback(async () => {
     try {
@@ -192,7 +192,7 @@ const Portfolio = () => {
                 <table className="min-w-full bgr text-white border-lg border-gray-600 rounded gap-4">
                   <thead className="text-white">
                     <tr>
-                      <th className="py-2 px-3 border-b border-gray-200 text-left text-xs leading-4 font-medium text-gray-300 uppercase tracking-wider sticky left-0 bg-[#1f1f1f] z-10">
+                      <th className="py-2 px-3 border-b border-gray-200 text-left text-xs leading-4 font-medium text-gray-300 uppercase tracking-wider left-0 bg-[#1f1f1f] z-10">
                         COIN
                       </th>
                       {[
@@ -214,7 +214,7 @@ const Portfolio = () => {
                   <tbody>
                     {portfolioData.map((item, index) => (
                       <tr key={index} className="gap-4 ">
-                        <td className="py-4 px-3  text-left text-xs leading-4 font-medium text-gray-300 sticky left-0 bg-[#1f1f1f] z-10">
+                        <td className="py-4 px-3  text-left text-xs leading-4 font-medium text-gray-300 left-0 bg-[#1f1f1f] z-10">
                           <div className="flex items-center">
                             <img
                               src={item.icon}
