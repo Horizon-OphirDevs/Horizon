@@ -158,7 +158,6 @@ const Portfolio = () => {
                       ${parseFloat(arbitrumDistribution).toFixed(4)}
                     </h2>
                     <div className="text-xs text-gray-500">
-                      <p>Monthly Profit</p>
                       {/* percentage increase */}
                       <p>
                         24hr Gain: ${total24hrProfit.toFixed(4)} (
