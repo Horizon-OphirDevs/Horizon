@@ -29,7 +29,7 @@ const PieChartComponent = ({ data }) => {
           cy="50%"
           outerRadius={80}
           innerRadius={60}
-          fill="#000000"
+          fill="transparent"
           labelLine={false}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
@@ -43,8 +43,8 @@ const PieChartComponent = ({ data }) => {
         {/* Inner Pie (to cover the center) */}
         <Pie
           data={data}
-          cx="50%"
-          cy="50%"
+          cx="40%"
+          cy="40%"
           outerRadius={60}
           innerRadius={0}
           fill="transparent"
@@ -52,7 +52,7 @@ const PieChartComponent = ({ data }) => {
       </PieChart>
       <div className="label">
         {selectedSegment && (
-          <div className="label-text text-white">{selectedSegment}</div>
+          <div className="label-text text-center text-white">{selectedSegment}</div>
         )}
       </div>
     </div>
