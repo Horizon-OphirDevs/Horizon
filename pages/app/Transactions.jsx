@@ -135,7 +135,7 @@ const Transactions = () => {
               <div className="flex-1 text-left">
                 {/* @DoctorInTech add the number latest transactions */}
                 <p className="text-xs md:text-sm">
-                  Latest _ from a total of _ transactions
+                  Latest {displayedTransactions.length} from a total of {transactions.length} transactions, showing {transactionsPerPage} per page
                 </p>
               </div>
               <div className="flex justify-center items-center gap-3 mt-2 pt-3">
