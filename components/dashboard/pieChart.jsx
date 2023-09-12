@@ -25,8 +25,8 @@ const PieChartComponent = ({ data }) => {
         {/* Outer Pie (the hollow part) */}
         <Pie
           data={data}
-          cx="50%"
-          cy="50%"
+          cx="40%"
+          cy="40%"
           outerRadius={80}
           innerRadius={60}
           fill="transparent"
