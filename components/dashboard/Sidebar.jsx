@@ -61,7 +61,7 @@ const Sidebar = ({ setActiveSection }) => {
         </div>
 
         <div className="dashboard_sidebar_navigation ">
-          <ul className="text-gray-300">
+          <ul className="text-gray-200">
             <div className="sidebar_top_part">
               <Link href="/app/Portfolio">
                 <div
@@ -136,14 +136,12 @@ const Sidebar = ({ setActiveSection }) => {
             </div>
 
             <div className="sidebar_bottom_part">
-              <div onClick={() => {}}>
+              <div onClick={disconnect}>
                 <div className="dashboard_flex_item p-2 m-auto bg-red-500 rounded-lg ">
                   <div id="text-white">
                     <BsDashCircle />
                   </div>
-                  <li className="disc" onClick={disconnect}>
-                    Disconnect
-                  </li>
+                  <li className="disc">Disconnect</li>
                 </div>
               </div>
             </div>
