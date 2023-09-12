@@ -211,7 +211,7 @@ const Transactions = () => {
         <button
           className="p-3 rounded-lg bg-[#0baab5]"
           onClick={() => loadPage(currentPage + 1)}
-          disabled={currentPage === totalPages}
+          isabled={currentPage === totalPages}
         >
           Next
         </button>
