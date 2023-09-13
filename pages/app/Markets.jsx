@@ -31,10 +31,6 @@ const Markets = () => {
 
   return (
     <div className="markets_home md:h-screen">
-      <div className="text-gray-300">
-        <h1>Token Tracker</h1>
-        <p></p>
-      </div>
       <div className="rounded-lg shadow-xl bg-[#1f1f1f] overflow-x-auto w-full relative text-xs ">
         <div className="p-3 m-2 overflow-x-auto flex justify-center space-x-2 ">
           <div className="flex rounded overflow-x-auto w-full relative md:justify-center">
