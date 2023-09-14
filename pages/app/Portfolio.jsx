@@ -33,7 +33,7 @@ const Portfolio = () => {
   }
 
   useEffect(() => {
-    setWalletAddress("0x7d6fAdb02e70bfb6325cFD6Ec5605e552115AA76");
+    setWalletAddress(address);
   }, [address]);
 
   const fetchData = useCallback(async () => {

@@ -13,6 +13,7 @@ const Transactions = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const transactionsPerPage = 10;
   const [totalPages, setTotalPages] = useState(1); // Initialize totalPages
+  const [totalTransactions, setTotalTransactions] = useState(null);
 
   useEffect(() => {
     const fetchTransactions = async () => {
@@ -33,26 +34,47 @@ const Transactions = () => {
         console.error("Fetch Error:", error);
       }
     };
+    
 
     if (walletAddress !== "") {
       fetchTransactions();
     }
   }, [walletAddress, page]);
 
+   
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
           `/api/txn?walletAddress=${walletAddress}&page=${page}`
-        ); // Replace with the actual route to your API
+        ); 
         setTransactionss(response.data);
       } catch (error) {
         console.error("Error:", error);
       }
     };
 
+
     fetchData();
   }, [walletAddress, page]);
+  const roundedTotalTransactions = Math.ceil(totalTransactions / 10);
+
+  useEffect(() => {
+    const fetchTransactionList = async () => {
+      try {
+        const response1 = await axios.get(
+          `/api/txntest?walletAddress=${walletAddress}`
+        );
+        const { totalTransactions } = response1.data;
+        setTotalTransactions(totalTransactions);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    fetchTransactionList();
+  }, [walletAddress]);
 
   const handleNextClick = () => {
     const nextPage = String(parseInt(page, 10) + 1);
@@ -135,7 +157,7 @@ const Transactions = () => {
               <div className="flex-1 text-left">
                 {/* @DoctorInTech add the number latest transactions */}
                 <p className="text-xs md:text-sm">
-                  Latest {displayedTransactions.length} from a total of {transactions.length} transactions, showing {transactionsPerPage} per page
+                  Latest {page * 10} from a total of {totalTransactions} transactions, showing {transactionsPerPage} per page
                 </p>
               </div>
               <div className="flex justify-center items-center gap-3 mt-2 pt-3">
@@ -146,10 +168,11 @@ const Transactions = () => {
                 >
                   Previous
                 </button>
-                <span className="text-sm">{page}</span>
+                <span className="text-sm">{page}/ {roundedTotalTransactions}</span>
                 <button
                   className="p-2 rounded-md  border text-xs md:text-sm"
                   onClick={handleNextClick}
+                  disabled={parseInt(page, 10) === roundedTotalTransactions}
                 >
                   Next
                 </button>
@@ -157,6 +180,7 @@ const Transactions = () => {
               <div></div>
             </div>
             <div className="overflow-x-auto p-3 m-3">
+
               <table
                 className=" text-xs rounded-lg bg-[#1f1f1f] p-3 m-3 gap-3  min-w-max whitespace-nowrap border-collapse"
                 // style={{
