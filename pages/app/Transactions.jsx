@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useAddress } from "@thirdweb-dev/react";
 import { BiCopy } from "react-icons/bi";
 
+
 const Transactions = () => {
   const address = useAddress();
   const [transactions, setTransactions] = useState([]);
@@ -13,7 +14,6 @@ const Transactions = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const transactionsPerPage = 10;
   const [totalPages, setTotalPages] = useState(1); // Initialize totalPages
-  const [totalTransactions, setTotalTransactions] = useState(null);
 
   useEffect(() => {
     const fetchTransactions = async () => {

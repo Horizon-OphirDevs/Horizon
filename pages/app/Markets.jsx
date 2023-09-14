@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 
-const CoinsPerPage = 20; // Define the number of coins per page
+const CoinsPerPage = 20;
 
 const Markets = () => {
   const [data, setData] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1); // Add currentPage stat
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState(""); // Step 1: Add searchQuery state
 
   useEffect(() => {
     const fetchData = async () => {
@@ -15,13 +16,12 @@ const Markets = () => {
         setData(newData);
       } catch (error) {
         console.error("Error fetching data:", error);
-        setData([]); // Reset data to an empty array on error
+        setData([]);
       }
     };
 
-    fetchData(); // Initial data fetch
-
-    const interval = setInterval(fetchData, 60000); // Fetch data every 60 seconds
+    fetchData();
+    const interval = setInterval(fetchData, 60000);
 
     return () => clearInterval(interval);
   }, []);
@@ -29,34 +29,49 @@ const Markets = () => {
   const startIndex = (currentPage - 1) * CoinsPerPage;
   const endIndex = startIndex + CoinsPerPage;
 
+  // Step 3: Filter the data based on the search query
+  const filteredData = data.filter((token) =>
+    token.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="markets_home md:h-screen">
-      <div className="text-gray-300">
-        <h1>Token Tracker</h1>
-        <p></p>
-      </div>
-      <div className="rounded-lg shadow-xl bg-[#1f1f1f] overflow-x-auto w-full relative text-xs ">
-        <div className="p-3 m-2 overflow-x-auto flex justify-center space-x-2 ">
-          <div className="flex rounded overflow-x-auto w-full relative md:justify-center">
-            <table className="min-w-max whitespace-nowrap bgr text-white border-lg border-gray-600 rounded overflow-x-auto h-full ">
+      <div className="rounded-lg shadow-xl bg-[#1f1f1f] overflow-x-auto text-xs">
+        <div className="p-3 m-2">
+          {/* Step 2: Add an input field for searching */}
+          <input
+            type="text"
+            placeholder="Search tokens..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <div className="overflow-x-auto">
+            <table className="min-w-full gap-4 whitespace-nowrap bgr text-white border-lg border-gray-600 rounded overflow-x-auto h-full">
               <thead className="border-b border-gray-600 sticky top-0">
                 <tr className="py-5">
-                  {/* bg-[#1f1f1f] */}
-                  <th className="  p-2 border bg-[#1f1f1f] px-5 fixed-column">
+                  <th className="p-2 border bg-[#1f1f1f] px-5 text-left text-xs leading-4">
                     Token
                   </th>
-                  <th className="px-5">Price</th>
-                  <th className="px-5">Change (%)</th>
-                  <th className="px-5">Volume 24h</th>
-                  <th className="px-5">Market Cap</th>
-                  <th className="px-5">Total Supply</th>
+                  <th className="px-5 text-left text-xs leading-4">Price</th>
+                  <th className="px-5 text-left text-xs leading-4">
+                    Change (%)
+                  </th>
+                  <th className="px-5 text-left text-xs leading-4">
+                    Volume 24h
+                  </th>
+                  <th className="px-5 text-left text-xs leading-4">
+                    Market Cap
+                  </th>
+                  <th className="px-5 text-left text-xs leading-4">
+                    Total Supply
+                  </th>
                 </tr>
               </thead>
               <tbody className="">
-                {Array.isArray(data) &&
-                  data.slice(startIndex, endIndex).map((token) => (
+                {Array.isArray(filteredData) && // Step 4: Use filteredData
+                  filteredData.slice(startIndex, endIndex).map((token) => (
                     <tr key={token.id}>
-                      <td className="flex gap-2 items-center p-3 px-3  bg-[#1f1f1f] fixed-column">
+                      <td className="flex gap-2 items-center p-3 px-3  bg-[#1f1f1f] ">
                         <div className="p-2 rounded-lg bg-[#39393983]">
                           <Image
                             src={token.image}
@@ -115,7 +130,7 @@ const Markets = () => {
           <button
             className="p-3 rounded-lg bg-[#0baab5]"
             onClick={() => setCurrentPage(currentPage + 1)}
-            disabled={endIndex >= data.length}
+            disabled={endIndex >= filteredData.length}
           >
             Next
           </button>
@@ -126,7 +141,3 @@ const Markets = () => {
 };
 
 export default Markets;
-
-Markets.getLayout = function PageLayout(page) {
-  return <>{page}</>;
-};
