@@ -14,6 +14,7 @@ const Transactions = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const transactionsPerPage = 10;
   const [totalPages, setTotalPages] = useState(1); // Initialize totalPages
+  const [totalTransactions, setTotalTransactions] = useState(null);
 
   useEffect(() => {
     const fetchTransactions = async () => {
@@ -58,7 +59,7 @@ const Transactions = () => {
 
     fetchData();
   }, [walletAddress, page]);
-  const roundedTotalTransactions = Math.ceil(totalTransactions / 10);
+  
 
   useEffect(() => {
     const fetchTransactionList = async () => {
@@ -75,6 +76,7 @@ const Transactions = () => {
 
     fetchTransactionList();
   }, [walletAddress]);
+  const roundedTotalTransactions = Math.ceil(totalTransactions / 10);
 
   const handleNextClick = () => {
     const nextPage = String(parseInt(page, 10) + 1);
