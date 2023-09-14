@@ -13,36 +13,8 @@ const Transactions = () => {
   const [copiedText, setCopiedText] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const transactionsPerPage = 10;
-  const [totalPages, setTotalPages] = useState(1); // Initialize totalPages
   const [totalTransactions, setTotalTransactions] = useState(null);
 
-  useEffect(() => {
-    const fetchTransactions = async () => {
-      try {
-        const response = await axios.get(
-          `/api/transactions?walletAddress=${walletAddress}`
-        );
-        const data = response.data.simplifiedTransactions;
-        setTransactions(data);
-
-        // Calculate totalPages after data is fetched and when transactions change
-        const calculatedTotalPages = Math.ceil(
-          data.length / transactionsPerPage
-        );
-        setTotalPages(calculatedTotalPages);
-        setCurrentPage(1); // Reset to the first page when data is fetched
-      } catch (error) {
-        console.error("Fetch Error:", error);
-      }
-    };
-    
-
-    if (walletAddress !== "") {
-      fetchTransactions();
-    }
-  }, [walletAddress, page]);
-
-   
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,8 +28,9 @@ const Transactions = () => {
       }
     };
 
-
-    fetchData();
+    if (walletAddress !== "") {
+      fetchData();
+    }
   }, [walletAddress, page]);
   
 
@@ -144,7 +117,7 @@ const Transactions = () => {
 
   return (
     <div className="text-white">
-      {transactions.length === 0 ? (
+      {transactionss.length === 0 ? (
         <p>No transactions to show.</p>
       ) : (
         <>
@@ -273,29 +246,6 @@ const Transactions = () => {
       {copiedText && (
         <div className="copy-notification">Copied: {copiedText}</div>
       )}
-
-      {/* Pagination Controls */}
-      {/*<div className="pagination">
-        <button
-          className="p-3 rounded-lg bg-[#0baab5]"
-          onClick={() => loadPage(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </button>
-        <span>{`Page ${currentPage} of ${totalPages}`}</span>
-        <button
-          className="p-3 rounded-lg bg-[#0baab5]"
-          onClick={() => loadPage(currentPage + 1)}
-          disabled={currentPage === totalPages}
-        >
-          Next
-        </button>
-        {currentPage === totalPages && (
-          <p>No more pages to show</p>
-        )}
-      </div>
-      */}
 
       <div></div>
     </div>

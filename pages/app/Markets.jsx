@@ -141,3 +141,7 @@ const Markets = () => {
 };
 
 export default Markets;
+
+Markets.getLayout = function PageLayout(page) {
+  return <>{page}</>;
+};

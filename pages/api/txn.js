@@ -6,8 +6,6 @@ export default async (req, res) => {
   try {
     // Extract query parameters from the request
     const { walletAddress, page } = req.query;
-    //const walletAddress = '0x1a97a5a0063d837fd3365e71e5bdc3894e833e6d';
-    //const page = '2';
     const offset = '10';
     const sort = 'asc';
     const apiKey ='E2T436336DVTJ676A15WURXT2PHM5E8QX8';
