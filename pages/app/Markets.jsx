@@ -31,28 +31,36 @@ const Markets = () => {
 
   return (
     <div className="markets_home md:h-screen">
-      <div className="rounded-lg shadow-xl bg-[#1f1f1f] overflow-x-auto w-full relative text-xs ">
-        <div className="p-3 m-2 overflow-x-auto flex justify-center space-x-2 ">
-          <div className="flex rounded overflow-x-auto w-full relative md:justify-center">
-            <table className="min-w-max whitespace-nowrap bgr text-white border-lg border-gray-600 rounded overflow-x-auto h-full ">
+      <div className="rounded-lg shadow-xl bg-[#1f1f1f] overflow-x-auto text-xs ">
+        <div className="p-3 m-2  ">
+          <div className="overflow-x-auto">
+            <table className="min-w-full gap-4 whitespace-nowrap bgr text-white border-lg border-gray-600 rounded overflow-x-auto h-full ">
               <thead className="border-b border-gray-600 sticky top-0">
                 <tr className="py-5">
                   {/* bg-[#1f1f1f] */}
-                  <th className="  p-2 border bg-[#1f1f1f] px-5 fixed-column">
+                  <th className="  p-2 border bg-[#1f1f1f] px-5 text-left text-xs leading-4">
                     Token
                   </th>
-                  <th className="px-5">Price</th>
-                  <th className="px-5">Change (%)</th>
-                  <th className="px-5">Volume 24h</th>
-                  <th className="px-5">Market Cap</th>
-                  <th className="px-5">Total Supply</th>
+                  <th className="px-5 text-left text-xs leading-4">Price</th>
+                  <th className="px-5 text-left text-xs leading-4">
+                    Change (%)
+                  </th>
+                  <th className="px-5 text-left text-xs leading-4">
+                    Volume 24h
+                  </th>
+                  <th className="px-5 text-left text-xs leading-4">
+                    Market Cap
+                  </th>
+                  <th className="px-5 text-left text-xs leading-4">
+                    Total Supply
+                  </th>
                 </tr>
               </thead>
               <tbody className="">
                 {Array.isArray(data) &&
                   data.slice(startIndex, endIndex).map((token) => (
                     <tr key={token.id}>
-                      <td className="flex gap-2 items-center p-3 px-3  bg-[#1f1f1f] fixed-column">
+                      <td className="flex gap-2 items-center p-3 px-3  bg-[#1f1f1f] ">
                         <div className="p-2 rounded-lg bg-[#39393983]">
                           <Image
                             src={token.image}
