@@ -38,9 +38,9 @@ const Settings = () => {
             </div>
             <div className="p-5 text-white">
               <p>Partners</p>
-              <div className="rounded bg-[#141414] p-4 text-white justify-center items-center w-auto flex">
-                <Image src={"/alchemy-Icon.png"} width={30} height={30} />
-                <p className="px-2">Alchemy</p>
+              <div className="rounded bg-[#141414] p-3 text-white justify-center items-center w-auto flex">
+                <Image src={"/ophir-remove.png"} width={300} height={300} />
+                {/* <p className="px-2">Ophir Institute</p> */}
               </div>
             </div>
           </div>
