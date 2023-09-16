@@ -15,6 +15,9 @@ const Portfolio = () => {
   const [portfolioData, setPortfolioData] = useState([]);
   const [arbitrumDistribution, setArbitrumDistribution] = useState(null);
 
+  // to show balance or not
+  const [showBalance, setShowBalance] = useState(false);
+
   // Calculate the total portfolio value
   const totalPortfolioValue = portfolioData.reduce(
     (total, item) => total + item.value,
@@ -106,19 +109,33 @@ const Portfolio = () => {
             <>
               {/* first div box */}
               <div className="md:col-span-3 rounded-lg shadow-xl md:min-h-[18rem]  bg-[#1f1f1f] items-center grid-row-3 ">
-                {/* <div className="flex flex-col items-center justify-center "> */}
                 <div className="  justify-between p-3 flex">
                   <p className="text-gray-300">Token Allocation</p>
                   <span className="text-gray-600 rounded-2xl border p-2">
                     <BsThreeDots />
                   </span>
                 </div>
-                <div className="flex items-center justify-center pb-3">
-                  <div className=" pie_Chart m-auto ">
-                    <PieChartComponent data={pieChartData} />
+                {/* Check if balance is zero or empty */}
+                {parseFloat(arbitrumDistribution) === 0 ||
+                arbitrumDistribution === "" ? (
+                  <div className="flex items-center justify-center pb-3">
+                    {/* empty wallet image */}
+                    <Image
+                      className=" rounded-xl "
+                      src="/broke4.png"
+                      alt="empty icon"
+                      width={250}
+                      height={250}
+                    />
                   </div>
-                </div>
-                {/* </div> */}
+                ) : (
+                  // Render the pie chart when the balance is not zero or empty
+                  <div className="flex items-center justify-center pb-3">
+                    <div className="pie_Chart m-auto">
+                      <PieChartComponent data={pieChartData} />
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* second div box */}
@@ -126,7 +143,7 @@ const Portfolio = () => {
                 <div className="flex flex-row p-3 gap-4 items-center justify-center">
                   {/* first inner box */}
                   <div className="rounded ">
-                    {/* image icon`` */}
+                    {/* broke image icon`` */}
                     <div className="text-gray-300 p-1 rounded flex flex-col items-center justify-center">
                       <Image
                         className=" rounded-xl "
@@ -151,11 +168,18 @@ const Portfolio = () => {
                         {" "}
                         Net Worth
                       </h2>
-                      {/* eye ball symbol */}
-                      <BsEyeSlash size={17} />
+
+                      <div onClick={() => setShowBalance(!showBalance)}>
+                        {/* Toggle visibility of balance when clicking on the eye ball symbol */}
+                        <BsEyeSlash size={17} style={{ cursor: "pointer" }} />
+                      </div>
                     </div>
-                    <h2 className=" text-xl md:text-3xl">
-                      ${parseFloat(arbitrumDistribution).toFixed(4)}
+                    {/* Conditionally render the balance or asterisks */}
+                    <h2 className="text-xl md:text-3xl">
+                      {showBalance
+                        ? `$${parseFloat(arbitrumDistribution).toFixed(4)}`
+                        : "*".repeat(7)}{" "}
+                      {/* Display 10 asterisks */}
                     </h2>
                     <div className="text-xs text-gray-500">
                       {/* percentage increase */}
